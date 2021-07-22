@@ -32,3 +32,16 @@ func alignElements():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+func close():
+	queue_free()
+
+func _hostPressed():
+	var port = int($PortEdit.text)
+	Network.hostLobby(port)
+
+
+func _joinPressed():
+	var ip = $IPEdit.text
+	var port = int($PortEdit.text)
+	Network.joinLobby(ip, port)

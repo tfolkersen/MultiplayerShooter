@@ -59,14 +59,14 @@ func populateValues():
 	$TabContainer/Control/SensEdit.text = str(Global.sensitivity)
 	$TabContainer/Display/ResXEdit.text = str(Global.resolutionX)
 	$TabContainer/Display/ResYEdit.text = str(Global.resolutionY)
-	$TabContainer/Display/FullscreenCheck.text = str(Global.fullscreen)
+	$TabContainer/Display/FullscreenCheck.pressed = Global.fullscreen
 	$TabContainer/Misc/NameEdit.text = Global.playerName
 
 func _acceptPressed():
 	Global.sensitivity = float($TabContainer/Control/SensEdit.text)
 	Global.resolutionX = int($TabContainer/Display/ResXEdit.text)
 	Global.resolutionY = int($TabContainer/Display/ResYEdit.text)
-	Global.fullscreen = bool($TabContainer/Display/FullscreenCheck.text)
+	Global.fullscreen = $TabContainer/Display/FullscreenCheck.pressed
 	Global.playerName = $TabContainer/Misc/NameEdit.text
 	Global.saveSettings()
 	Global.closeSettingsMenu()

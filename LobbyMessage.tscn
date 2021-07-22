@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://LobbyMessage.gd" type="Script" id=1]
+
+[node name="LobbyMessage" type="HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sender" type="Label" parent="."]
+margin_top = 13.0
+margin_right = 57.0
+margin_bottom = 27.0
+custom_colors/font_color = Color( 0.921569, 1, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "[SENDER]"
+
+[node name="Message" type="Label" parent="."]
+margin_left = 61.0
+margin_top = 13.0
+margin_right = 128.0
+margin_bottom = 27.0
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "[MESSAGE]"

@@ -91,4 +91,6 @@ margin_right = 339.744
 margin_bottom = 135.209
 text = "25565"
 
+[connection signal="pressed" from="MainMenu/HostButton" to="MainMenu" method="_hostPressed"]
+[connection signal="pressed" from="MainMenu/JoinButton" to="MainMenu" method="_joinPressed"]
 [connection signal="pressed" from="MainMenu/SettingsButton" to="MainMenu/SettingsButton" method="_onPress"]
