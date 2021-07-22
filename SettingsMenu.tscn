@@ -1,0 +1,110 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://SettingsMenu.gd" type="Script" id=1]
+
+[node name="SettingsMenu" type="WindowDialog"]
+margin_right = 48.0
+margin_bottom = 40.0
+popup_exclusive = true
+window_title = "Settings"
+resizable = true
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TabContainer" type="TabContainer" parent="."]
+margin_right = 367.0
+margin_bottom = 36.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Panel" parent="TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="SensLabel" type="Label" parent="TabContainer/Control"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Sensitivity"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SensEdit" type="TextEdit" parent="TabContainer/Control"]
+margin_right = 80.0
+margin_bottom = 21.0
+text = "0.5"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Display" type="Panel" parent="TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="ResLabel" type="Label" parent="TabContainer/Display"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Resolution (x, y)"
+
+[node name="ResXEdit" type="TextEdit" parent="TabContainer/Display"]
+margin_right = 60.0
+margin_bottom = 21.0
+text = "1024"
+
+[node name="ResYEdit" type="TextEdit" parent="TabContainer/Display"]
+margin_right = 60.0
+margin_bottom = 21.0
+text = "600"
+
+[node name="FullscreenLabel" type="Label" parent="TabContainer/Display"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Fullscreen"
+
+[node name="FullscreenCheck" type="CheckBox" parent="TabContainer/Display"]
+margin_right = 24.0
+margin_bottom = 24.0
+
+[node name="Misc" type="Panel" parent="TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="NameLabel" type="Label" parent="TabContainer/Misc"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Player name"
+
+[node name="NameEdit" type="TextEdit" parent="TabContainer/Misc"]
+margin_right = 200.0
+margin_bottom = 24.0
+text = "Unnamed"
+
+[node name="AcceptButton" type="Button" parent="."]
+margin_right = 12.0
+margin_bottom = 20.0
+text = "Accept"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="popup_hide" from="." to="." method="_onHide"]
+[connection signal="tree_entered" from="." to="." method="_treeEntered"]
+[connection signal="tree_exiting" from="." to="." method="_leavingTree"]
+[connection signal="pressed" from="AcceptButton" to="." method="_acceptPressed"]
