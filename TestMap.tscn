@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [sub_resource type="BoxShape" id=1]
 
@@ -6,6 +6,9 @@
 
 [sub_resource type="SpatialMaterial" id=3]
 albedo_color = Color( 0.454902, 0.462745, 0.00392157, 1 )
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0.462745, 0.00392157, 0.00392157, 1 )
 
 [sub_resource type="SpatialMaterial" id=4]
 albedo_color = Color( 0.054902, 0.411765, 0.6, 1 )
@@ -37,6 +40,19 @@ shape = SubResource( 1 )
 [node name="MeshInstance" type="MeshInstance" parent="Block3"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
+
+[node name="Block6" type="StaticBody" parent="."]
+transform = Transform( -1.31134e-07, -0.0939693, -1.02606, 0, 0.034202, -2.81908, 3, -4.10753e-09, -4.48506e-08, 3.73516, 2.73369, 3.27746 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Block6"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Block6"]
+mesh = SubResource( 2 )
+material/0 = SubResource( 5 )
 
 [node name="Block4" type="StaticBody" parent="."]
 transform = Transform( -1.31134e-07, 0.05, 2.59808, 0, 0.0866025, -1.5, -3, -2.18557e-09, -1.13566e-07, -4.69137, 0.970846, -0.740397 )

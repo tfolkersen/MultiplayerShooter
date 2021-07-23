@@ -85,7 +85,7 @@ func _process(delta):
 		velocity.x = moveDir.x * 0.4
 	rotationMomentum *= 0.94
 	
-	move_and_slide(velocity * 10, Vector3(0, 1, 0), true)
+	move_and_slide(velocity * 10, Vector3(0, 1, 0), true, 4, deg2rad(70)) #TODO change this lmao
 	$MeshInstance.rotation_degrees.y = rotationVec.y
 	$Camera/ViewportContainer/Viewport/GunCamera.global_transform = $Camera.global_transform
 	if is_network_master():
