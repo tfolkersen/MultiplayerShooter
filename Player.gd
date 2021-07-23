@@ -23,11 +23,32 @@ remote func synchronize(transform, velocity, rotationVec):
 	self.velocity = velocity
 	self.rotationVec = rotationVec
 
+var shotBuffer = 0
+onready var gunAnimator = $Camera/GunContainer/GunContainerAnim/AnimationPlayer
+onready var gunSoundPlayer = $SoundPlayer
+func handleShot():
+	shotBuffer -= 1
+	shotBuffer = 0 if shotBuffer < 0 else shotBuffer
+	
+	if shotBuffer > 0 and not gunAnimator.is_playing():
+		gunAnimator.playback_speed = 1.0
+		gunAnimator.stop()
+		gunAnimator.play("Shoot")
+		gunSoundPlayer.stop()
+		gunSoundPlayer.play()
+
 func _process(delta):
 	$Camera/GunContainer.transform = gunBaseTransform
-	rotationMomentum.x = clamp(rotationMomentum.x, -30, 30)
-	rotationMomentum.y = clamp(rotationMomentum.y, -30, 30)
+	rotationMomentum.x = clamp(rotationMomentum.x, -10, 10)
+	rotationMomentum.y = clamp(rotationMomentum.y, -10, 10)
 	$Camera/GunContainer.rotation_degrees.y += rotationMomentum.y
+	$Camera/GunContainer.rotation_degrees.x = rotationVec.x * 13.0 / 90.0
+	$Camera/GunContainer.translation.z -= 0.035 * abs(rotationVec.x) / 90.0
+	
+	if is_network_master():
+		if Input.is_action_pressed("shoot"):
+			shotBuffer = 5
+		handleShot()
 	
 	velocity.y = clamp(velocity.y - 0.015, -0.5, 4)
 	
@@ -53,7 +74,7 @@ func _process(delta):
 	
 		velocity.z = moveDir.z * 0.4
 		velocity.x = moveDir.x * 0.4
-	rotationMomentum *= 0.9
+	rotationMomentum *= 0.94
 	
 	move_and_slide(velocity * 10, Vector3(0, 1, 0), true)
 	$MeshInstance.rotation_degrees.y = rotationVec.y

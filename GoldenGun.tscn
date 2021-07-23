@@ -94,6 +94,9 @@ surfaces/0 = {
 
 [node name="GoldenGun" type="Spatial"]
 
+[node name="BarrelTip" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.680835, -2.65892 )
+
 [node name="Cube" type="MeshInstance" parent="."]
 transform = Transform( 0.129926, 0, 0, 0, 0.445672, 0, 0, 0, 0.279102, 0, 0.0635567, 0.0440951 )
 layers = 2

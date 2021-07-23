@@ -129,3 +129,6 @@ transform = Transform( 0.130439, 0, 0, 0, -6.94577e-08, -0.17073, 0, 0.582653, -
 layers = 2
 mesh = SubResource( 6 )
 material/0 = null
+
+[node name="BarrelTip" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.606679, -2.46063 )
