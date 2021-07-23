@@ -51,7 +51,10 @@ func testUserList():
 		addUserToList(u, i)
 
 func _ready():
-	print("Joined tree")
+	$MessageEdit.grab_focus()
+	$MessageEdit.text = "/start"
+	
+	print("Lobby joined tree")
 	#testChat()
 	#testUserList()
 	var dims = get_viewport().size
@@ -98,6 +101,9 @@ func quitLobby():
 func _messageEntered(text):
 	$MessageEdit.clear()
 	if text == "":
+		return
+	if text in ["/start", "/startgame"] and is_network_master():
+		Network.rpc("startGame")
 		return
 	if text in ["/disconnect", "/quit"]:
 		quitLobby()

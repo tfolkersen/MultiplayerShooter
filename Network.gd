@@ -1,6 +1,8 @@
 extends Node
 
 var lobbyInstance = null
+var gameInstance = null
+
 var networkID = 0
 var peers = {}
 
@@ -94,6 +96,38 @@ func hostLobby(port):
 	rpc("addPeer", Global.playerName)
 	
 	Global.closeMainMenu()
+
+var playerScene = preload("res://Player.tscn")
+remotesync func startGame():
+	if is_instance_valid(gameInstance):
+		stopGame()
+		
+	#Make level
+	lobbyInstance.visible = false
+	var levelScene = preload("res://TestMap.tscn")
+	gameInstance = levelScene.instance()
+	gameInstance.name = "Level"
+	get_node("/root/Game").add_child(gameInstance)
+	
+	#Make players
+	var players = Node.new()
+	players.set_name("players")
+	gameInstance.add_child(players)
+	
+	for id in peers:
+		var player = playerScene.instance()
+		player.set_name(str(id))
+		player.set_network_master(id)
+		gameInstance.add_child(player)
+		
+	Global.captureMouse()
+	
+	
+	
+	
+remotesync func stopGame():
+	if is_instance_valid(gameInstance):
+		gameInstance.queue_free()
 
 func joinLobby(ip, port):
 	print("Joining lobby")

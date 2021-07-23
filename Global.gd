@@ -12,6 +12,7 @@ var settingsMenuInstance = null
 var mainMenuInstance = null
 
 func _ready():
+	OS.window_resizable = false
 	loadSettings()
 	showMainMenu()
 	
@@ -74,3 +75,9 @@ func closeSettingsMenu():
 func _process(delta):
 	if Input.is_key_pressed(KEY_ESCAPE):
 		get_tree().quit()
+
+func captureMouse():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
+func releaseMouse():
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
