@@ -7,8 +7,8 @@ var networkID = 0
 var peers = {}
 
 remotesync func addPeer(name):
-	print("Adding peer " + name)
 	var id = get_tree().get_rpc_sender_id()
+	print("Adding peer [" + str(id) + "]" + name)
 	if peers.has(id):
 		return
 	peers[id] = {"id": id, "name": name}
@@ -22,7 +22,7 @@ func removePeer(id):
 	print("Removing peer" + str(id))
 	if peers.has(id):
 		var peer = peers[id]
-		if lobbyInstance:
+		if is_instance_valid(lobbyInstance):
 			lobbyInstance.systemMessage(peer.name + " has left")
 			lobbyInstance.removeUserFromList(id)
 
@@ -45,14 +45,17 @@ func _player_disconnected(id):
 	
 func _connected_ok():
 	print("Connected to server")
+	rpc("addPeer", Global.playerName)
 	lobbyInstance.visible = true
 	Global.closeMainMenu()
 
 func _server_disconnected():
 	print("Disconnected by server")
 	if is_instance_valid(lobbyInstance):
+		stopGame()
 		lobbyInstance.quitLobby()
 		lobbyInstance = null
+	Network.disconnectNetwork()
 
 func _connected_fail():
 	print("Failed to connect to server")
@@ -77,8 +80,9 @@ func createClient(ip, port):
 	
 func disconnectNetwork():
 	var peer = get_tree().network_peer
-	if peer:
+	if is_instance_valid(peer):
 		peer.close_connection()
+		peer = null
 		networkID = 0
 		print("Closed network connection")
 		peers = {}
@@ -98,6 +102,7 @@ func hostLobby(port):
 	Global.closeMainMenu()
 
 var playerScene = preload("res://Player.tscn")
+
 remotesync func startGame():
 	if is_instance_valid(gameInstance):
 		stopGame()
@@ -116,18 +121,19 @@ remotesync func startGame():
 	
 	for id in peers:
 		var player = playerScene.instance()
+		print("Making player with ID " + str(id))
 		player.set_name(str(id))
 		player.set_network_master(id)
-		gameInstance.add_child(player)
+		players.add_child(player)
+		#gameInstance.add_child(player)
 		
 	Global.captureMouse()
-	
-	
-	
-	
+
 remotesync func stopGame():
 	if is_instance_valid(gameInstance):
 		gameInstance.queue_free()
+		gameInstance = null
+		Global.releaseMouse()
 
 func joinLobby(ip, port):
 	print("Joining lobby")
@@ -143,4 +149,4 @@ func joinLobby(ip, port):
 	#Global.closeMainMenu()
 	
 	createClient(ip, port)
-	addPeer(Global.playerName)
+	#addPeer(Global.playerName)

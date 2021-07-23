@@ -37,8 +37,26 @@ cast_to = Vector3( 0, -0.453, 0 )
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.499, 0 )
+cull_mask = 1048573
 
 [node name="ViewModel" type="MeshInstance" parent="Camera"]
 transform = Transform( 1, 0, 0, 0, 0.0817994, 0.996649, 0, -0.996649, 0.0817994, 0.825944, -0.163268, -1.06435 )
+layers = 2
 mesh = SubResource( 4 )
 material/0 = SubResource( 5 )
+
+[node name="ViewportContainer" type="ViewportContainer" parent="Camera"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="Camera/ViewportContainer"]
+size = Vector2( 1024, 600 )
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="GunCamera" type="Camera" parent="Camera/ViewportContainer/Viewport"]
+cull_mask = 2

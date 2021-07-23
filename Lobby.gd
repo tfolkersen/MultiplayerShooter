@@ -54,7 +54,7 @@ func _ready():
 	$MessageEdit.grab_focus()
 	$MessageEdit.text = "/start"
 	
-	print("Lobby joined tree")
+	print("Lobby Joined tree")
 	#testChat()
 	#testUserList()
 	var dims = get_viewport().size
@@ -91,7 +91,7 @@ remotesync func receiveMessage(message):
 	addMessage(peer.name, message)
 	
 remotesync func systemMessage(message):
-	addMessage("[SYSTEM]", message, Color(0.5, 0.0, 1.0))
+	addMessage("[SYSTEM]", message, Color(1.0, 0.0, 1.0))
 
 func quitLobby():
 	Network.disconnectNetwork()
@@ -101,6 +101,11 @@ func quitLobby():
 func _messageEntered(text):
 	$MessageEdit.clear()
 	if text == "":
+		return
+		
+	if text == "/help":
+		var helpString = "Commands:\n/help -- show this message\n/start or /startgame -- start game if host\n/disconnect or /quit -- leave lobby\n/ready -- mark self as ready\n/unready or /notready -- mark self as not ready\n/host -- show who is host"
+		systemMessage(helpString)
 		return
 	if text in ["/start", "/startgame"] and is_network_master():
 		Network.rpc("startGame")
@@ -117,6 +122,9 @@ func _messageEntered(text):
 		rpc("setNotReady")
 		if not is_network_master():
 			setNotReady()
+		return
+	if text == "/host":
+		systemMessage("Host is \"" + str(Network.peers[1].name) + "\"")
 		return
 
 	rpc("receiveMessage", text)
