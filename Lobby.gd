@@ -2,6 +2,8 @@ extends Control
 
 var messageScene = preload("res://LobbyMessage.tscn")
 
+onready var xd = randi()
+
 remotesync func setReady():
 	var id = get_tree().get_rpc_sender_id()
 	var node = get_node("PlayerList/VBoxContainer/" + str(id))
@@ -49,6 +51,7 @@ func testUserList():
 		addUserToList(u, i)
 
 func _ready():
+	print("Joined tree")
 	#testChat()
 	#testUserList()
 	var dims = get_viewport().size
@@ -88,7 +91,9 @@ remotesync func systemMessage(message):
 	addMessage("[SYSTEM]", message, Color(0.5, 0.0, 1.0))
 
 func quitLobby():
-	get_tree().quit()
+	Network.disconnectNetwork()
+	queue_free()
+	Global.showMainMenu()
 
 func _messageEntered(text):
 	$MessageEdit.clear()
@@ -111,3 +116,9 @@ func _messageEntered(text):
 	rpc("receiveMessage", text)
 	if not is_network_master():
 		receiveMessage(text)
+
+func _process(delta):
+	pass
+
+func _exitingTree():
+	print("Lobby exiting tree")

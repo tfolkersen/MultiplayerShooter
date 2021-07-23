@@ -23,8 +23,7 @@ func removePeer(id):
 		if lobbyInstance:
 			lobbyInstance.systemMessage(peer.name + " has left")
 			lobbyInstance.removeUserFromList(id)
-	
-	
+
 func _ready():
 	print("Network ready")
 	get_tree().connect("network_peer_connected", self, "_player_connected")
@@ -44,12 +43,14 @@ func _player_disconnected(id):
 	
 func _connected_ok():
 	print("Connected to server")
-	pass # Only called on clients, not server. Will go unused; not useful here.
+	lobbyInstance.visible = true
+	Global.closeMainMenu()
 
 func _server_disconnected():
 	print("Disconnected by server")
-	if lobbyInstance:
+	if is_instance_valid(lobbyInstance):
 		lobbyInstance.quitLobby()
+		lobbyInstance = null
 
 func _connected_fail():
 	print("Failed to connect to server")
@@ -81,25 +82,31 @@ func disconnectNetwork():
 		peers = {}
 
 func hostLobby(port):
+	print("Hosting lobby")
+	if is_instance_valid(lobbyInstance):
+		lobbyInstance.quitLobby()
+		lobbyInstance = null
 	var lobbyScene = preload("res://Lobby.tscn")
 	lobbyInstance = lobbyScene.instance()
 	get_node("/root/Game").add_child(lobbyInstance)
 	
-	var menu = get_node("/root/Game/MainMenu")
-	if menu:
-		menu.close()
-		
 	createServer(port)
 	rpc("addPeer", Global.playerName)
+	
+	Global.closeMainMenu()
 
 func joinLobby(ip, port):
+	print("Joining lobby")
+	if is_instance_valid(lobbyInstance):
+		lobbyInstance.quitLobby()
+		lobbyInstance = null
+	
 	var lobbyScene = preload("res://Lobby.tscn")
 	lobbyInstance = lobbyScene.instance()
+	lobbyInstance.visible = false
 	get_node("/root/Game").add_child(lobbyInstance)
 	
-	var menu = get_node("/root/Game/MainMenu")
-	if menu:
-		menu.close()
-		
+	#Global.closeMainMenu()
+	
 	createClient(ip, port)
 	addPeer(Global.playerName)

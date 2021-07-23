@@ -42,4 +42,5 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[connection signal="tree_exiting" from="." to="." method="_exitingTree"]
 [connection signal="text_entered" from="MessageEdit" to="." method="_messageEntered"]

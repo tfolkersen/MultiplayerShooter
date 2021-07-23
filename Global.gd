@@ -9,9 +9,11 @@ var resolutionY = 600
 var fullscreen = false
 
 var settingsMenuInstance = null
+var mainMenuInstance = null
 
 func _ready():
 	loadSettings()
+	showMainMenu()
 	
 func loadSettings():
 	var file = File.new()
@@ -50,6 +52,19 @@ func showSettingsMenu():
 		var menu = settingsScene.instance()
 		get_node("/root/Game").add_child(menu)
 		#settingsMenuInstance = menu
+		
+func showMainMenu():
+	if mainMenuInstance:
+		return
+	var scene = preload("res://MainMenu.tscn")
+	var m = scene.instance()
+	mainMenuInstance = m
+	get_node("/root/Game").add_child(m)
+	
+func closeMainMenu():
+	if mainMenuInstance:
+		mainMenuInstance.queue_free()
+		mainMenuInstance = null
 	
 func closeSettingsMenu():
 	if settingsMenuInstance != null:
