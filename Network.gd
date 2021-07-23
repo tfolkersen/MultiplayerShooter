@@ -25,6 +25,10 @@ func removePeer(id):
 		if is_instance_valid(lobbyInstance):
 			lobbyInstance.systemMessage(peer.name + " has left")
 			lobbyInstance.removeUserFromList(id)
+			
+		if is_instance_valid(gameInstance):
+			var playerNode = gameInstance.get_node("players/" + str(id))
+			playerNode.queue_free()
 
 func _ready():
 	print("Network ready")
