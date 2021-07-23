@@ -13,6 +13,7 @@ var mainMenuInstance = null
 
 func _ready():
 	OS.window_resizable = false
+	#OS.window_fullscreen = true
 	loadSettings()
 	showMainMenu()
 	

@@ -3,6 +3,9 @@ extends KinematicBody
 var velocity = Vector3(0, 0, 0)
 
 onready var rotationVec = $Camera.rotation_degrees
+onready var rotationMomentum = Vector3(0, 0, 0)
+onready var gunBaseTransform = $Camera/GunContainer.transform
+
 
 func _ready():
 	if Network.networkID != 1:
@@ -11,7 +14,7 @@ func _ready():
 	if not is_network_master():
 		$Camera.current = false
 		$Camera/ViewportContainer.visible = false
-		$Camera/ViewModel.visible = false
+		$Camera/GunContainer.visible = false
 	else:
 		$Camera.current = true
 
@@ -21,6 +24,11 @@ remote func synchronize(transform, velocity, rotationVec):
 	self.rotationVec = rotationVec
 
 func _process(delta):
+	$Camera/GunContainer.transform = gunBaseTransform
+	rotationMomentum.x = clamp(rotationMomentum.x, -30, 30)
+	rotationMomentum.y = clamp(rotationMomentum.y, -30, 30)
+	$Camera/GunContainer.rotation_degrees.y += rotationMomentum.y
+	
 	velocity.y = clamp(velocity.y - 0.015, -0.5, 4)
 	
 	if is_on_floor():
@@ -45,8 +53,9 @@ func _process(delta):
 	
 		velocity.z = moveDir.z * 0.4
 		velocity.x = moveDir.x * 0.4
+	rotationMomentum *= 0.9
 	
-	move_and_slide(velocity * 10, Vector3(0, 1, 0))
+	move_and_slide(velocity * 10, Vector3(0, 1, 0), true)
 	$MeshInstance.rotation_degrees.y = rotationVec.y
 	$Camera/ViewportContainer/Viewport/GunCamera.global_transform = $Camera.global_transform
 	if is_network_master():
@@ -58,8 +67,8 @@ func _input(event):
 		
 	if event is InputEventMouseMotion:
 		var vec = event.relative
+		rotationMomentum -= Vector3(vec.y, vec.x, 0) * 0.005
 		rotationVec.y -= vec.x * Global.sensitivity * 0.1
 		rotationVec.x -= vec.y * Global.sensitivity * 0.1
 		rotationVec.x = clamp(rotationVec.x, -90, 90)
-		
 		$Camera.rotation_degrees = rotationVec

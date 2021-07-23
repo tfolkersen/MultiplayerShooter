@@ -1,13 +1,19 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [sub_resource type="BoxShape" id=1]
 
 [sub_resource type="CubeMesh" id=2]
 
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.454902, 0.462745, 0.00392157, 1 )
+
 [node name="TestMap" type="Spatial"]
 
 [node name="Block" type="StaticBody" parent="."]
 transform = Transform( 3, 0, 0, 0, 0.1, 0, 0, 0, 3, 0, 0, 0 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="CollisionShape" type="CollisionShape" parent="Block"]
 shape = SubResource( 1 )
@@ -15,3 +21,36 @@ shape = SubResource( 1 )
 [node name="MeshInstance" type="MeshInstance" parent="Block"]
 mesh = SubResource( 2 )
 material/0 = null
+
+[node name="Block3" type="StaticBody" parent="."]
+transform = Transform( 3, 0, 0, 0, 0.0731354, -2.046, 0, 0.0681998, 2.19406, 0.817996, 0.970846, -4.1783 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Block3"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Block3"]
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="Block2" type="StaticBody" parent="."]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.53064, 0.543039, 1.81788 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Block2"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Block2"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.57018, 0.63396, 2.64347 )
+layers = 3
+light_color = Color( 0.0784314, 1, 0, 1 )
+light_energy = 16.0
+omni_range = 1.3
