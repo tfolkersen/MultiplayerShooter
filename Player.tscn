@@ -178,25 +178,26 @@ layers = 2
 mesh = SubResource( 4 )
 material/0 = SubResource( 5 )
 
-[node name="GunContainer" type="Spatial" parent="Camera"]
+[node name="GCWalk" type="Spatial" parent="Camera"]
+
+[node name="GCTurn" type="Spatial" parent="Camera/GCWalk"]
 transform = Transform( 0.0978148, 0, -0.0207912, 0, 0.1, 0, 0.0207912, 0, 0.0978148, 0.2, -0.2, -0.3 )
 
-[node name="GunContainerAnim" type="Spatial" parent="Camera/GunContainer"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+[node name="GCAnim" type="Spatial" parent="Camera/GCWalk/GCTurn"]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera/GunContainer/GunContainerAnim"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera/GCWalk/GCTurn/GCAnim"]
 anims/Idle = SubResource( 6 )
 anims/Reload = SubResource( 8 )
 anims/Shoot = SubResource( 7 )
 
-[node name="GoldenGun" parent="Camera/GunContainer/GunContainerAnim" instance=ExtResource( 2 )]
+[node name="GoldenGun" parent="Camera/GCWalk/GCTurn/GCAnim" instance=ExtResource( 2 )]
 transform = Transform( 1, 1.49012e-08, -4.47035e-08, 7.45058e-09, 1, 0, -2.98023e-08, 2.98023e-08, 1, 0.0106211, 0.0679665, 0.0499637 )
 
-[node name="pistol" parent="Camera/GunContainer/GunContainerAnim" instance=ExtResource( 4 )]
+[node name="pistol" parent="Camera/GCWalk/GCTurn/GCAnim" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, -1.49012e-08, 0, 1, 0, 1.49012e-08, 0, 1, 0, 0, 0 )
 visible = false
 
-[node name="rifle" parent="Camera/GunContainer/GunContainerAnim" instance=ExtResource( 5 )]
+[node name="rifle" parent="Camera/GCWalk/GCTurn/GCAnim" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, -1.49012e-08, 0, 1, 0, 1.49012e-08, 0, 1, 0, 0, 0 )
 visible = false
 

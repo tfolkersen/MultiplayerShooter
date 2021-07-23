@@ -4,8 +4,7 @@ var velocity = Vector3(0, 0, 0)
 
 onready var rotationVec = $Camera.rotation_degrees
 onready var rotationMomentum = Vector3(0, 0, 0)
-onready var gunBaseTransform = $Camera/GunContainer.transform
-
+onready var turnBaseTransform = $Camera/GCWalk/GCTurn.transform
 
 func _ready():
 	if Network.networkID != 1:
@@ -14,7 +13,7 @@ func _ready():
 	if not is_network_master():
 		$Camera.current = false
 		$Camera/ViewportContainer.visible = false
-		$Camera/GunContainer.visible = false
+		$Camera/GCWalk.visible = false
 	else:
 		$Camera.current = true
 
@@ -24,7 +23,7 @@ remote func synchronize(transform, velocity, rotationVec):
 	self.rotationVec = rotationVec
 
 var shotBuffer = 0
-onready var gunAnimator = $Camera/GunContainer/GunContainerAnim/AnimationPlayer
+onready var gunAnimator = $Camera/GCWalk/GCTurn/GCAnim/AnimationPlayer
 onready var gunSoundPlayer = $SoundPlayer
 func handleShot():
 	shotBuffer -= 1
@@ -38,12 +37,14 @@ func handleShot():
 		gunSoundPlayer.play()
 
 func _process(delta):
-	$Camera/GunContainer.transform = gunBaseTransform
+	$Camera/GCWalk/GCTurn.transform = turnBaseTransform
 	rotationMomentum.x = clamp(rotationMomentum.x, -10, 10)
 	rotationMomentum.y = clamp(rotationMomentum.y, -10, 10)
-	$Camera/GunContainer.rotation_degrees.y += rotationMomentum.y
-	$Camera/GunContainer.rotation_degrees.x = rotationVec.x * 13.0 / 90.0
-	$Camera/GunContainer.translation.z -= 0.035 * abs(rotationVec.x) / 90.0
+	$Camera/GCWalk/GCTurn.rotation_degrees.y += rotationMomentum.y
+	$Camera/GCWalk/GCTurn.rotation_degrees.x = rotationVec.x * 13.0 / 90.0
+	$Camera/GCWalk/GCTurn.translation.z -= 0.035 * abs(rotationVec.x) / 90.0
+	
+	#Move gun container based on walk time
 	
 	if is_network_master():
 		if Input.is_action_pressed("shoot"):
