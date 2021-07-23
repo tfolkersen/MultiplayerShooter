@@ -71,6 +71,14 @@ func _process(delta):
 		if Input.is_action_pressed("right"):
 			moveDir += Vector3(1, 0, 0)
 	
+		var walkAnimator = $Camera/GCWalk/AnimationPlayer
+		walkAnimator.set_blend_time("Walk", "Idle", 0.3)
+		walkAnimator.playback_speed = 1.0
+		if moveDir != Vector3(0, 0, 0):	
+			walkAnimator.play("Walk")
+		else:
+			walkAnimator.play("Idle")
+		
 		moveDir = moveDir.normalized().rotated(Vector3(0, 1, 0), deg2rad(rotationVec.y))
 	
 		velocity.z = moveDir.z * 0.4
