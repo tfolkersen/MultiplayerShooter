@@ -48,6 +48,21 @@ __meta__ = {
 shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Block4"]
+transform = Transform( 1, 0, 0, 5.68434e-14, 1, -9.53674e-07, 0, -9.31323e-10, 1, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 4 )
+
+[node name="Block5" type="StaticBody" parent="."]
+transform = Transform( 3, 0, 0, 0, 0.0939693, -1.02606, 0, 0.034202, 2.81908, 0.657444, 3.88949, -9.0631 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Block5"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Block5"]
+transform = Transform( 1, 0, 0, 5.68434e-14, 1, -9.53674e-07, 0, -9.31323e-10, 1, 0, 0, 0 )
 mesh = SubResource( 2 )
 material/0 = SubResource( 4 )
 
