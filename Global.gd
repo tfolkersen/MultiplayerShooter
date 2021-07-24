@@ -13,7 +13,7 @@ var mainMenuInstance = null
 
 func _ready():
 	OS.window_resizable = false
-	#OS.window_fullscreen = true
+	OS.window_fullscreen = true
 	loadSettings()
 	showMainMenu()
 	
@@ -76,6 +76,10 @@ func closeSettingsMenu():
 func _process(delta):
 	if Input.is_key_pressed(KEY_ESCAPE):
 		get_tree().quit()
+	if Input.is_action_just_pressed("screenshot"):
+		var data = get_viewport().get_texture().get_data()
+		data.flip_y()
+		data.save_png("gameScreenshot.png")
 
 func captureMouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)

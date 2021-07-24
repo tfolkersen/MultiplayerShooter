@@ -36,7 +36,10 @@ func handleShot():
 		gunSoundPlayer.stop()
 		gunSoundPlayer.play()
 
-func _process(delta):
+
+var airFrames = 0
+func _physics_process(delta):
+	
 	$Camera/GCWalk/GCTurn.transform = turnBaseTransform
 	rotationMomentum.x = clamp(rotationMomentum.x, -10, 10)
 	rotationMomentum.y = clamp(rotationMomentum.y, -10, 10)
@@ -51,13 +54,20 @@ func _process(delta):
 			shotBuffer = 5
 		handleShot()
 	
-	velocity.y = clamp(velocity.y - 0.015, -0.5, 4)
-	
-	if is_on_floor():
+	var gravity = 0.015 * 10
+	if not is_on_floor():
+		airFrames += 1
+	else:
+		airFrames = 0
 		velocity.y = 0
+	if airFrames < 1:
+		gravity = 0.01
+	
+	velocity.y = clamp(velocity.y - gravity, -0.5 * 10, 4 * 10)
 		
-	if Input.is_action_pressed("jump") and $RayCast.is_colliding() and is_network_master():
-		velocity.y = 0.4
+	#if Input.is_action_pressed("jump") and $RayCast.is_colliding() and is_network_master():
+	if Input.is_action_pressed("jump") and is_on_floor() and is_network_master():
+		velocity.y = 0.4 * 10
 	
 	if is_network_master():
 		var moveDir = Vector3(0, 0, 0)
@@ -81,11 +91,31 @@ func _process(delta):
 		
 		moveDir = moveDir.normalized().rotated(Vector3(0, 1, 0), deg2rad(rotationVec.y))
 	
-		velocity.z = moveDir.z * 0.4
-		velocity.x = moveDir.x * 0.4
+		velocity.z = moveDir.z * 0.4 * 10
+		velocity.x = moveDir.x * 0.4 * 10
+		
+	var rotVel = Vector3(velocity.x, 0, velocity.z)
+	if is_on_floor():
+		var x = Vector3(1, 0, 0)
+		var y = Vector3(0, 1, 0)
+		var z = Vector3(0, 0, 1)
+		var norm = get_floor_normal()
+		print(norm)
+		
+		print(y.project(x))
+		var zRot = Vector3(y.dot(x), y.dot(y), 0).angle_to(Vector3(norm.dot(x), norm.dot(y), 0))
+		var xRot = Vector3(0, y.dot(y), y.dot(z)).angle_to(Vector3(0, norm.dot(y), norm.dot(z)))
+		rotVel = rotVel.rotated(z, zRot)
+		rotVel = rotVel.rotated(x, xRot)
+		
 	rotationMomentum *= 0.94
 	
-	move_and_slide(velocity * 10, Vector3(0, 1, 0), true, 4, deg2rad(70)) #TODO change this lmao
+	#print(get_floor_normal())
+	#print(velocity)
+	if is_on_floor():
+		move_and_slide(rotVel + Vector3(0, velocity.y, 0), Vector3(0, 1, 0), true, 4, deg2rad(70))
+	else:
+		move_and_slide(velocity, Vector3(0, 1, 0), true, 4, deg2rad(70))
 	$MeshInstance.rotation_degrees.y = rotationVec.y
 	$Camera/ViewportContainer/Viewport/GunCamera.global_transform = $Camera.global_transform
 	if is_network_master():
