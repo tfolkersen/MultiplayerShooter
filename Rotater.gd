@@ -13,4 +13,5 @@ func _ready():
 
 
 func _physics_process(delta):
-	rotation_degrees.y += 0.2
+	#rotation_degrees.x += 0.2
+	rotate(Vector3(1, 0, 0), deg2rad(0.2))

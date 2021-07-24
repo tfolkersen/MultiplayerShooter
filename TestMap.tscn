@@ -126,6 +126,19 @@ shape = SubResource( 1 )
 mesh = SubResource( 2 )
 material/0 = null
 
+[node name="Block8" type="StaticBody" parent="."]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.53064, -0.364401, -1.09219 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Block8"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Block8"]
+mesh = SubResource( 2 )
+material/0 = null
+
 [node name="OmniLight" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.57018, 0.63396, 2.64347 )
 layers = 3

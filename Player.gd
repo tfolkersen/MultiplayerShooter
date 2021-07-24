@@ -114,10 +114,10 @@ func _physics_process(delta):
 		xRot = Vector3(0, y.dot(y), y.dot(z)).angle_to(normYZ)
 		
 		if x.angle_to(normXY) <= deg2rad(90):
-			print("invert zrot")
+			#print("invert zrot")
 			zRot = -zRot
 		if (-z).angle_to(normYZ) <= deg2rad(90):
-			print("invert xrot")
+			#print("invert xrot")
 			xRot = -xRot
 		
 		#print(str(zRot) + " " + str(xRot))
