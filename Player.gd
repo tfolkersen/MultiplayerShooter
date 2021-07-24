@@ -107,14 +107,30 @@ func _physics_process(delta):
 		var norm = get_floor_normal()
 		#print(norm)
 		
-		zRot = Vector3(y.dot(x), y.dot(y), 0).angle_to(Vector3(norm.dot(x), norm.dot(y), 0))
-		xRot = Vector3(0, y.dot(y), y.dot(z)).angle_to(Vector3(0, norm.dot(y), norm.dot(z)))
+		
+		var normXY = Vector3(norm.dot(x), norm.dot(y), 0)
+		var normYZ = Vector3(0, norm.dot(y), norm.dot(z))
+		zRot = Vector3(y.dot(x), y.dot(y), 0).angle_to(normXY)
+		xRot = Vector3(0, y.dot(y), y.dot(z)).angle_to(normYZ)
+		
+		if x.angle_to(normXY) <= deg2rad(90):
+			print("invert zrot")
+			zRot = -zRot
+		if (-z).angle_to(normYZ) <= deg2rad(90):
+			print("invert xrot")
+			xRot = -xRot
+		
+		#print(str(zRot) + " " + str(xRot))
+		
+		
 		rotVel = rotVel.rotated(z, zRot)
 		rotVel = rotVel.rotated(x, xRot)
 		
+		#print(str(get_floor_normal()) + " || " + str(y.rotated(z, zRot).rotated(x, xRot)))
+		
 	rotationMomentum *= 0.94
 	
-	print(get_floor_normal())
+	#print(get_floor_normal())
 	#print(velocity)
 	if is_on_floor():
 #		print("Slide1")
