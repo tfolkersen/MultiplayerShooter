@@ -44,8 +44,8 @@ var airFrames = 0
 func _physics_process(delta):
 	
 	$Camera/GCWalk/GCTurn.transform = turnBaseTransform
-	rotationMomentum.x = clamp(rotationMomentum.x, -10, 10)
-	rotationMomentum.y = clamp(rotationMomentum.y, -10, 10)
+	rotationMomentum.x = clamp(rotationMomentum.x, -15, 12)
+	rotationMomentum.y = clamp(rotationMomentum.y, -15, 12)
 	$Camera/GCWalk/GCTurn.rotation_degrees.y += rotationMomentum.y
 	$Camera/GCWalk/GCTurn.rotation_degrees.x = rotationVec.x * 13.0 / 90.0
 	$Camera/GCWalk/GCTurn.translation.z -= 0.035 * abs(rotationVec.x) / 90.0
@@ -135,7 +135,7 @@ func _physics_process(delta):
 	if is_on_floor():
 #		print("Slide1")
 		var vec = rotVel + Vector3(0, velocity.y, 0)
-		move_and_slide(vec, Vector3(0, 1, 0), true, 4, deg2rad(70))
+		move_and_slide(vec, Vector3(0, 1, 0), true, 4, deg2rad(90))
 		$MeshInstance2.global_transform = revert
 		$MeshInstance3.global_transform = revert2
 		$MeshInstance2.look_at_from_position(Vector3(0, 0, 0), Vector3(0, 1, 0).rotated(Vector3(0, 0, 1), zRot).rotated(Vector3(1, 0, 0), xRot), Vector3(0, 1, 0))
@@ -146,7 +146,7 @@ func _physics_process(delta):
 	else:
 		print("Slide2")
 		var vec = velocity
-		move_and_slide(velocity, Vector3(0, 1, 0), true, 4, deg2rad(70))
+		move_and_slide(velocity, Vector3(0, 1, 0), true, 4, deg2rad(90))
 		$MeshInstance2.global_transform = revert
 		$MeshInstance3.global_transform = revert2
 		$MeshInstance2.look_at_from_position(Vector3(0, 0, 0), Vector3(0, 1, 0).rotated(Vector3(0, 0, 1), zRot).rotated(Vector3(1, 0, 0), xRot), Vector3(0, 1, 0))
