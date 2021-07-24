@@ -8,6 +8,10 @@ onready var turnBaseTransform = $Camera/GCWalk/GCTurn.transform
 
 var notWalking = 4000
 
+var jumpLimit = 20 #Frames before you can jump again
+#TODO could also make consecutive slope jumps result in large cooldown
+var jumpCooldown = 0
+
 enum guns {GOLDEN_GUN = 0, PISTOL, RIFLE}
 onready var gunModels = [$Camera/GCWalk/GCTurn/GCAnim/GoldenGun, $Camera/GCWalk/GCTurn/GCAnim/pistol, $Camera/GCWalk/GCTurn/GCAnim/rifle]
 var activeGun = guns.GOLDEN_GUN
@@ -54,6 +58,7 @@ func handleShot():
 
 var airFrames = 0
 func _physics_process(delta):
+	jumpCooldown = clamp(jumpCooldown - delta * 60.0, 0, jumpLimit)
 	
 	$Camera/GCWalk/GCTurn.transform = turnBaseTransform
 	rotationMomentum.x = clamp(rotationMomentum.x, -15, 12)
@@ -81,7 +86,8 @@ func _physics_process(delta):
 	velocity.y = clamp(velocity.y - gravity, -0.5 * 10, 4 * 10)
 		
 	#if Input.is_action_pressed("jump") and $RayCast.is_colliding() and is_network_master():
-	if Input.is_action_pressed("jump") and is_on_floor() and is_network_master():
+	if Input.is_action_pressed("jump") and is_on_floor() and is_network_master() and jumpCooldown == 0:
+		jumpCooldown = jumpLimit
 		velocity.y = 0.4 * 10
 	
 	if is_network_master():
@@ -141,10 +147,10 @@ func _physics_process(delta):
 	
 	if is_on_floor():
 		var vec = rotVel + Vector3(0, velocity.y, 0)
-		move_and_slide(vec, Vector3(0, 1, 0), true, 4, deg2rad(90))
+		move_and_slide(vec, Vector3(0, 1, 0), true, 4, deg2rad(70))
 	else:
 		var vec = velocity
-		move_and_slide(velocity, Vector3(0, 1, 0), true, 4, deg2rad(90))
+		move_and_slide(velocity, Vector3(0, 1, 0), true, 4, deg2rad(70))
 		
 	$MeshInstance.rotation_degrees.y = rotationVec.y
 	$Camera/ViewportContainer/Viewport/GunCamera.global_transform = $Camera.global_transform

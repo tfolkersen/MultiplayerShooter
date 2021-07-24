@@ -10,9 +10,9 @@
 [ext_resource path="res://gunFlash.png" type="Texture" id=8]
 [ext_resource path="res://gunflash.gd" type="Script" id=9]
 
-[sub_resource type="CylinderShape" id=16]
+[sub_resource type="CapsuleShape" id=16]
 radius = 0.3
-height = 0.5
+height = 0.2
 
 [sub_resource type="CubeMesh" id=2]
 size = Vector3( 0.5, 0.5, 0.5 )
@@ -267,7 +267,7 @@ stream = ExtResource( 6 )
 unit_db = -10.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.188022, 0 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.045144, 0 )
 shape = SubResource( 16 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
@@ -275,8 +275,9 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.2
 mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
 
-[node name="RayCast" type="RayCast" parent="."]
-cast_to = Vector3( 0, -1.2, 0 )
+[node name="SnapRay" type="RayCast" parent="."]
+enabled = true
+cast_to = Vector3( 0, -4, 0 )
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.499, 0 )
