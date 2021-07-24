@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://GoldenGun.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://pistol.tscn" type="PackedScene" id=4]
 [ext_resource path="res://rifle.tscn" type="PackedScene" id=5]
 [ext_resource path="res://shot.mp3" type="AudioStream" id=6]
+[ext_resource path="res://ShaderOverlay.gd" type="Script" id=7]
 
 [sub_resource type="PrismMesh" id=11]
 size = Vector3( 0.8, 1.1, 0.5 )
@@ -212,6 +213,57 @@ tracks/2/keys = {
 "values": [ Vector3( 1, 1, 1 ), Vector3( 1, 1, 1 ) ]
 }
 
+[sub_resource type="Shader" id=14]
+code = "shader_type canvas_item;
+
+uniform vec2 dims;
+uniform int frame;
+uniform int lastFrame;
+
+void vertex() {
+}
+
+const float PI = 3.141592654;
+
+void fragment() {
+	COLOR = vec4(0.0, 0.0, 0.0, 0.0);
+	
+	float frac = float(frame) / float(220) * (1.0 / 0.50);
+	
+	float baseBoundary = float(dims.y) - frac * float(dims.y);
+	float boundary = baseBoundary;
+	
+	float baseWave = sin((FRAGCOORD.x / float(dims.x)) * 8.0 * PI + 0.7); //sine wave
+	float baseAmplitude = (1.0 / 5.0) * float(dims.y);
+	float amplitude = min(baseAmplitude * (frac + 0.2), baseAmplitude);
+	
+	boundary += baseWave * amplitude;
+	
+	if (abs(boundary - FRAGCOORD.y) <= 0.005 * float(dims.y)) {
+		COLOR = vec4(0.0, 0.0, 0.0, 1.0);
+	}
+	
+	if (FRAGCOORD.y >= boundary) {
+		float dist = abs(FRAGCOORD.y - baseBoundary);
+		float bonus = min(dist / (float(dims.y) * 0.75), 1.0) * 0.5;
+		COLOR = vec4(0.6, 0.0, 0.0, 0.5 + bonus);
+	}
+	
+	if (frame > 210) {
+		frac = min((float(frame - 210) / float(lastFrame - 210)), 1.0);
+		COLOR = mix(vec4(0.6, 0.0, 0.0, 1.0), vec4(0.0, 0.0, 0.0, 1.0), frac);
+	}
+	
+	
+}	
+"
+
+[sub_resource type="ShaderMaterial" id=15]
+shader = SubResource( 14 )
+shader_param/dims = null
+shader_param/frame = null
+shader_param/lastFrame = null
+
 [node name="Player" type="KinematicBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0 )
 script = ExtResource( 1 )
@@ -300,3 +352,12 @@ script = ExtResource( 3 )
 [node name="GunCamera" type="Camera" parent="Camera/ViewportContainer/Viewport"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.29891, 0 )
 cull_mask = 2
+
+[node name="ShaderOverlay" type="ColorRect" parent="."]
+material = SubResource( 15 )
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
