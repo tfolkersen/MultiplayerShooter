@@ -6,12 +6,16 @@ onready var rotationVec = $Camera.rotation_degrees
 onready var rotationMomentum = Vector3(0, 0, 0)
 onready var turnBaseTransform = $Camera/GCWalk/GCTurn.transform
 
-onready var revert = $MeshInstance2.global_transform
-onready var revert2 = $MeshInstance3.global_transform
-
 var notWalking = 4000
 
+enum guns {GOLDEN_GUN = 0, PISTOL, RIFLE}
+onready var gunModels = [$Camera/GCWalk/GCTurn/GCAnim/GoldenGun, $Camera/GCWalk/GCTurn/GCAnim/pistol, $Camera/GCWalk/GCTurn/GCAnim/rifle]
+var activeGun = guns.GOLDEN_GUN
+
 func _ready():
+	var gun = gunModels[activeGun]
+	gun.visible = true
+	
 	if Network.networkID != 1:
 		self.translation += Vector3(2, 0, 0)
 		
@@ -40,6 +44,12 @@ func handleShot():
 		gunAnimator.play("Shoot")
 		gunSoundPlayer.stop()
 		gunSoundPlayer.play()
+		
+		var flash = $Camera/GCWalk/GCTurn/GCAnim/flash
+		var gun = gunModels[activeGun]
+		var barrel = gun.get_node("BarrelTip")
+		flash.global_transform = barrel.global_transform
+		flash.show()
 
 
 var airFrames = 0
@@ -111,7 +121,6 @@ func _physics_process(delta):
 		var y = Vector3(0, 1, 0)
 		var z = Vector3(0, 0, 1)
 		var norm = get_floor_normal()
-		#print(norm)
 		
 		
 		var normXY = Vector3(norm.dot(x), norm.dot(y), 0)
@@ -120,46 +129,22 @@ func _physics_process(delta):
 		xRot = Vector3(0, y.dot(y), y.dot(z)).angle_to(normYZ)
 		
 		if x.angle_to(normXY) <= deg2rad(90):
-			#print("invert zrot")
 			zRot = -zRot
 		if (-z).angle_to(normYZ) <= deg2rad(90):
-			#print("invert xrot")
 			xRot = -xRot
-		
-		#print(str(zRot) + " " + str(xRot))
-		
 		
 		rotVel = rotVel.rotated(z, zRot)
 		rotVel = rotVel.rotated(x, xRot)
 		
-		#print(str(get_floor_normal()) + " || " + str(y.rotated(z, zRot).rotated(x, xRot)))
 		
 	rotationMomentum *= 0.94
 	
-	#print(get_floor_normal())
-	#print(velocity)
 	if is_on_floor():
-#		print("Slide1")
 		var vec = rotVel + Vector3(0, velocity.y, 0)
 		move_and_slide(vec, Vector3(0, 1, 0), true, 4, deg2rad(90))
-		$MeshInstance2.global_transform = revert
-		$MeshInstance3.global_transform = revert2
-		$MeshInstance2.look_at_from_position(Vector3(0, 0, 0), Vector3(0, 1, 0).rotated(Vector3(0, 0, 1), zRot).rotated(Vector3(1, 0, 0), xRot), Vector3(0, 1, 0))
-		$MeshInstance3.global_transform = revert2
-		$MeshInstance3.look_at_from_position(Vector3(0, 0, 0), get_floor_normal(), Vector3(0, 1, 0))
-		$MeshInstance2.global_translate(Vector3(0, 1, 0))
-		$MeshInstance3.global_translate(Vector3(1, 1, 0))
 	else:
-		print("Slide2")
 		var vec = velocity
 		move_and_slide(velocity, Vector3(0, 1, 0), true, 4, deg2rad(90))
-		$MeshInstance2.global_transform = revert
-		$MeshInstance3.global_transform = revert2
-		$MeshInstance2.look_at_from_position(Vector3(0, 0, 0), Vector3(0, 1, 0).rotated(Vector3(0, 0, 1), zRot).rotated(Vector3(1, 0, 0), xRot), Vector3(0, 1, 0))
-		$MeshInstance3.global_transform = revert2
-		$MeshInstance3.look_at_from_position(Vector3(0, 0, 0), get_floor_normal(), Vector3(0, 1, 0))
-		$MeshInstance2.global_translate(Vector3(0, 1, 0))
-		$MeshInstance3.global_translate(Vector3(1, 1, 0))
 		
 	$MeshInstance.rotation_degrees.y = rotationVec.y
 	$Camera/ViewportContainer/Viewport/GunCamera.global_transform = $Camera.global_transform

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://GoldenGun.tscn" type="PackedScene" id=2]
@@ -7,19 +7,12 @@
 [ext_resource path="res://rifle.tscn" type="PackedScene" id=5]
 [ext_resource path="res://shot.mp3" type="AudioStream" id=6]
 [ext_resource path="res://ShaderOverlay.gd" type="Script" id=7]
+[ext_resource path="res://gunFlash.png" type="Texture" id=8]
+[ext_resource path="res://gunflash.gd" type="Script" id=9]
 
-[sub_resource type="PrismMesh" id=11]
-size = Vector3( 0.8, 1.1, 0.5 )
-
-[sub_resource type="SpatialMaterial" id=12]
-albedo_color = Color( 1, 0, 0, 1 )
-
-[sub_resource type="SpatialMaterial" id=13]
-albedo_color = Color( 0.054902, 0, 1, 1 )
-
-[sub_resource type="CapsuleShape" id=1]
+[sub_resource type="CylinderShape" id=16]
 radius = 0.3
-height = 0.2
+height = 0.5
 
 [sub_resource type="CubeMesh" id=2]
 size = Vector3( 0.5, 0.5, 0.5 )
@@ -268,27 +261,17 @@ shader_param/lastFrame = null
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0 )
 script = ExtResource( 1 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="."]
-mesh = SubResource( 11 )
-material/0 = SubResource( 12 )
-
-[node name="MeshInstance3" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.51016 )
-mesh = SubResource( 11 )
-material/0 = SubResource( 13 )
-
 [node name="SoundPlayer" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, -1.49012e-08, 0, 1, 0, 1.49012e-08, 0, 1, -1.49012e-08, 0, 2.98023e-08 )
 stream = ExtResource( 6 )
 unit_db = -10.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.0746937, 0 )
-shape = SubResource( 1 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.188022, 0 )
+shape = SubResource( 16 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.2, 0 )
-visible = false
 mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
 
@@ -316,6 +299,7 @@ anims/Walk = SubResource( 10 )
 transform = Transform( 0.0978148, 0, -0.0207912, 0, 0.1, 0, 0.0207912, 0, 0.0978148, 0.2, -0.2, -0.3 )
 
 [node name="GCAnim" type="Spatial" parent="Camera/GCWalk/GCTurn"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Camera/GCWalk/GCTurn/GCAnim"]
 anims/Idle = SubResource( 6 )
@@ -324,6 +308,7 @@ anims/Shoot = SubResource( 7 )
 
 [node name="GoldenGun" parent="Camera/GCWalk/GCTurn/GCAnim" instance=ExtResource( 2 )]
 transform = Transform( 1, 1.49012e-08, -4.47035e-08, 7.45058e-09, 1, 0, -2.98023e-08, 2.98023e-08, 1, 0.0106211, 0.0679665, 0.0499637 )
+visible = false
 
 [node name="pistol" parent="Camera/GCWalk/GCTurn/GCAnim" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, -1.49012e-08, 0, 1, 0, 1.49012e-08, 0, 1, 0, 0, 0 )
@@ -332,6 +317,13 @@ visible = false
 [node name="rifle" parent="Camera/GCWalk/GCTurn/GCAnim" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, -1.49012e-08, 0, 1, 0, 1.49012e-08, 0, 1, 0, 0, 0 )
 visible = false
+
+[node name="flash" type="Sprite3D" parent="Camera/GCWalk/GCTurn/GCAnim"]
+transform = Transform( 1, 0, -1.49012e-08, 0, 1, 0, 1.49012e-08, 0, 1, 1.91057, 0, 8.98852 )
+visible = false
+layers = 2
+texture = ExtResource( 8 )
+script = ExtResource( 9 )
 
 [node name="ViewportContainer" type="ViewportContainer" parent="Camera"]
 anchor_right = 1.0

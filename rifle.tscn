@@ -187,7 +187,7 @@ surfaces/0 = {
 [node name="rifle" type="Spatial"]
 
 [node name="BarrelTip" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.544144, -4.20793 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00446008, 0.575346, -4.23668 )
 
 [node name="Cube" type="MeshInstance" parent="."]
 transform = Transform( 0.247144, 0, 0, 0, 0.247466, 0, 0, 0, 1.28515, 0, 0.690898, -1.01518 )
