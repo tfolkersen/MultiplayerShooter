@@ -6,6 +6,9 @@ onready var rotationVec = $Camera.rotation_degrees
 onready var rotationMomentum = Vector3(0, 0, 0)
 onready var turnBaseTransform = $Camera/GCWalk/GCTurn.transform
 
+onready var revert = $MeshInstance2.global_transform
+onready var revert2 = $MeshInstance3.global_transform
+
 func _ready():
 	if Network.networkID != 1:
 		self.translation += Vector3(2, 0, 0)
@@ -61,7 +64,7 @@ func _physics_process(delta):
 		airFrames = 0
 		velocity.y = 0
 	if airFrames < 1:
-		gravity = 0.01
+		gravity = 0.05
 	
 	velocity.y = clamp(velocity.y - gravity, -0.5 * 10, 4 * 10)
 		
@@ -95,27 +98,47 @@ func _physics_process(delta):
 		velocity.x = moveDir.x * 0.4 * 10
 		
 	var rotVel = Vector3(velocity.x, 0, velocity.z)
+	var zRot = 0
+	var xRot = 0
 	if is_on_floor():
 		var x = Vector3(1, 0, 0)
 		var y = Vector3(0, 1, 0)
 		var z = Vector3(0, 0, 1)
 		var norm = get_floor_normal()
-		print(norm)
+		#print(norm)
 		
-		print(y.project(x))
-		var zRot = Vector3(y.dot(x), y.dot(y), 0).angle_to(Vector3(norm.dot(x), norm.dot(y), 0))
-		var xRot = Vector3(0, y.dot(y), y.dot(z)).angle_to(Vector3(0, norm.dot(y), norm.dot(z)))
+		zRot = Vector3(y.dot(x), y.dot(y), 0).angle_to(Vector3(norm.dot(x), norm.dot(y), 0))
+		xRot = Vector3(0, y.dot(y), y.dot(z)).angle_to(Vector3(0, norm.dot(y), norm.dot(z)))
 		rotVel = rotVel.rotated(z, zRot)
 		rotVel = rotVel.rotated(x, xRot)
 		
 	rotationMomentum *= 0.94
 	
-	#print(get_floor_normal())
+	print(get_floor_normal())
 	#print(velocity)
 	if is_on_floor():
-		move_and_slide(rotVel + Vector3(0, velocity.y, 0), Vector3(0, 1, 0), true, 4, deg2rad(70))
+#		print("Slide1")
+		var vec = rotVel + Vector3(0, velocity.y, 0)
+		move_and_slide(vec, Vector3(0, 1, 0), true, 4, deg2rad(70))
+		$MeshInstance2.global_transform = revert
+		$MeshInstance3.global_transform = revert2
+		$MeshInstance2.look_at_from_position(Vector3(0, 0, 0), Vector3(0, 1, 0).rotated(Vector3(0, 0, 1), zRot).rotated(Vector3(1, 0, 0), xRot), Vector3(0, 1, 0))
+		$MeshInstance3.global_transform = revert2
+		$MeshInstance3.look_at_from_position(Vector3(0, 0, 0), get_floor_normal(), Vector3(0, 1, 0))
+		$MeshInstance2.global_translate(Vector3(0, 1, 0))
+		$MeshInstance3.global_translate(Vector3(1, 1, 0))
 	else:
+		print("Slide2")
+		var vec = velocity
 		move_and_slide(velocity, Vector3(0, 1, 0), true, 4, deg2rad(70))
+		$MeshInstance2.global_transform = revert
+		$MeshInstance3.global_transform = revert2
+		$MeshInstance2.look_at_from_position(Vector3(0, 0, 0), Vector3(0, 1, 0).rotated(Vector3(0, 0, 1), zRot).rotated(Vector3(1, 0, 0), xRot), Vector3(0, 1, 0))
+		$MeshInstance3.global_transform = revert2
+		$MeshInstance3.look_at_from_position(Vector3(0, 0, 0), get_floor_normal(), Vector3(0, 1, 0))
+		$MeshInstance2.global_translate(Vector3(0, 1, 0))
+		$MeshInstance3.global_translate(Vector3(1, 1, 0))
+		
 	$MeshInstance.rotation_degrees.y = rotationVec.y
 	$Camera/ViewportContainer/Viewport/GunCamera.global_transform = $Camera.global_transform
 	if is_network_master():

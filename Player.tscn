@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://GoldenGun.tscn" type="PackedScene" id=2]
@@ -6,6 +6,9 @@
 [ext_resource path="res://pistol.tscn" type="PackedScene" id=4]
 [ext_resource path="res://rifle.tscn" type="PackedScene" id=5]
 [ext_resource path="res://shot.mp3" type="AudioStream" id=6]
+
+[sub_resource type="PrismMesh" id=11]
+size = Vector3( 0.8, 1.1, 0.5 )
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.3
@@ -206,6 +209,15 @@ tracks/2/keys = {
 [node name="Player" type="KinematicBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0 )
 script = ExtResource( 1 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="."]
+mesh = SubResource( 11 )
+material/0 = null
+
+[node name="MeshInstance3" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.51016 )
+mesh = SubResource( 11 )
+material/0 = null
 
 [node name="SoundPlayer" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, -1.49012e-08, 0, 1, 0, 1.49012e-08, 0, 1, -1.49012e-08, 0, 2.98023e-08 )
