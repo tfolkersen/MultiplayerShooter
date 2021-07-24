@@ -9,6 +9,8 @@ onready var turnBaseTransform = $Camera/GCWalk/GCTurn.transform
 onready var revert = $MeshInstance2.global_transform
 onready var revert2 = $MeshInstance3.global_transform
 
+var notWalking = 4000
+
 func _ready():
 	if Network.networkID != 1:
 		self.translation += Vector3(2, 0, 0)
@@ -87,10 +89,14 @@ func _physics_process(delta):
 		var walkAnimator = $Camera/GCWalk/AnimationPlayer
 		walkAnimator.set_blend_time("Walk", "Idle", 0.3)
 		walkAnimator.playback_speed = 1.0
-		if moveDir != Vector3(0, 0, 0):	
-			walkAnimator.play("Walk")
+		if moveDir != Vector3(0, 0, 0):
+			notWalking = 0
 		else:
+			notWalking += 1
+		if notWalking >= 10:
 			walkAnimator.play("Idle")
+		else:
+			walkAnimator.play("Walk")
 		
 		moveDir = moveDir.normalized().rotated(Vector3(0, 1, 0), deg2rad(rotationVec.y))
 	
