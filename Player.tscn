@@ -204,7 +204,7 @@ tracks/2/keys = {
 "values": [ Vector3( 1, 1, 1 ), Vector3( 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=11]
 resource_name = "SwapIn"
 length = 0.4
 step = 0.05
@@ -245,7 +245,7 @@ tracks/2/keys = {
 "values": [ Vector3( 1, 1, 1 ), Vector3( 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=12]
 resource_name = "SwapOut"
 length = 0.6
 step = 0.05
@@ -286,7 +286,7 @@ tracks/2/keys = {
 "values": [ Vector3( 1, 1, 1 ), Vector3( 1, 1, 1 ) ]
 }
 
-[sub_resource type="Shader" id=11]
+[sub_resource type="Shader" id=13]
 code = "shader_type canvas_item;
 
 uniform vec2 dims;
@@ -331,8 +331,8 @@ void fragment() {
 }	
 "
 
-[sub_resource type="ShaderMaterial" id=12]
-shader = SubResource( 11 )
+[sub_resource type="ShaderMaterial" id=14]
+shader = SubResource( 13 )
 shader_param/dims = null
 shader_param/frame = null
 shader_param/lastFrame = null
@@ -386,8 +386,8 @@ transform = Transform( 0.0978148, 0, -0.0207912, 0, 0.1, 0, 0.0207912, 0, 0.0978
 anims/Idle = SubResource( 8 )
 anims/Reload = SubResource( 9 )
 anims/Shoot = SubResource( 10 )
-anims/SwapIn = SubResource( 14 )
-anims/SwapOut = SubResource( 13 )
+anims/SwapIn = SubResource( 11 )
+anims/SwapOut = SubResource( 12 )
 
 [node name="GoldenGun" parent="Camera/GCWalk/GCTurn/GCAnim" instance=ExtResource( 2 )]
 transform = Transform( 1, 1.49012e-08, -4.47035e-08, 7.45058e-09, 1, 0, -2.98023e-08, 2.98023e-08, 1, 0.0106211, 0.0679665, 0.0499637 )
@@ -430,7 +430,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.29891, 0 )
 cull_mask = 2
 
 [node name="ShaderOverlay" type="ColorRect" parent="."]
-material = SubResource( 12 )
+material = SubResource( 14 )
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 7 )
