@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://GoldenGun.tscn" type="PackedScene" id=2]
@@ -9,8 +9,9 @@
 [ext_resource path="res://ShaderOverlay.gd" type="Script" id=7]
 [ext_resource path="res://gunFlash.png" type="Texture" id=8]
 [ext_resource path="res://gunflash.gd" type="Script" id=9]
+[ext_resource path="res://dvaAnimated.tscn" type="PackedScene" id=10]
 
-[sub_resource type="CapsuleShape" id=16]
+[sub_resource type="CapsuleShape" id=1]
 radius = 0.3
 height = 0.2
 
@@ -26,7 +27,7 @@ size = Vector3( 0.1, 0.1, 0.1 )
 [sub_resource type="SpatialMaterial" id=5]
 albedo_color = Color( 0, 1, 0.0627451, 1 )
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=6]
 resource_name = "Idle"
 length = 0.001
 tracks/0/type = "value"
@@ -66,7 +67,7 @@ tracks/2/keys = {
 "values": [ Vector3( 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=7]
 resource_name = "Walk"
 length = 1.4
 loop = true
@@ -84,8 +85,7 @@ tracks/0/keys = {
 "values": [ Vector3( 0, 0, 0 ), Vector3( 0.03, 0, 0 ), Vector3( -0.03, 0, 0 ), Vector3( 0, 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "Idle"
+[sub_resource type="Animation" id=8]
 length = 0.05
 step = 0.105
 tracks/0/type = "value"
@@ -125,8 +125,7 @@ tracks/2/keys = {
 "values": [ Vector3( 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=8]
-resource_name = "Reload"
+[sub_resource type="Animation" id=9]
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:translation")
@@ -165,8 +164,7 @@ tracks/2/keys = {
 "values": [ Vector3( 1, 1, 1 ), Vector3( 1, 1, 1 ), Vector3( 1, 1, 1 ), Vector3( 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=7]
-resource_name = "Shoot"
+[sub_resource type="Animation" id=10]
 length = 0.27
 step = 0.03
 tracks/0/type = "value"
@@ -206,7 +204,89 @@ tracks/2/keys = {
 "values": [ Vector3( 1, 1, 1 ), Vector3( 1, 1, 1 ) ]
 }
 
-[sub_resource type="Shader" id=14]
+[sub_resource type="Animation" id=14]
+resource_name = "SwapIn"
+length = 0.4
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, -2.07724, 0 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( -35.9917, -2.89011, 8.88111 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 1, 1, 1 ), Vector3( 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "SwapOut"
+length = 0.6
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, -2.07724, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( -35.9917, -2.89011, 8.88111 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 1, 1, 1 ), Vector3( 1, 1, 1 ) ]
+}
+
+[sub_resource type="Shader" id=11]
 code = "shader_type canvas_item;
 
 uniform vec2 dims;
@@ -251,8 +331,8 @@ void fragment() {
 }	
 "
 
-[sub_resource type="ShaderMaterial" id=15]
-shader = SubResource( 14 )
+[sub_resource type="ShaderMaterial" id=12]
+shader = SubResource( 11 )
 shader_param/dims = null
 shader_param/frame = null
 shader_param/lastFrame = null
@@ -268,10 +348,11 @@ unit_db = -10.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.045144, 0 )
-shape = SubResource( 16 )
+shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.2, 0 )
+visible = false
 mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
 
@@ -293,19 +374,20 @@ material/0 = SubResource( 5 )
 [node name="GCWalk" type="Spatial" parent="Camera"]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Camera/GCWalk"]
-anims/Idle = SubResource( 9 )
-anims/Walk = SubResource( 10 )
+anims/Idle = SubResource( 6 )
+anims/Walk = SubResource( 7 )
 
 [node name="GCTurn" type="Spatial" parent="Camera/GCWalk"]
 transform = Transform( 0.0978148, 0, -0.0207912, 0, 0.1, 0, 0.0207912, 0, 0.0978148, 0.2, -0.2, -0.3 )
 
 [node name="GCAnim" type="Spatial" parent="Camera/GCWalk/GCTurn"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Camera/GCWalk/GCTurn/GCAnim"]
-anims/Idle = SubResource( 6 )
-anims/Reload = SubResource( 8 )
-anims/Shoot = SubResource( 7 )
+anims/Idle = SubResource( 8 )
+anims/Reload = SubResource( 9 )
+anims/Shoot = SubResource( 10 )
+anims/SwapIn = SubResource( 14 )
+anims/SwapOut = SubResource( 13 )
 
 [node name="GoldenGun" parent="Camera/GCWalk/GCTurn/GCAnim" instance=ExtResource( 2 )]
 transform = Transform( 1, 1.49012e-08, -4.47035e-08, 7.45058e-09, 1, 0, -2.98023e-08, 2.98023e-08, 1, 0.0106211, 0.0679665, 0.0499637 )
@@ -347,10 +429,15 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.29891, 0 )
 cull_mask = 2
 
 [node name="ShaderOverlay" type="ColorRect" parent="."]
-material = SubResource( 15 )
+material = SubResource( 12 )
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="playerModel" parent="." instance=ExtResource( 10 )]
+transform = Transform( -0.1, 0, -8.74228e-09, 0, 0.1, 0, 8.74228e-09, 0, -0.1, 0, -0.474562, 0 )
+
+[connection signal="animation_finished" from="Camera/GCWalk/GCTurn/GCAnim/AnimationPlayer" to="." method="_onGCAnimDone"]

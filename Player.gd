@@ -8,17 +8,27 @@ onready var turnBaseTransform = $Camera/GCWalk/GCTurn.transform
 
 var notWalking = 4000
 
+onready var armAnimator = $playerModel/ArmAnimator
+onready var legAnimator = $playerModel/LegAnimator
+var baseWaistTransform
+
+var cameraBone = "Chest"
+
 var jumpLimit = 20 #Frames before you can jump again
 #TODO could also make consecutive slope jumps result in large cooldown
 var jumpCooldown = 0
 
 enum guns {GOLDEN_GUN = 0, PISTOL, RIFLE}
 onready var gunModels = [$Camera/GCWalk/GCTurn/GCAnim/GoldenGun, $Camera/GCWalk/GCTurn/GCAnim/pistol, $Camera/GCWalk/GCTurn/GCAnim/rifle]
-var activeGun = guns.GOLDEN_GUN
+var activeGun
 
 func _ready():
-	var gun = gunModels[activeGun]
-	gun.visible = true
+	armAnimator.set_blend_time("ArmsDown", "ArmUp", 0.6)
+	swapToGun(guns.GOLDEN_GUN)
+	
+	var skel = $playerModel/Armature/Skeleton
+	var waist = skel.find_bone(cameraBone)
+	baseWaistTransform = skel.get_bone_pose(waist)
 	
 	if Network.networkID != 1:
 		self.translation += Vector3(2, 0, 0)
@@ -27,8 +37,10 @@ func _ready():
 		$Camera.current = false
 		$Camera/ViewportContainer.visible = false
 		$Camera/GCWalk.visible = false
+		$playerModel.visible = true
 	else:
 		$Camera.current = true
+		$playerModel.visible = false
 
 remote func synchronize(transform, velocity, rotationVec):
 	self.global_transform = transform
@@ -56,8 +68,43 @@ func handleShot():
 		flash.show()
 
 
+func swapOut():
+	if is_network_master():
+		armAnimator.rpc("playRemote", "ArmsDown")
+	$Camera/GCWalk/GCTurn/GCAnim/AnimationPlayer.play("SwapOut")
+
+func swapIn(gun):
+	if is_network_master():
+		armAnimator.rpc("playRemote", "ArmUp")
+	activeGun = gun
+	for model in gunModels:
+		model.visible = false
+	gunModels[activeGun].visible = true
+	$Camera/GCWalk/GCTurn/GCAnim/AnimationPlayer.play("SwapIn")
+	
+
+func _onGCAnimDone(animName):
+	if animName == "SwapOut":
+		swapIn(nextGun)
+
+var nextGun
+func swapToGun(gun):
+	if gun != activeGun:
+		nextGun = gun
+		swapOut()
+	
+func handleItemSwap():
+	if Input.is_action_just_pressed("item1"):
+		swapToGun(guns.GOLDEN_GUN)
+	if Input.is_action_just_pressed("item2"):
+		swapToGun(guns.PISTOL)
+	if Input.is_action_just_pressed("item3"):
+		swapToGun(guns.RIFLE)
+
 var airFrames = 0
 func _physics_process(delta):
+	handleItemSwap()
+	
 	jumpCooldown = clamp(jumpCooldown - delta * 60.0, 0, jumpLimit)
 	
 	$Camera/GCWalk/GCTurn.transform = turnBaseTransform
@@ -90,6 +137,11 @@ func _physics_process(delta):
 		jumpCooldown = jumpLimit
 		velocity.y = 0.4 * 10
 	
+	var modelSpeed = 8.0
+	legAnimator.set_blend_time("Walk", "Stand", 0.2 * modelSpeed)
+	legAnimator.playback_speed = modelSpeed
+	armAnimator.playback_speed = 2.0
+	
 	if is_network_master():
 		var moveDir = Vector3(0, 0, 0)
 		
@@ -109,10 +161,16 @@ func _physics_process(delta):
 			notWalking = 0
 		else:
 			notWalking += 1
+		
 		if notWalking >= 10:
 			walkAnimator.play("Idle")
+			if is_network_master():
+				pass
+				#$playerModel/AnimationPlayer.rpc("playRemote", "Stand")
 		else:
 			walkAnimator.play("Walk")
+			if is_network_master():
+				legAnimator.rpc("playRemote", "Walk")
 		
 		moveDir = moveDir.normalized().rotated(Vector3(0, 1, 0), deg2rad(rotationVec.y))
 	
@@ -153,6 +211,13 @@ func _physics_process(delta):
 		move_and_slide(velocity, Vector3(0, 1, 0), true, 4, deg2rad(70))
 		
 	$MeshInstance.rotation_degrees.y = rotationVec.y
+	$playerModel.rotation_degrees.y = rotationVec.y - 180
+	#Bones
+	var skel = $playerModel/Armature/Skeleton
+	var waist = skel.find_bone(cameraBone)
+	var waistTransform = baseWaistTransform
+	skel.set_bone_pose(waist, waistTransform.rotated(Vector3(1, 0, 0), deg2rad(-rotationVec.x)))
+	
 	$Camera/ViewportContainer/Viewport/GunCamera.global_transform = $Camera.global_transform
 	if is_network_master():
 		rpc_unreliable("synchronize", global_transform, velocity, rotationVec)
@@ -168,3 +233,5 @@ func _input(event):
 		rotationVec.x -= vec.y * Global.sensitivity * 0.1
 		rotationVec.x = clamp(rotationVec.x, -90, 90)
 		$Camera.rotation_degrees = rotationVec
+
+
