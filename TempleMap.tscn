@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://sandTile.png" type="Texture" id=1]
 
@@ -15,14 +15,21 @@ uv1_triplanar = true
 [sub_resource type="SpatialMaterial" id=4]
 flags_world_triplanar = true
 albedo_texture = ExtResource( 1 )
-uv1_scale = Vector3( 3.41, 3.41, 2.5 )
-uv1_offset = Vector3( -0.35, -0.408, 0 )
+uv1_scale = Vector3( 3.088, 4.932, 2.5 )
+uv1_offset = Vector3( 0.219, 0.932, 0 )
+uv1_triplanar = true
+
+[sub_resource type="SpatialMaterial" id=5]
+flags_world_triplanar = true
+albedo_texture = ExtResource( 1 )
+uv1_scale = Vector3( 2.504, 6.159, 2.5 )
+uv1_offset = Vector3( 1.036, 4.009, 0 )
 uv1_triplanar = true
 
 [node name="TempleMap" type="Spatial"]
 
 [node name="WallRuler" type="StaticBody" parent="."]
-transform = Transform( 0.8, 0, 0, 0, 1.6, 0, 0, 0, 0.8, -5.06639e-07, 4.4, 13.4 )
+transform = Transform( 0.8, 0, 0, 0, 1.6, 0, 0, 0, 0.8, -0.997976, 3.46502, -0.023654 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -36,6 +43,7 @@ mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
 
 [node name="F-Top" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -97,7 +105,7 @@ mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
 
 [node name="BottomRightRamp" type="StaticBody" parent="F-Top"]
-transform = Transform( 0.565685, -0.282843, 0, 0.565685, 0.282843, 0, 0, 0, 0.8, -4.28292, 0.151226, -12.8 )
+transform = Transform( 1.6961, -0.211968, 0, 1.05984, 0.339219, 0, 0, 0, 0.8, -5.483, -0.4, -12.8 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -110,8 +118,22 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 mesh = SubResource( 2 )
 material/0 = SubResource( 4 )
 
+[node name="Ramp" type="StaticBody" parent="F-Top"]
+transform = Transform( -2.50149, 0.150541, 1.20797e-07, 1.01615, 0.37059, -6.95265e-10, -3.78597e-07, 2.2409e-08, -0.8, -4.86934, -2.39139, -3.2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="F-Top/Ramp"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="F-Top/Ramp"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 5 )
+
 [node name="F-Lower" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0 )
 
 [node name="Floor" type="StaticBody" parent="F-Lower"]
 transform = Transform( 4, 0, 0, 0, 0.4, 0, 0, 0, 6.4, 4.47035e-08, -3.8, 5.6 )
@@ -193,6 +215,106 @@ __meta__ = {
 shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="F-Lower/Floor4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="Side1" type="Spatial" parent="."]
+
+[node name="RampHall" type="StaticBody" parent="Side1"]
+transform = Transform( 0.8, 0, 0, 0, 0.4, 0, 0, 0, 1.6, -8, -1.2, -12 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Side1/RampHall"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Side1/RampHall"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="RampHall3" type="StaticBody" parent="Side1"]
+transform = Transform( 0.8, 0, 0, 0, 0.4, 0, 0, 0, 1.6, -12.8, -1.2, -0.800001 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Side1/RampHall3"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Side1/RampHall3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="RampHall4" type="StaticBody" parent="Side1"]
+transform = Transform( 0.8, 0, 0, 0, 0.4, 0, 0, 0, 1.6, -11.2, -1.2, 0.799999 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Side1/RampHall4"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Side1/RampHall4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="RampHall5" type="StaticBody" parent="Side1"]
+transform = Transform( 0.8, 0, 0, 0, 0.4, 0, 0, 0, 2.4, -12.8, -1.2, 4.8 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Side1/RampHall5"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Side1/RampHall5"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="RampHall6" type="StaticBody" parent="Side1"]
+transform = Transform( 0.8, 0, 0, 0, 0.4, 0, 0, 0, 2.4, -9.6, -1.2, 4.8 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Side1/RampHall6"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Side1/RampHall6"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="RampHall7" type="StaticBody" parent="Side1"]
+transform = Transform( 0.8, 0, 0, 0, 0.4, 0, 0, 0, 3.2, -11.2, -1.2, 5.6 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Side1/RampHall7"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Side1/RampHall7"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="RampHall2" type="StaticBody" parent="Side1"]
+transform = Transform( 3.2, 0, 0, 0, 0.4, 0, 0, 0, 4, -10.4, -1.2, -6.4 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Side1/RampHall2"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Side1/RampHall2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
