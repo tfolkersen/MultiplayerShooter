@@ -20,15 +20,30 @@ var jumpCooldown = 0
 
 enum guns {GOLDEN_GUN = 0, PISTOL, RIFLE}
 onready var gunModels = [$Camera/GCWalk/GCTurn/GCAnim/GoldenGun, $Camera/GCWalk/GCTurn/GCAnim/pistol, $Camera/GCWalk/GCTurn/GCAnim/rifle]
+onready var gunCModels = [preload("res://GoldenGun.tscn").instance(), preload("res://pistol.tscn").instance(), preload("res://rifle.tscn").instance()]
 var activeGun
 
 func _ready():
+	$Camera/GCWalk/GCTurn/GCAnim/AnimationPlayer.connect("animation_finished", self, "_onGCAnimDone")
 	armAnimator.set_blend_time("ArmsDown", "ArmUp", 0.6)
 	swapToGun(guns.GOLDEN_GUN)
 	
 	var skel = $playerModel/Armature/Skeleton
 	var waist = skel.find_bone(cameraBone)
 	baseWaistTransform = skel.get_bone_pose(waist)
+	
+	#attach stuff to bones
+	var att = BoneAttachment.new()
+	att.bone_name = "Hand.R"
+	var hand = skel.find_bone("Hand.R")
+	skel.add_child(att)
+	for model in gunCModels:
+		model.visible = false
+		model.rotation_degrees = Vector3(90, 30, 90)
+		model.setLayerMaskBit(0, true)
+		model.setLayerMaskBit(1, false)
+		att.add_child(model)
+	
 	
 	if Network.networkID != 1:
 		self.translation += Vector3(2, 0, 0)
@@ -67,7 +82,6 @@ func handleShot():
 		flash.global_transform = barrel.global_transform
 		flash.show()
 
-
 func swapOut():
 	if is_network_master():
 		armAnimator.rpc("playRemote", "ArmsDown")
@@ -80,6 +94,11 @@ func swapIn(gun):
 	for model in gunModels:
 		model.visible = false
 	gunModels[activeGun].visible = true
+	
+	if not is_network_master() or true:
+		for model in gunCModels:
+			model.visible = false
+		gunCModels[activeGun].visible = true
 	$Camera/GCWalk/GCTurn/GCAnim/AnimationPlayer.play("SwapIn")
 	
 
@@ -88,18 +107,26 @@ func _onGCAnimDone(animName):
 		swapIn(nextGun)
 
 var nextGun
-func swapToGun(gun):
+remotesync func swapToGun(gun):
 	if gun != activeGun:
 		nextGun = gun
+		#rset("nextGun", gun)
 		swapOut()
 	
 func handleItemSwap():
-	if Input.is_action_just_pressed("item1"):
-		swapToGun(guns.GOLDEN_GUN)
-	if Input.is_action_just_pressed("item2"):
-		swapToGun(guns.PISTOL)
-	if Input.is_action_just_pressed("item3"):
-		swapToGun(guns.RIFLE)
+	if is_network_master():
+		if Input.is_action_just_pressed("item1"):
+			print("Swapping to golden gun")
+			rpc("swapToGun", guns.GOLDEN_GUN)
+			#swapToGun(guns.GOLDEN_GUN)
+		if Input.is_action_just_pressed("item2"):
+			print("Swapping to pistol")
+			rpc("swapToGun", guns.PISTOL)
+			#swapToGun(guns.PISTOL)
+		if Input.is_action_just_pressed("item3"):
+			print("Swapping to rifle")
+			rpc("swapToGun", guns.RIFLE)
+			#swapToGun(guns.RIFLE)
 
 var airFrames = 0
 func _physics_process(delta):

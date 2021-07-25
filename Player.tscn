@@ -439,5 +439,3 @@ __meta__ = {
 
 [node name="playerModel" parent="." instance=ExtResource( 10 )]
 transform = Transform( -0.1, 0, -8.74228e-09, 0, 0.1, 0, 8.74228e-09, 0, -0.1, 0, -0.474562, 0 )
-
-[connection signal="animation_finished" from="Camera/GCWalk/GCTurn/GCAnim/AnimationPlayer" to="." method="_onGCAnimDone"]
