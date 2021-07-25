@@ -21,6 +21,8 @@ var jumpCooldown = 0
 enum guns {GOLDEN_GUN = 0, PISTOL, RIFLE}
 onready var gunModels = [$Camera/GCWalk/GCTurn/GCAnim/GoldenGun, $Camera/GCWalk/GCTurn/GCAnim/pistol, $Camera/GCWalk/GCTurn/GCAnim/rifle]
 onready var gunCModels = [preload("res://GoldenGun.tscn").instance(), preload("res://pistol.tscn").instance(), preload("res://rifle.tscn").instance()]
+var gunCooldowns = [52, 22, 10]
+var lastShot = 999999
 var activeGun
 
 func _ready():
@@ -69,7 +71,8 @@ func handleShot():
 	shotBuffer -= 1
 	shotBuffer = 0 if shotBuffer < 0 else shotBuffer
 	
-	if shotBuffer > 0 and not gunAnimator.is_playing():
+	if shotBuffer > 0 and lastShot >= gunCooldowns[activeGun] and not (gunAnimator.is_playing() and gunAnimator.current_animation in ["SwapIn", "SwapOut", "Reload"]):
+		lastShot = 0
 		gunAnimator.playback_speed = 1.0
 		gunAnimator.stop()
 		gunAnimator.play("Shoot")
@@ -81,6 +84,8 @@ func handleShot():
 		var barrel = gun.get_node("BarrelTip")
 		flash.global_transform = barrel.global_transform
 		flash.show()
+		
+		#Shot multiplayer anim
 
 func swapOut():
 	if is_network_master():
@@ -130,6 +135,7 @@ func handleItemSwap():
 
 var airFrames = 0
 func _physics_process(delta):
+	lastShot += delta * 60.0
 	handleItemSwap()
 	
 	jumpCooldown = clamp(jumpCooldown - delta * 60.0, 0, jumpLimit)
