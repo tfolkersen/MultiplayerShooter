@@ -26,6 +26,8 @@ var lastShot = 999999
 var activeGun
 
 func _ready():
+	print(global_transform.origin)
+	
 	$Camera/GCWalk/GCTurn/GCAnim/AnimationPlayer.connect("animation_finished", self, "_onGCAnimDone")
 	armAnimator.set_blend_time("ArmsDown", "ArmUp", 0.6)
 	swapToGun(guns.GOLDEN_GUN)
@@ -36,9 +38,14 @@ func _ready():
 	
 	#attach stuff to bones
 	var att = BoneAttachment.new()
+	att.name = "HandR"
 	att.bone_name = "Hand.R"
 	var hand = skel.find_bone("Hand.R")
 	skel.add_child(att)
+	var cmflash = $playerModel/CModelFlash
+	$playerModel.remove_child(cmflash)
+	att.add_child(cmflash)
+	cmflash.set_owner(att)
 	for model in gunCModels:
 		model.visible = false
 		model.rotation_degrees = Vector3(90, 30, 90)
@@ -46,9 +53,9 @@ func _ready():
 		model.setLayerMaskBit(1, false)
 		att.add_child(model)
 	
-	
 	if Network.networkID != 1:
-		self.translation += Vector3(2, 0, 0)
+		pass
+		#self.translation += Vector3(0, 2, 0)
 		
 	if not is_network_master():
 		$Camera.current = false
@@ -67,6 +74,17 @@ remote func synchronize(transform, velocity, rotationVec):
 var shotBuffer = 0
 onready var gunAnimator = $Camera/GCWalk/GCTurn/GCAnim/AnimationPlayer
 onready var gunSoundPlayer = $SoundPlayer
+
+remote func cModelShotAnim():
+	var hand = get_node("playerModel/Armature/Skeleton/HandR")
+	hand.get_node("CModelFlash").show()
+	var gun = gunCModels[activeGun]
+	var flash = hand.get_node("CModelFlash")
+	flash.global_transform = gun.get_node("BarrelTip").global_transform
+	gunSoundPlayer.stop()
+	gunSoundPlayer.play()
+
+
 func handleShot():
 	shotBuffer -= 1
 	shotBuffer = 0 if shotBuffer < 0 else shotBuffer
@@ -84,6 +102,8 @@ func handleShot():
 		var barrel = gun.get_node("BarrelTip")
 		flash.global_transform = barrel.global_transform
 		flash.show()
+		
+		rpc("cModelShotAnim")
 		
 		#Shot multiplayer anim
 

@@ -405,6 +405,7 @@ visible = false
 transform = Transform( 1, 0, -1.49012e-08, 0, 1, 0, 1.49012e-08, 0, 1, 1.91057, 0, 8.98852 )
 visible = false
 layers = 2
+billboard = 1
 texture = ExtResource( 8 )
 script = ExtResource( 9 )
 
@@ -439,3 +440,9 @@ __meta__ = {
 
 [node name="playerModel" parent="." instance=ExtResource( 10 )]
 transform = Transform( -0.1, 0, -8.74228e-09, 0, 0.1, 0, 8.74228e-09, 0, -0.1, 0, -0.474562, 0 )
+
+[node name="CModelFlash" type="Sprite3D" parent="playerModel"]
+visible = false
+billboard = 1
+texture = ExtResource( 8 )
+script = ExtResource( 9 )
