@@ -21,6 +21,20 @@ uv1_triplanar = true
 
 [node name="TempleMap" type="Spatial"]
 
+[node name="WallRuler" type="StaticBody" parent="."]
+transform = Transform( 0.8, 0, 0, 0, 1.6, 0, 0, 0, 0.8, -5.06639e-07, 4.4, 13.4 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="WallRuler"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="WallRuler"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
 [node name="F-Top" type="Spatial" parent="."]
 __meta__ = {
 "_edit_group_": true
@@ -97,6 +111,7 @@ mesh = SubResource( 2 )
 material/0 = SubResource( 4 )
 
 [node name="F-Lower" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0 )
 
 [node name="Floor" type="StaticBody" parent="F-Lower"]
 transform = Transform( 4, 0, 0, 0, 0.4, 0, 0, 0, 6.4, 4.47035e-08, -3.8, 5.6 )
