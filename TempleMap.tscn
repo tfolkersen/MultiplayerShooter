@@ -61,7 +61,7 @@ mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
 
 [node name="WallRuler" type="StaticBody" parent="."]
-transform = Transform( 2.4, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 6.4, 10.8, -9.6 )
+transform = Transform( 2.4, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 4.8, 6.6, 26 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -70,6 +70,71 @@ __meta__ = {
 shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="WallRuler"]
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="WallRuler18" type="StaticBody" parent="."]
+transform = Transform( 7.2, 0, 0, 0, 0.4, 0, 0, 0, 0.8, 0, -0.8, 19.2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="WallRuler18"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="WallRuler18"]
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="WallRuler20" type="StaticBody" parent="."]
+transform = Transform( 0.8, 0, 0, 0, 0.379506, -0.884745, 0, 0.126392, 2.65654, 6.4, -0.064, 16.122 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="WallRuler20"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="WallRuler20"]
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="WallRuler21" type="StaticBody" parent="."]
+transform = Transform( 0.8, 0, 0, 0, 0.379506, -0.884745, 0, 0.126392, 2.65654, -6.4, -0.064, 16.122 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="WallRuler21"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="WallRuler21"]
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="WallRuler19" type="StaticBody" parent="."]
+transform = Transform( 0.8, 0, 0, 0, 0.358285, 1.24498, 0, -0.177854, 2.50799, 0, -2.00524, 16.0696 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="WallRuler19"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="WallRuler19"]
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="WallRuler17" type="StaticBody" parent="."]
+transform = Transform( 0.8, 0, 0, 0, 0.357771, 0.894426, 0, -0.178885, 1.78886, 9.6, -0.0512422, 2.4 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="WallRuler17"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="WallRuler17"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
 
