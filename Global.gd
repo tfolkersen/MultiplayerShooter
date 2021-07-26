@@ -73,7 +73,7 @@ func closeSettingsMenu():
 		settingsMenuInstance.queue_free()
 		#settingsMenuInstance = null
 
-func _process(delta):
+func _process(delta):	
 	if Input.is_key_pressed(KEY_ESCAPE):
 		get_tree().quit()
 	if Input.is_action_just_pressed("screenshot"):
