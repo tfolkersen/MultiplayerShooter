@@ -362,7 +362,7 @@ cast_to = Vector3( 0, -4, 0 )
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.499, 0 )
-cull_mask = 1048573
+cull_mask = 1
 
 [node name="ViewModel2" type="MeshInstance" parent="Camera"]
 transform = Transform( 1, 0, 0, 0, 0.0817994, 0.996649, 0, -0.996649, 0.0817994, 0.825944, -0.163268, -1.06435 )

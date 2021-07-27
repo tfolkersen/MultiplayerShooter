@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://sandTile.png" type="Texture" id=1]
 [ext_resource path="res://sandTileBlue.png" type="Texture" id=2]
 [ext_resource path="res://TempleCeilingMaterial.tres" type="Material" id=3]
 [ext_resource path="res://sandTileGreen.png" type="Texture" id=4]
+[ext_resource path="res://templeFloor.png" type="Texture" id=5]
 
 [sub_resource type="BoxShape" id=1]
 
@@ -17,7 +18,7 @@ uv1_triplanar = true
 
 [sub_resource type="SpatialMaterial" id=4]
 flags_world_triplanar = true
-albedo_texture = ExtResource( 1 )
+albedo_texture = ExtResource( 5 )
 uv1_scale = Vector3( 2.5, 2.5, 2.5 )
 uv1_triplanar = true
 
@@ -42,6 +43,19 @@ uv1_offset = Vector3( 1.036, 4.009, 0 )
 uv1_triplanar = true
 
 [node name="TempleMap" type="Spatial"]
+
+[node name="Object6" type="StaticBody" parent="."]
+transform = Transform( 2, 0, 0, 0, 1.6, 0, 0, 0, 0.8, 0.4, 2.4, -3.33334 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Object6"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Object6"]
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
 
 [node name="Geometry" type="Spatial" parent="."]
 
@@ -2430,3 +2444,24 @@ shape = SubResource( 1 )
 [node name="MeshInstance" type="MeshInstance" parent="Geometry/SideLarge/Floor3"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 4 )
+
+[node name="SpotLight" type="SpotLight" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.2, 3.2 )
+light_energy = 1.11
+spot_range = 187.4
+spot_angle = 27.7681
+
+[node name="SpotLight3" type="SpotLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 2.4 )
+light_energy = 1.11
+light_cull_mask = 4293918721
+shadow_enabled = true
+spot_range = 187.4
+spot_angle = 27.7681
+
+[node name="SpotLight2" type="SpotLight" parent="."]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 17.6, -0.6, 12.8 )
+light_energy = 2.27
+light_indirect_energy = 2.86
+spot_range = 31.9
+spot_angle = 40.4

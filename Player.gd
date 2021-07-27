@@ -25,6 +25,18 @@ var gunCooldowns = [52, 22, 10]
 var lastShot = 999999
 var activeGun
 
+func _recursiveSetBit(obj, bit, enabled):
+	if obj.has_method("set_layer_mask_bit"):
+		obj.set_layer_mask_bit(bit, enabled)
+	for c in obj.get_children():
+		_recursiveSetBit(c, bit, enabled)
+	
+func _recursiveSetCastShadow(obj, enabled):
+	if "cast_shadow" in obj:
+		obj.cast_shadow = enabled
+	for c in obj.get_children():
+		_recursiveSetCastShadow(c, enabled)
+
 func _ready():
 	print(global_transform.origin)
 	
@@ -57,6 +69,10 @@ func _ready():
 		pass
 		#self.translation += Vector3(0, 2, 0)
 		
+		
+	_recursiveSetCastShadow($Camera/GCWalk, false)
+	for g in gunModels:
+		_recursiveSetBit(g, 0, false)
 	if not is_network_master():
 		$Camera.current = false
 		$Camera/ViewportContainer.visible = false
@@ -64,7 +80,8 @@ func _ready():
 		$playerModel.visible = true
 	else:
 		$Camera.current = true
-		$playerModel.visible = false
+		$playerModel.visible = true
+		_recursiveSetBit($playerModel, 0, false)
 
 remote func synchronize(transform, velocity, rotationVec):
 	self.global_transform = transform
