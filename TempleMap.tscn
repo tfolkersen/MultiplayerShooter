@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://sandTile.png" type="Texture" id=1]
 [ext_resource path="res://sandTileBlue.png" type="Texture" id=2]
@@ -41,6 +41,10 @@ albedo_texture = ExtResource( 1 )
 uv1_scale = Vector3( 2.504, 6.159, 2.5 )
 uv1_offset = Vector3( 1.036, 4.009, 0 )
 uv1_triplanar = true
+
+[sub_resource type="Environment" id=8]
+ambient_light_color = Color( 1, 1, 1, 1 )
+ambient_light_energy = 0.5
 
 [node name="TempleMap" type="Spatial"]
 
@@ -1340,7 +1344,7 @@ mesh = SubResource( 2 )
 material/0 = SubResource( 5 )
 
 [node name="Wall13" type="StaticBody" parent="Geometry"]
-transform = Transform( 0.2, 0, 0, 0, 5.2, 0, 0, 0, 5.6, 4.2, 6.4, 6.4 )
+transform = Transform( 0.2, 0, 0, 0, 5.4, 0, 0, 0, 5.6, 4.2, 6.2, 6.4 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -2447,21 +2451,34 @@ material/0 = SubResource( 4 )
 
 [node name="SpotLight" type="SpotLight" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.2, 3.2 )
+visible = false
 light_energy = 1.11
 spot_range = 187.4
 spot_angle = 27.7681
 
 [node name="SpotLight3" type="SpotLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 2.4 )
+visible = false
+layers = 3
 light_energy = 1.11
-light_cull_mask = 4293918721
+light_cull_mask = 4293918727
 shadow_enabled = true
-spot_range = 187.4
+spot_range = 1.6
 spot_angle = 27.7681
 
 [node name="SpotLight2" type="SpotLight" parent="."]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 17.6, -0.6, 12.8 )
+visible = false
 light_energy = 2.27
 light_indirect_energy = 2.86
 spot_range = 31.9
 spot_angle = 40.4
+
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0 )
+visible = false
+shadow_enabled = true
+omni_range = 26.4
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 8 )
