@@ -1,9 +1,8 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://sandTile.png" type="Texture" id=1]
-[ext_resource path="res://sandTileBlue.png" type="Texture" id=2]
+[ext_resource path="res://templeWall.png" type="Texture" id=2]
 [ext_resource path="res://TempleCeilingMaterial.tres" type="Material" id=3]
-[ext_resource path="res://sandTileGreen.png" type="Texture" id=4]
+[ext_resource path="res://artSmall.png" type="Texture" id=4]
 [ext_resource path="res://templeFloor.png" type="Texture" id=5]
 
 [sub_resource type="BoxShape" id=1]
@@ -13,7 +12,22 @@
 [sub_resource type="SpatialMaterial" id=3]
 flags_world_triplanar = true
 albedo_texture = ExtResource( 4 )
-uv1_scale = Vector3( 2.5, 2.5, 2.5 )
+uv1_scale = Vector3( 0.5, 0.3, 0.5 )
+uv1_offset = Vector3( 1.321, -0.358, 0.092 )
+uv1_triplanar = true
+
+[sub_resource type="SpatialMaterial" id=10]
+flags_world_triplanar = true
+albedo_texture = ExtResource( 4 )
+uv1_scale = Vector3( 0.5, 0.3, 0.5 )
+uv1_offset = Vector3( 1.519, 0.14, 0.092 )
+uv1_triplanar = true
+
+[sub_resource type="SpatialMaterial" id=11]
+flags_world_triplanar = true
+albedo_texture = ExtResource( 4 )
+uv1_scale = Vector3( 0.439, 0.3, 0.5 )
+uv1_offset = Vector3( 1.314, -0.358, 0.092 )
 uv1_triplanar = true
 
 [sub_resource type="SpatialMaterial" id=4]
@@ -25,41 +39,32 @@ uv1_triplanar = true
 [sub_resource type="SpatialMaterial" id=5]
 flags_world_triplanar = true
 albedo_texture = ExtResource( 2 )
-uv1_scale = Vector3( 2.5, 2.5, 2.5 )
+uv1_scale = Vector3( 0.2, 0.2, 0.2 )
 uv1_triplanar = true
 
 [sub_resource type="SpatialMaterial" id=6]
 flags_world_triplanar = true
-albedo_texture = ExtResource( 1 )
+albedo_texture = ExtResource( 5 )
 uv1_scale = Vector3( 3.088, 4.932, 2.5 )
 uv1_offset = Vector3( 0.219, 0.932, 0 )
 uv1_triplanar = true
 
 [sub_resource type="SpatialMaterial" id=7]
 flags_world_triplanar = true
-albedo_texture = ExtResource( 1 )
+albedo_texture = ExtResource( 5 )
 uv1_scale = Vector3( 2.504, 6.159, 2.5 )
 uv1_offset = Vector3( 1.036, 4.009, 0 )
 uv1_triplanar = true
 
+[sub_resource type="ProceduralSky" id=9]
+
 [sub_resource type="Environment" id=8]
+background_mode = 2
+background_sky = SubResource( 9 )
 ambient_light_color = Color( 1, 1, 1, 1 )
-ambient_light_energy = 0.5
+ambient_light_sky_contribution = 0.0
 
 [node name="TempleMap" type="Spatial"]
-
-[node name="Object6" type="StaticBody" parent="."]
-transform = Transform( 2, 0, 0, 0, 1.6, 0, 0, 0, 0.8, 0.4, 2.4, -3.33334 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="CollisionShape" type="CollisionShape" parent="Object6"]
-shape = SubResource( 1 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Object6"]
-mesh = SubResource( 2 )
-material/0 = SubResource( 3 )
 
 [node name="Geometry" type="Spatial" parent="."]
 
@@ -126,7 +131,7 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Geometry/Object2"]
 mesh = SubResource( 2 )
-material/0 = SubResource( 3 )
+material/0 = SubResource( 10 )
 
 [node name="Object4" type="StaticBody" parent="Geometry"]
 transform = Transform( 1.2, 0, 0, 0, 1.6, 0, 0, 0, 0.8, 16.4, 6, 12.8 )
@@ -139,7 +144,7 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Geometry/Object4"]
 mesh = SubResource( 2 )
-material/0 = SubResource( 3 )
+material/0 = SubResource( 11 )
 
 [node name="Object5" type="StaticBody" parent="Geometry"]
 transform = Transform( 1.2, 0, 0, 0, 1.6, 0, 0, 0, 0.8, 26, 2.8, 12.8 )
@@ -1158,6 +1163,7 @@ __meta__ = {
 shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall32"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 mesh = SubResource( 2 )
 material/0 = SubResource( 5 )
 
@@ -1864,7 +1870,7 @@ mesh = SubResource( 2 )
 material/0 = SubResource( 4 )
 
 [node name="WallRuler20" type="StaticBody" parent="Geometry"]
-transform = Transform( 0.8, 0, 0, 0, 0.379506, -0.884745, 0, 0.126392, 2.65654, 6.4, -0.064, 16.122 )
+transform = Transform( 0.8, 0, 0, 0, 0.190016, -0.873609, 0, 0.0624007, 2.66023, 6.4, 0.136, 16.122 )
 __meta__ = {
 "_edit_group_": true
 }
