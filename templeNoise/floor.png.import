@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/gameScreenshot.png-1eb6384649d9037b0f172f7a2ccd10a3.s3tc.stex"
-path.etc2="res://.import/gameScreenshot.png-1eb6384649d9037b0f172f7a2ccd10a3.etc2.stex"
+path.s3tc="res://.import/floor.png-6383f3de43a198f7d899c77a44ca2895.s3tc.stex"
+path.etc2="res://.import/floor.png-6383f3de43a198f7d899c77a44ca2895.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://gameScreenshot.png"
-dest_files=[ "res://.import/gameScreenshot.png-1eb6384649d9037b0f172f7a2ccd10a3.s3tc.stex", "res://.import/gameScreenshot.png-1eb6384649d9037b0f172f7a2ccd10a3.etc2.stex" ]
+source_file="res://templeNoise/floor.png"
+dest_files=[ "res://.import/floor.png-6383f3de43a198f7d899c77a44ca2895.s3tc.stex", "res://.import/floor.png-6383f3de43a198f7d899c77a44ca2895.etc2.stex" ]
 
 [params]
 
@@ -20,12 +20,12 @@ compress/mode=2
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
-compress/normal_map=0
+compress/normal_map=1
 flags/repeat=true
 flags/filter=true
 flags/mipmaps=true
 flags/anisotropic=false
-flags/srgb=1
+flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
