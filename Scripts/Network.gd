@@ -1,119 +1,155 @@
+"""
+		Network singleton
+
+	Handles client/server setup and connecting/disconnecting
+"""
+
 extends Node
+
+const lobbyScene = preload("res://Scenes/Lobby.tscn")
+const playerScene = preload("res://Scenes/Player.tscn")
 
 var lobbyInstance = null
 var gameInstance = null
 
-var networkID = 0
-var peers = {}
-
-remotesync func addPeer(name):
-	var id = get_tree().get_rpc_sender_id()
-	print("Adding peer [" + str(id) + "]" + name)
-	if peers.has(id):
-		return
-	peers[id] = {"id": id, "name": name}
-	if id != networkID:
-		rpc_id(id, "addPeer", Global.playerName)
-	lobbyInstance.addUserToList(name, id)
-	if lobbyInstance.is_network_master():
-		lobbyInstance.rpc("systemMessage", name + " has joined")
-
-func removePeer(id):
-	print("Removing peer" + str(id))
-	if peers.has(id):
-		var peer = peers[id]
-		if is_instance_valid(lobbyInstance):
-			lobbyInstance.systemMessage(peer.name + " has left")
-			lobbyInstance.removeUserFromList(id)
-			
-		if is_instance_valid(gameInstance):
-			var playerNode = gameInstance.get_node("players/" + str(id))
-			playerNode.queue_free()
+var networkID = 0 #My network ID
+var peers = {} #Data for connected peers
 
 func _ready():
-	print("Network ready")
+	print("Network entered tree")
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 	get_tree().connect("connected_to_server", self, "_connected_ok")
 	get_tree().connect("connection_failed", self, "_connected_fail")
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
 
-func _player_connected(id):
-	# Called on both clients and server when a peer connects. Send my info to it.
-	print("Player connected " + str(id))
-	rpc_id(id, "addPeer", Global.playerName)
+#Called by a peer sending their peer information to us. Responds with our own data
+#Called by self
+remotesync func addPeer(name: String):
+	var id = get_tree().get_rpc_sender_id()
+	print("Adding peer [" + str(id) + "] " + name)
+	if peers.has(id):
+		return
+	peers[id] = {"id": id, "name": name}
+	if id != networkID:
+		rpc_id(id, "addPeer", Global.settings.playerName)
+	if is_instance_valid(lobbyInstance):
+		lobbyInstance.peerConnected(id)
 
+#Remove a peer's data when they disconnect
+func removePeer(id):
+	print("Removing peer" + str(id))
+	if peers.has(id):
+		var peer = peers[id]
+		if is_instance_valid(lobbyInstance):
+			lobbyInstance.peerDisconnected(id)
+		removePlayerFromGame(id)
+		peers.erase(id)
+
+func removePlayerFromGame(id):
+	if is_instance_valid(gameInstance):
+		var playerNode = gameInstance.get_node("Players/" + str(id))
+		if is_instance_valid(playerNode):
+			playerNode.queue_free()
+
+#Peer connected
+func _player_connected(id):
+	print("Player connected " + str(id))
+	rpc_id(id, "addPeer", Global.settings.playerName)
+
+#Peer disconnected
 func _player_disconnected(id):
 	print("Player disconnected " + str(id))
 	removePeer(id)
 	
+#Connected to server
 func _connected_ok():
 	print("Connected to server")
-	rpc("addPeer", Global.playerName)
+	rpc("addPeer", Global.settings.playerName)
 	lobbyInstance.visible = true
 	Global.closeMainMenu()
 
+#Disconnected by server
 func _server_disconnected():
 	print("Disconnected by server")
+	stopGame()
 	if is_instance_valid(lobbyInstance):
-		stopGame()
 		lobbyInstance.quitLobby()
-		lobbyInstance = null
-	Network.disconnectNetwork()
+	Global.showMainMenu()
+	Global.showDialogMessage("Disconnected by server.", "Network")
 
+#Failed to connect to server
 func _connected_fail():
 	print("Failed to connect to server")
-	pass # Could not even connect to server; abort.
+	if is_instance_valid(lobbyInstance):
+		lobbyInstance.quitLobby()
 
-func createServer(port):
+#Start hosting a server
+func createServer(port: int):
+	disconnectNetwork()
 	peers = {}
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_server(int(port))
 	get_tree().network_peer = peer
 	networkID = peer.get_unique_id()
-
 	print("Created server. I am ID " + str(networkID))
-	
-func createClient(ip, port):
+
+#Try to join a server
+func createClient(ip: String, port: int):
+	disconnectNetwork()
 	peers = {}
 	var peer = NetworkedMultiplayerENet.new()
-	peer.create_client(ip, int(port))
+	peer.create_client(ip, port)
 	get_tree().network_peer = peer
 	networkID = peer.get_unique_id()
 	print("Created client. I am ID " + str(networkID))
 	
+#Close connections and reset variables
 func disconnectNetwork():
+	print("Closing network connection")
 	var peer = get_tree().network_peer
 	if is_instance_valid(peer):
+		print("Closed network connection")
 		peer.close_connection()
 		peer = null
-		networkID = 0
-		print("Closed network connection")
-		peers = {}
+	peers = {}
+	networkID = 0
+	
 
-func hostLobby(port):
+#Start a new lobby as the server
+func hostLobby(port: int):
 	print("Hosting lobby")
 	if is_instance_valid(lobbyInstance):
 		lobbyInstance.quitLobby()
 		lobbyInstance = null
-	var lobbyScene = preload("res://Scenes/Lobby.tscn")
 	lobbyInstance = lobbyScene.instance()
 	get_node("/root/Game").add_child(lobbyInstance)
 	
 	createServer(port)
-	rpc("addPeer", Global.playerName)
-	
+	rpc("addPeer", Global.settings.playerName)
 	Global.closeMainMenu()
 
-var playerScene = preload("res://Scenes/Player.tscn")
+#Join lobby as client
+func joinLobby(ip: String, port:int):
+	print("Joining lobby")
+	if is_instance_valid(lobbyInstance):
+		lobbyInstance.quitLobby()
+		lobbyInstance = null
+	
+	lobbyInstance = lobbyScene.instance()
+	lobbyInstance.visible = false
+	get_node("/root/Game").add_child(lobbyInstance)
 
+	createClient(ip, port)
+
+
+#Start a game with the current peers
 remotesync func startGame():
 	if is_instance_valid(gameInstance):
 		stopGame()
-		
-	#Make level
 	lobbyInstance.visible = false
-	#var levelScene = preload("res://Maps/TestMap.tscn")
+	
+	#Make level
 	var levelScene = preload("res://Maps/TempleMap.tscn")
 	gameInstance = levelScene.instance()
 	gameInstance.name = "Level"
@@ -121,7 +157,7 @@ remotesync func startGame():
 	
 	#Make players
 	var players = Node.new()
-	players.set_name("players")
+	players.set_name("Players")
 	gameInstance.add_child(players)
 	
 	for id in peers:
@@ -131,28 +167,13 @@ remotesync func startGame():
 		player.set_name(str(id))
 		player.set_network_master(id)
 		players.add_child(player)
-		#gameInstance.add_child(player)
 		
 	Global.captureMouse()
 
+#End the current game
 remotesync func stopGame():
 	if is_instance_valid(gameInstance):
 		gameInstance.queue_free()
 		gameInstance = null
 		Global.releaseMouse()
 
-func joinLobby(ip, port):
-	print("Joining lobby")
-	if is_instance_valid(lobbyInstance):
-		lobbyInstance.quitLobby()
-		lobbyInstance = null
-	
-	var lobbyScene = preload("res://Scenes/Lobby.tscn")
-	lobbyInstance = lobbyScene.instance()
-	lobbyInstance.visible = false
-	get_node("/root/Game").add_child(lobbyInstance)
-	
-	#Global.closeMainMenu()
-	
-	createClient(ip, port)
-	#addPeer(Global.playerName)

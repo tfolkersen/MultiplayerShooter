@@ -300,8 +300,8 @@ func _input(event):
 	if event is InputEventMouseMotion:
 		var vec = event.relative
 		rotationMomentum -= Vector3(vec.y, vec.x, 0) * 0.005
-		rotationVec.y -= vec.x * Global.sensitivity * 0.1
-		rotationVec.x -= vec.y * Global.sensitivity * 0.1
+		rotationVec.y -= vec.x * Global.settings.sensitivity * 0.1
+		rotationVec.x -= vec.y * Global.settings.sensitivity * 0.1
 		rotationVec.x = clamp(rotationVec.x, -90, 90)
 		$Camera.rotation_degrees = rotationVec
 

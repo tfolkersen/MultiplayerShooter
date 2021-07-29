@@ -1,23 +1,17 @@
 extends HBoxContainer
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
-	#setContent("[SENDER]", "[MESSAGE]")
 
-
-func setContent(sender, message):
+#Set sender and message text
+func setContent(sender: String, message: String):
 	$Sender.text = sender + ":"
 	$Message.text = " " + message
 	
-func setText(message):
+#Set message text
+func setText(message: String):
 	$Message.text = " " + message
 
-func setSenderColor(textColor):
+#Change sender color
+func setSenderColor(textColor: Color):
 	$Sender.add_color_override("font_color", textColor)

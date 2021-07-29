@@ -35,9 +35,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SensEdit" type="TextEdit" parent="TabContainer/Control"]
+[node name="SensEdit" type="LineEdit" parent="TabContainer/Control"]
 margin_right = 80.0
-margin_bottom = 21.0
+margin_bottom = 24.0
 text = "0.5"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -57,14 +57,14 @@ margin_right = 40.0
 margin_bottom = 14.0
 text = "Resolution (x, y)"
 
-[node name="ResXEdit" type="TextEdit" parent="TabContainer/Display"]
+[node name="ResXEdit" type="LineEdit" parent="TabContainer/Display"]
 margin_right = 60.0
-margin_bottom = 21.0
+margin_bottom = 24.0
 text = "1024"
 
-[node name="ResYEdit" type="TextEdit" parent="TabContainer/Display"]
+[node name="ResYEdit" type="LineEdit" parent="TabContainer/Display"]
 margin_right = 60.0
-margin_bottom = 21.0
+margin_bottom = 24.0
 text = "600"
 
 [node name="FullscreenLabel" type="Label" parent="TabContainer/Display"]
@@ -90,10 +90,9 @@ margin_right = 40.0
 margin_bottom = 14.0
 text = "Player name"
 
-[node name="NameEdit" type="TextEdit" parent="TabContainer/Misc"]
+[node name="NameEdit" type="LineEdit" parent="TabContainer/Misc"]
 margin_right = 200.0
 margin_bottom = 24.0
-text = "Unnamed"
 
 [node name="AcceptButton" type="Button" parent="."]
 margin_right = 12.0

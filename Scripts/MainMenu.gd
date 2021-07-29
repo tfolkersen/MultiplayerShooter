@@ -1,9 +1,18 @@
+"""
+		Main menu
+"""
+
 extends Control
 
 func _ready():
-	alignElements()
-	
-func alignElements():
+	updateLayout()
+
+#Close the menu
+func closeSelf():
+	queue_free()
+
+#Set the layout based on the screen size
+func updateLayout():
 	var dims = get_viewport().size
 	var pos = Vector2(0, 0)
 	
@@ -28,16 +37,17 @@ func alignElements():
 	$PortLabel.rect_position = $IPLabel.rect_position + Vector2(offset, 0) 
 	$PortEdit.rect_position = $PortLabel.rect_position + Vector2(0, $PortLabel.rect_size.y + 10)
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
-func _hostPressed():
+#Host game button pressed
+func _hostButtonPressed():
 	var port = int($PortEdit.text)
 	Network.hostLobby(port)
 
-func _joinPressed():
+#Join button pressed
+func _joinButtonPressed():
 	var ip = $IPEdit.text
 	var port = int($PortEdit.text)
 	Network.joinLobby(ip, port)
+
+#Settings button pressed
+func _settingsButtonPressed():
+	Global.showSettingsMenu()

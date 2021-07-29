@@ -1,8 +1,16 @@
+"""
+		Dialog menu for updating settings
+
+"""
+
 extends WindowDialog
 
 func _ready():
+	updateLayout()
 	populateValues()
 	
+#Set layout based on current screen size
+func updateLayout():
 	var dims = Vector2(500, 500)
 	
 	var prev
@@ -55,21 +63,29 @@ func _ready():
 	current = $AcceptButton
 	current.rect_position = Vector2(10, rect_size.y - current.rect_size.y - 10)
 
-func populateValues():
-	$TabContainer/Control/SensEdit.text = str(Global.sensitivity)
-	$TabContainer/Display/ResXEdit.text = str(Global.resolutionX)
-	$TabContainer/Display/ResYEdit.text = str(Global.resolutionY)
-	$TabContainer/Display/FullscreenCheck.pressed = Global.fullscreen
-	$TabContainer/Misc/NameEdit.text = Global.playerName
 
+#Fill node with current settings values
+func populateValues():
+	$TabContainer/Control/SensEdit.text = str(Global.settings.sensitivity)
+	$TabContainer/Display/ResXEdit.text = str(Global.settings.resolutionX)
+	$TabContainer/Display/ResYEdit.text = str(Global.settings.resolutionY)
+	$TabContainer/Display/FullscreenCheck.pressed = Global.settings.fullscreen
+	$TabContainer/Misc/NameEdit.text = Global.settings.playerName
+
+#Close menu
+func closeSelf():
+	queue_free()
+
+#Accept button pressed
 func _acceptPressed():
-	Global.sensitivity = float($TabContainer/Control/SensEdit.text)
-	Global.resolutionX = int($TabContainer/Display/ResXEdit.text)
-	Global.resolutionY = int($TabContainer/Display/ResYEdit.text)
-	Global.fullscreen = $TabContainer/Display/FullscreenCheck.pressed
-	Global.playerName = $TabContainer/Misc/NameEdit.text
+	Global.settings.sensitivity = float($TabContainer/Control/SensEdit.text)
+	Global.settings.resolutionX = int($TabContainer/Display/ResXEdit.text)
+	Global.settings.resolutionY = int($TabContainer/Display/ResYEdit.text)
+	Global.settings.fullscreen = $TabContainer/Display/FullscreenCheck.pressed
+	Global.settings.playerName = $TabContainer/Misc/NameEdit.text
 	Global.saveSettings()
 	Global.closeSettingsMenu()
+	Global.applySettings()
 
 func _treeEntered():
 	Global.settingsMenuInstance = self
@@ -77,7 +93,7 @@ func _treeEntered():
 func _leavingTree():
 	Global.settingsMenuInstance = null
 
-
+#X button clicked
 func _onHide():
 	Global.closeSettingsMenu()
 	Global.settingsMenuInstance = null

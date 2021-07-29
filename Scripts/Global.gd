@@ -1,77 +1,34 @@
+"""
+		Global singleton
+		
+	Execution entry point of the game.
+	Initializes things and provides various utility functions to be used by nodes.
+"""
+
 extends Node
 
-var settingsShown = false
+#Various scene files
+const mainMenuScene = preload("res://Scenes/MainMenu.tscn")
+const settingsMenuScene = preload("res://Scenes/SettingsMenu.tscn")
+const dialogMessageScene = preload("res://Scenes/DialogMessage.tscn")
 
-var playerName = "Unnamed"
-var sensitivity = 0.5
-var resolutionX = 1024
-var resolutionY = 600
-var fullscreen = false
+#Various constants
+const settingsFileName = "settings.json"
 
-var settingsMenuInstance = null
+#Instances of menus
 var mainMenuInstance = null
+var settingsMenuInstance = null
 
+#Data
+var settings = {}
+
+#Entry point of the game
 func _ready():
 	OS.window_resizable = false
-	#OS.window_fullscreen = true
+	loadDefaultSettings()
 	loadSettings()
+	applySettings()
 	showMainMenu()
-	
-func loadSettings():
-	var file = File.new()
-	if file.open("settings.json", file.READ) == OK:
-		print("Opened settings file")
-		var data = JSON.parse(file.get_as_text())
-		print(data.result)
-		playerName = data.result.playerName
-		sensitivity = data.result.sensitivity
-		resolutionX = data.result.resolutionX
-		resolutionY = data.result.resolutionY
-		fullscreen = data.result.fullscreen
-		file.close()
-	else:
-		print("Failed to open settings file")
-	
-func saveSettings():
-	#Overwrite settings
-	var file = File.new()
-	if file.open("settings.json", file.WRITE) == OK:
-		print("Opened settings file for writing")
-		var settings = {}
-		settings.playerName = playerName
-		settings.sensitivity = sensitivity
-		settings.resolutionX = resolutionX
-		settings.resolutionY = resolutionY
-		settings.fullscreen = fullscreen
-		file.store_string(JSON.print(settings))
-		file.close()
-	else:
-		print("Failed to open settings file for writing")
-
-func showSettingsMenu():
-	if settingsMenuInstance == null:
-		var settingsScene = preload("res://Scenes/SettingsMenu.tscn")
-		var menu = settingsScene.instance()
-		get_node("/root/Game").add_child(menu)
-		#settingsMenuInstance = menu
-		
-func showMainMenu():
-	if mainMenuInstance:
-		return
-	var scene = preload("res://Scenes/MainMenu.tscn")
-	var m = scene.instance()
-	mainMenuInstance = m
-	get_node("/root/Game").add_child(m)
-	
-func closeMainMenu():
-	if mainMenuInstance:
-		mainMenuInstance.queue_free()
-		mainMenuInstance = null
-	
-func closeSettingsMenu():
-	if settingsMenuInstance != null:
-		settingsMenuInstance.queue_free()
-		#settingsMenuInstance = null
 
 func _process(delta):	
 	if Input.is_key_pressed(KEY_ESCAPE):
@@ -81,8 +38,78 @@ func _process(delta):
 		data.flip_y()
 		data.save_png("gameScreenshot.png")
 
+func applySettings():
+	OS.window_fullscreen = settings.fullscreen
+	OS.window_size = Vector2(settings.resolutionX, settings.resolutionY)
+
+#Initialize settings with their default values
+func loadDefaultSettings():
+	settings.playerName = "Unnamed"
+	settings.sensitivity = 0.5
+	settings.resolutionX = 1024
+	settings.resolutionY = 600
+	settings.fullscreen = false
+
+#Loads settings file if one exists
+func loadSettings():
+	var file = File.new()
+	if file.open(settingsFileName, file.READ) == OK:
+		print("Opened settings file")
+		var data = JSON.parse(file.get_as_text())
+		print(data.result)
+		settings.playerName = data.result.playerName
+		settings.sensitivity = data.result.sensitivity
+		settings.resolutionX = data.result.resolutionX
+		settings.resolutionY = data.result.resolutionY
+		settings.fullscreen = data.result.fullscreen
+		file.close()
+	else:
+		print("Failed to open settings file")
+
+#Writes a new settings file to disk, overwriting old one
+func saveSettings():
+	var file = File.new()
+	if file.open(settingsFileName, file.WRITE) == OK:
+		print("Opened settings file for writing")
+		file.store_string(JSON.print(settings))
+		file.close()
+	else:
+		print("Failed to open settings file for writing")
+
+#Show main menu if it's not already shown
+func showMainMenu():
+	if not is_instance_valid(mainMenuInstance):
+		mainMenuInstance = mainMenuScene.instance()
+		get_node("/root/Game").add_child(mainMenuInstance)
+
+#Close main menu if it's open
+func closeMainMenu():
+	if is_instance_valid(mainMenuInstance):
+		mainMenuInstance.closeSelf()
+
+#Show the settings menu if it's not shown
+func showSettingsMenu():
+	if not is_instance_valid(settingsMenuInstance):
+		settingsMenuInstance = settingsMenuScene.instance()
+		get_node("/root/Game").add_child(settingsMenuInstance)
+
+#Close settings menu if it's open
+func closeSettingsMenu():
+	if is_instance_valid(settingsMenuInstance):
+		settingsMenuInstance.closeSelf()
+
+#Show a dialog message (i.e. if disconnected from server)
+func showDialogMessage(message, title = null):
+	var dialog = dialogMessageScene.instance()
+	dialog.setMessage(message)
+	if title != null:
+		dialog.setTitle(title)
+	get_node("/root/Game").add_child(dialog)
+
+#Capture the cursor
 func captureMouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	
+
+#Allow the cursor to move again
 func releaseMouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)

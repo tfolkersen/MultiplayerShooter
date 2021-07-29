@@ -1,6 +1,5 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Scripts/SettingsButton.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/MainMenu.gd" type="Script" id=2]
 
 [node name="MainMenu" type="Control"]
@@ -47,7 +46,6 @@ margin_top = 162.602
 margin_right = 118.265
 margin_bottom = 182.602
 text = "Settings"
-script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -62,9 +60,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="IPEdit" type="TextEdit" parent="."]
+[node name="IPEdit" type="LineEdit" parent="."]
 margin_right = 100.0
-margin_bottom = 21.0
+margin_bottom = 24.0
 text = "127.0.0.1"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -80,13 +78,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PortEdit" type="TextEdit" parent="."]
-margin_left = 239.744
-margin_top = 114.209
-margin_right = 339.744
-margin_bottom = 135.209
+[node name="PortEdit" type="LineEdit" parent="."]
+margin_left = 167.489
+margin_top = 11.5817
+margin_right = 267.489
+margin_bottom = 35.5817
 text = "25565"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[connection signal="pressed" from="HostButton" to="." method="_hostPressed"]
-[connection signal="pressed" from="JoinButton" to="." method="_joinPressed"]
-[connection signal="pressed" from="SettingsButton" to="SettingsButton" method="_onPress"]
+[connection signal="pressed" from="HostButton" to="." method="_hostButtonPressed"]
+[connection signal="pressed" from="JoinButton" to="." method="_joinButtonPressed"]
+[connection signal="pressed" from="SettingsButton" to="." method="_settingsButtonPressed"]
