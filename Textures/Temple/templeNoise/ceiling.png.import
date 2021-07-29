@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/floor.png-6383f3de43a198f7d899c77a44ca2895.s3tc.stex"
-path.etc2="res://.import/floor.png-6383f3de43a198f7d899c77a44ca2895.etc2.stex"
+path.s3tc="res://.import/ceiling.png-aca604e907e6ec8850a6c2b6c0d19edb.s3tc.stex"
+path.etc2="res://.import/ceiling.png-aca604e907e6ec8850a6c2b6c0d19edb.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://templeNoise/floor.png"
-dest_files=[ "res://.import/floor.png-6383f3de43a198f7d899c77a44ca2895.s3tc.stex", "res://.import/floor.png-6383f3de43a198f7d899c77a44ca2895.etc2.stex" ]
+source_file="res://Textures/Temple/templeNoise/ceiling.png"
+dest_files=[ "res://.import/ceiling.png-aca604e907e6ec8850a6c2b6c0d19edb.s3tc.stex", "res://.import/ceiling.png-aca604e907e6ec8850a6c2b6c0d19edb.etc2.stex" ]
 
 [params]
 

@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/wall.png-8427fe9728037dff869be7cfcbd95b80.s3tc.stex"
-path.etc2="res://.import/wall.png-8427fe9728037dff869be7cfcbd95b80.etc2.stex"
+path.s3tc="res://.import/wall.png-1c6682903ca28ac8e8e7e1215feb4a2c.s3tc.stex"
+path.etc2="res://.import/wall.png-1c6682903ca28ac8e8e7e1215feb4a2c.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://templeNoise/wall.png"
-dest_files=[ "res://.import/wall.png-8427fe9728037dff869be7cfcbd95b80.s3tc.stex", "res://.import/wall.png-8427fe9728037dff869be7cfcbd95b80.etc2.stex" ]
+source_file="res://Textures/Temple/templeNoise/wall.png"
+dest_files=[ "res://.import/wall.png-1c6682903ca28ac8e8e7e1215feb4a2c.s3tc.stex", "res://.import/wall.png-1c6682903ca28ac8e8e7e1215feb4a2c.etc2.stex" ]
 
 [params]
 
