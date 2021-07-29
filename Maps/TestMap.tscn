@@ -1,0 +1,188 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Scripts/Rotater.gd" type="Script" id=1]
+[ext_resource path="res://Textures/Misc/rainbowTile.png" type="Texture" id=2]
+
+
+[sub_resource type="BoxShape" id=1]
+
+[sub_resource type="CubeMesh" id=2]
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.454902, 0.462745, 0.00392157, 1 )
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.462745, 0.00392157, 0.00392157, 1 )
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0.384314, 0.00392157, 0.462745, 1 )
+
+[sub_resource type="SpatialMaterial" id=6]
+flags_world_triplanar = true
+albedo_color = Color( 0.054902, 0.411765, 0.6, 1 )
+uv1_triplanar = true
+
+[sub_resource type="SpatialMaterial" id=7]
+flags_world_triplanar = true
+albedo_texture = ExtResource( 2 )
+uv1_triplanar = true
+uv2_triplanar = true
+
+[node name="TestMap" type="Spatial"]
+
+[node name="Block" type="StaticBody" parent="."]
+transform = Transform( 3, 0, 0, 0, 0.1, 0, 0, 0, 3, 0, 0, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Block"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Block"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Block3" type="StaticBody" parent="."]
+transform = Transform( 3, 0, 0, 0, 0.0731354, -2.046, 0, 0.0681998, 2.19406, 0.817996, 0.970846, -4.1783 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Block3"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Block3"]
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="Block6" type="StaticBody" parent="."]
+transform = Transform( -1.31134e-07, -0.0939693, -1.02606, 0, 0.034202, -2.81908, 3, -4.10753e-09, -4.48506e-08, 3.73516, 2.73369, 3.27746 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Block6"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Block6"]
+mesh = SubResource( 2 )
+material/0 = SubResource( 4 )
+
+[node name="Block9" type="StaticBody" parent="."]
+transform = Transform( -3, 8.74228e-09, -1.14641e-14, 0, -4.37114e-09, -3, -2.62268e-07, -0.1, 1.31134e-07, 5.70892, 1.86602, -2.45155 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Block9"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Block9"]
+transform = Transform( 1, 0, 0, -2.27374e-13, 1, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 5 )
+
+[node name="Block4" type="StaticBody" parent="."]
+transform = Transform( -1.31134e-07, 0.05, 2.59808, 0, 0.0866025, -1.5, -3, -2.18557e-09, -1.13566e-07, -4.69137, 0.970846, -0.740397 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Block4"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Block4"]
+transform = Transform( 1, 0, 0, 5.68434e-14, 1, -9.53674e-07, 0, -9.31323e-10, 1, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 6 )
+
+[node name="Block7" type="StaticBody" parent="."]
+transform = Transform( -3, -7.54979e-09, -3.92299e-07, 0, 0.0866025, -1.5, 4.52987e-07, -0.05, -2.59808, -4.69137, 0.970846, 4.85752 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Block7"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Block7"]
+transform = Transform( 1, 0, 0, 5.68434e-14, 1, -9.53674e-07, 0, -9.31323e-10, 1, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 6 )
+
+[node name="Block5" type="StaticBody" parent="."]
+transform = Transform( 3, 0, 0, 0, 0.0939693, -1.02606, 0, 0.034202, 2.81908, 0.657444, 3.88949, -9.0631 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Block5"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Block5"]
+transform = Transform( 1, 0, 0, 5.68434e-14, 1, -9.53674e-07, 0, -9.31323e-10, 1, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 6 )
+
+[node name="Rotater" type="StaticBody" parent="."]
+transform = Transform( -3, -2.99004e-09, -2.46452e-07, 0, 0.0939693, -1.02606, 2.62268e-07, -0.034202, -2.81908, -0.330949, 0.975696, 6.06583 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Rotater"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Rotater"]
+transform = Transform( 1, 0, 0, 5.68434e-14, 1, -9.53674e-07, 0, -9.31323e-10, 1, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 6 )
+
+[node name="Block2" type="StaticBody" parent="."]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.53064, 0.543039, 1.81788 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Block2"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Block2"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Block8" type="StaticBody" parent="."]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.53064, -0.364401, -1.09219 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="Block8"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Block8"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="TextureBlock" type="StaticBody" parent="."]
+transform = Transform( 0.499984, 0.00397058, 0, -0.00397058, 0.499984, 0, 0, 0, 0.5, 2.49111, 2.11706, -1.07811 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="TextureBlock"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="TextureBlock"]
+mesh = SubResource( 2 )
+material/0 = SubResource( 7 )
+
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.57018, 0.63396, 2.64347 )
+layers = 3
+light_color = Color( 0.0784314, 1, 0, 1 )
+light_energy = 16.0
+omni_range = 1.3

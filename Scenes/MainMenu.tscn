@@ -1,0 +1,92 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/SettingsButton.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/MainMenu.gd" type="Script" id=2]
+
+[node name="MainMenu" type="Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="."]
+margin_left = 361.705
+margin_top = 40.9813
+margin_right = 528.705
+margin_bottom = 54.9813
+text = "Multiplayer Shooter Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HostButton" type="Button" parent="."]
+margin_left = 48.9128
+margin_top = 56.8198
+margin_right = 129.913
+margin_bottom = 76.8198
+text = "Host game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="JoinButton" type="Button" parent="."]
+margin_left = 53.5793
+margin_top = 109.822
+margin_right = 127.579
+margin_bottom = 129.822
+text = "Join game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SettingsButton" type="Button" parent="."]
+margin_left = 55.2648
+margin_top = 162.602
+margin_right = 118.265
+margin_bottom = 182.602
+text = "Settings"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IPLabel" type="Label" parent="."]
+margin_left = 361.705
+margin_top = 40.9813
+margin_right = 528.705
+margin_bottom = 54.9813
+text = "IP (for joining)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IPEdit" type="TextEdit" parent="."]
+margin_right = 100.0
+margin_bottom = 21.0
+text = "127.0.0.1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PortLabel" type="Label" parent="."]
+margin_left = 361.705
+margin_top = 40.9813
+margin_right = 541.705
+margin_bottom = 54.9813
+text = "Port (for hosting and joining)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PortEdit" type="TextEdit" parent="."]
+margin_left = 239.744
+margin_top = 114.209
+margin_right = 339.744
+margin_bottom = 135.209
+text = "25565"
+
+[connection signal="pressed" from="HostButton" to="." method="_hostPressed"]
+[connection signal="pressed" from="JoinButton" to="." method="_joinPressed"]
+[connection signal="pressed" from="SettingsButton" to="SettingsButton" method="_onPress"]
