@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/rifle.glb-666842ddab23d4b94178cf9b7f763f74.scn"
+path="res://.import/pistol.glb-210e6cce7d44d80b6643d837fc4494d9.scn"
 
 [deps]
 
-source_file="res://ModelSources/rifle.glb"
-dest_files=[ "res://.import/rifle.glb-666842ddab23d4b94178cf9b7f763f74.scn" ]
+source_file="res://ModelSources/Export/pistol.glb"
+dest_files=[ "res://.import/pistol.glb-210e6cce7d44d80b6643d837fc4494d9.scn" ]
 
 [params]
 

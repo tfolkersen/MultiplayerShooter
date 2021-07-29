@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/dvaAnimated.glb-dca24c0ac11365cadac0e9f3700361a4.scn"
+path="res://.import/rifle.glb-bf34b47f77a15fc1b358a362b5d6e21d.scn"
 
 [deps]
 
-source_file="res://ModelSources/dvaAnimated.glb"
-dest_files=[ "res://.import/dvaAnimated.glb-dca24c0ac11365cadac0e9f3700361a4.scn" ]
+source_file="res://ModelSources/Export/rifle.glb"
+dest_files=[ "res://.import/rifle.glb-bf34b47f77a15fc1b358a362b5d6e21d.scn" ]
 
 [params]
 
@@ -28,7 +28,7 @@ meshes/lightmap_texel_size=0.1
 skins/use_named_skins=true
 external_files/store_in_subdir=false
 animation/import=true
-animation/fps=60.0
+animation/fps=15
 animation/filter_script=""
 animation/storage=false
 animation/keep_custom_tracks=false

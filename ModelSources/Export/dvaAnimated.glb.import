@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/gg.glb-4ce24e42b06ba8bbd4d09fa7ece67008.scn"
+path="res://.import/dvaAnimated.glb-7d9acaa055344d2a47ad3b67ea9ad0be.scn"
 
 [deps]
 
-source_file="res://ModelSources/gg.glb"
-dest_files=[ "res://.import/gg.glb-4ce24e42b06ba8bbd4d09fa7ece67008.scn" ]
+source_file="res://ModelSources/Export/dvaAnimated.glb"
+dest_files=[ "res://.import/dvaAnimated.glb-7d9acaa055344d2a47ad3b67ea9ad0be.scn" ]
 
 [params]
 
@@ -28,7 +28,7 @@ meshes/lightmap_texel_size=0.1
 skins/use_named_skins=true
 external_files/store_in_subdir=false
 animation/import=true
-animation/fps=15
+animation/fps=60.0
 animation/filter_script=""
 animation/storage=false
 animation/keep_custom_tracks=false
