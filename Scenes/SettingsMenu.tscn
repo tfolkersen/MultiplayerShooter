@@ -3,6 +3,7 @@
 [ext_resource path="res://Scripts/SettingsMenu.gd" type="Script" id=1]
 
 [node name="SettingsMenu" type="WindowDialog"]
+visible = true
 margin_right = 48.0
 margin_bottom = 40.0
 popup_exclusive = true
@@ -36,9 +37,24 @@ __meta__ = {
 }
 
 [node name="SensEdit" type="LineEdit" parent="TabContainer/Control"]
-margin_right = 80.0
+margin_right = 58.0
 margin_bottom = 24.0
 text = "0.5"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="JumpLabel" type="Label" parent="TabContainer/Control"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Jump"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="JumpEditButton" type="Button" parent="TabContainer/Control"]
+margin_right = 12.0
+margin_bottom = 20.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -105,4 +121,5 @@ __meta__ = {
 [connection signal="popup_hide" from="." to="." method="_onHide"]
 [connection signal="tree_entered" from="." to="." method="_treeEntered"]
 [connection signal="tree_exiting" from="." to="." method="_leavingTree"]
+[connection signal="pressed" from="TabContainer/Control/JumpEditButton" to="." method="_editButtonPressed" binds= [ "jump" ]]
 [connection signal="pressed" from="AcceptButton" to="." method="_acceptPressed"]

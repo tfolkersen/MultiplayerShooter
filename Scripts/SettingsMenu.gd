@@ -5,6 +5,8 @@
 
 extends WindowDialog
 
+var editingKey = null
+
 func _ready():
 	updateLayout()
 	populateValues()
@@ -27,6 +29,14 @@ func updateLayout():
 	prev = current
 	current = $TabContainer/Control/SensEdit
 	current.rect_position = prev.rect_position + Vector2(0, prev.rect_size.y + 5)
+	
+	prev = current
+	current = $TabContainer/Control/JumpLabel
+	current.rect_position = prev.rect_position + Vector2(0, prev.rect_size.y + 20)
+	
+	prev = current
+	current = $TabContainer/Control/JumpEditButton
+	current.rect_position = prev.rect_position + Vector2(prev.rect_size.x, 0)
 	
 	###Display
 	prev = null
@@ -66,10 +76,18 @@ func updateLayout():
 
 #Fill node with current settings values
 func populateValues():
+	#Control
 	$TabContainer/Control/SensEdit.text = str(Global.settings.sensitivity)
+	setEditButtonCurrent("jump")
+	
+	
+	
+	#Display
 	$TabContainer/Display/ResXEdit.text = str(Global.settings.resolutionX)
 	$TabContainer/Display/ResYEdit.text = str(Global.settings.resolutionY)
 	$TabContainer/Display/FullscreenCheck.pressed = Global.settings.fullscreen
+	
+	#Misc
 	$TabContainer/Misc/NameEdit.text = Global.settings.playerName
 
 #Close menu
@@ -97,3 +115,29 @@ func _leavingTree():
 func _onHide():
 	Global.closeSettingsMenu()
 	Global.settingsMenuInstance = null
+
+func _input(event):
+	print(event)
+	if editingKey and event is InputEventKey:
+		var action = editingKey
+		InputMap.action_erase_events(action)
+		InputMap.action_add_event(action, event)
+		editingKey = null
+		setEditButtonCurrent(action)
+
+func setEditButtonPrompt(action):
+	var promptText = "<Press button>"
+	editingKey = action
+	if action == "jump":
+		$TabContainer/Control/JumpEditButton.text = promptText
+		
+func setEditButtonCurrent(action):
+	if action == "jump":
+		$TabContainer/Control/JumpEditButton.text = OS.get_scancode_string(InputMap.get_action_list("jump")[0].scancode)
+
+func _editButtonPressed(action):
+	if editingKey:
+		setEditButtonCurrent(editingKey)
+	setEditButtonPrompt(action)
+	
+
