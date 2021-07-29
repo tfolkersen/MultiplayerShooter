@@ -65,9 +65,9 @@ uv1_triplanar = true
 
 [sub_resource type="ProceduralSky" id=10]
 sky_top_color = Color( 1, 1, 1, 1 )
-sky_energy = 0.05
-ground_energy = 0.05
-sun_energy = 0.05
+sky_energy = 0.2
+ground_energy = 0.2
+sun_energy = 0.2
 
 [sub_resource type="Environment" id=11]
 background_mode = 3
@@ -3567,11 +3567,10 @@ material/0 = SubResource( 6 )
 environment = SubResource( 11 )
 
 [node name="OmniLight" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 3.36243 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.905, 4.00739 )
 layers = 3
-light_color = Color( 1, 0.972549, 0.823529, 1 )
 shadow_enabled = true
-omni_range = 26.4
+omni_range = 16.0
 
 [node name="OmniLight2" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.5751, 11.598, -0.285464 )
