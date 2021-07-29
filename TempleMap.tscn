@@ -7,6 +7,24 @@
 [ext_resource path="res://templeFloor.png" type="Texture" id=5]
 [ext_resource path="res://templeNoise/floor.png" type="Texture" id=6]
 
+[sub_resource type="ProceduralSky" id=10]
+sky_top_color = Color( 1, 1, 1, 1 )
+sky_energy = 0.2
+ground_energy = 0.2
+sun_energy = 0.2
+
+[sub_resource type="Environment" id=11]
+background_mode = 3
+background_sky = SubResource( 10 )
+background_color = Color( 0.376471, 0.376471, 0.376471, 1 )
+ambient_light_color = Color( 1, 1, 1, 1 )
+ambient_light_energy = 0.2
+ambient_light_sky_contribution = 0.0
+fog_enabled = true
+fog_sun_amount = 1.0
+fog_depth_begin = 6.0
+fog_depth_curve = 0.5
+
 [sub_resource type="BoxShape" id=1]
 
 [sub_resource type="CubeMesh" id=2]
@@ -72,3529 +90,3520 @@ uv1_scale = Vector3( 2.504, 6.159, 2.5 )
 uv1_offset = Vector3( 1.036, 4.009, 0 )
 uv1_triplanar = true
 
-[sub_resource type="ProceduralSky" id=10]
-sky_top_color = Color( 1, 1, 1, 1 )
-sky_energy = 0.2
-ground_energy = 0.2
-sun_energy = 0.2
-
-[sub_resource type="Environment" id=11]
-background_mode = 3
-background_sky = SubResource( 10 )
-background_color = Color( 0.376471, 0.376471, 0.376471, 1 )
-ambient_light_color = Color( 1, 1, 1, 1 )
-ambient_light_energy = 0.2
-ambient_light_sky_contribution = 0.0
-
 [node name="TempleMap" type="Spatial"]
 
-[node name="Geometry" type="Spatial" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 11 )
+
+[node name="ScaleNode" type="Spatial" parent="."]
+transform = Transform( 1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 0, 0, 0 )
+
+[node name="Geometry" type="Spatial" parent="ScaleNode"]
 __meta__ = {
 "_edit_group_": true,
 "_edit_lock_": true
 }
 
-[node name="Ceiling" type="StaticBody" parent="Geometry"]
+[node name="Ceiling" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 3.2, 0, 0, 0, 0.2, 0, 0, 0, 4, -10.4, 11.4, -6.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling17" type="StaticBody" parent="Geometry"]
+[node name="Ceiling17" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 3.2, 0, 0, 0, 0.2, 0, 0, 0, 4, -10.4, 8.2, 3.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling17"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling17"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling17"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling17"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling17"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling17"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Object" type="StaticBody" parent="Geometry"]
+[node name="Object" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2, 0, 0, 0, 1.6, 0, 0, 0, 0.8, 6, 6.2, -21 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Object"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Object"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Object"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Object"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Object"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Object"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
 
-[node name="Object3" type="StaticBody" parent="Geometry"]
+[node name="Object3" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2, 0, 0, 0, 1.6, 0, 0, 0, 0.8, 6, 9.4, -19.5333 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Object3"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Object3"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Object3"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Object3"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Object3"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Object3"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
 
-[node name="Object2" type="StaticBody" parent="Geometry"]
+[node name="Object2" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 1.6, 0, 0, 0, 0.8, -2.83122e-07, 1.2, 20.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Object2"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Object2"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Object2"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Object2"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 4 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Object2"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Object2"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 4 )
 
-[node name="Object4" type="StaticBody" parent="Geometry"]
+[node name="Object4" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.2, 0, 0, 0, 1.6, 0, 0, 0, 0.8, 16.4, 6, 12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Object4"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Object4"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Object4"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Object4"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 5 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Object4"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Object4"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 5 )
 
-[node name="Object5" type="StaticBody" parent="Geometry"]
+[node name="Object5" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.2, 0, 0, 0, 1.6, 0, 0, 0, 0.8, 26, 2.8, 12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Object5"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Object5"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Object5"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Object5"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Object5"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Object5"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
 
-[node name="Ceiling16" type="StaticBody" parent="Geometry"]
+[node name="Ceiling16" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.2, 0, 0, 0, 0.4, -12.8, 2.6, -1.6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling16"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling16"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling16"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling16"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling16"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling16"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling15" type="StaticBody" parent="Geometry"]
+[node name="Ceiling15" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.60244, 0.10746, 0, -1.02087, 0.168678, 0, 0, 0, 0.8, -5.47768, 1.58798, -3.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling15"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling15"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling15"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling15"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling15"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling15"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling12" type="StaticBody" parent="Geometry"]
+[node name="Ceiling12" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.2, 0, 0, 0, 1.4, -8, 2.6, -12.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling12"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling12"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling12"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling12"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling12"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling12"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling13" type="StaticBody" parent="Geometry"]
+[node name="Ceiling13" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.60529, -0.106988, 0, 1.01639, 0.168978, 0, 0, 0, 0.8, -5.71698, 3.587, -12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling13"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling13"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling13"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling13"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling13"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling13"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling2" type="StaticBody" parent="Geometry"]
+[node name="Ceiling2" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 4, 0, 0, 0, 0.2, 0, 0, 0, 13.6, 0, 11.8, 0 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling2"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling2"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling2"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling2"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling2"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling2"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling33" type="StaticBody" parent="Geometry"]
+[node name="Ceiling33" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.4, 0, 0, 0, 0.2, 0, 0, 0, 2.4, 8, 11.8, -4.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling33"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling33"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling33"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling33"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling33"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling33"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling9" type="StaticBody" parent="Geometry"]
+[node name="Ceiling9" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.2, 0, 0, 0, 0.8, 10.4, 14.6, 8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling9"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling9"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling9"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling9"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling9"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling9"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling48" type="StaticBody" parent="Geometry"]
+[node name="Ceiling48" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 4.8, 0, 0, 0, 2, 0, 0, 0, 0.2, 20, 10.6, -0.923311 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling48"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling48"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling48"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling48"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling48"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling48"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling49" type="StaticBody" parent="Geometry"]
+[node name="Ceiling49" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 4.8, 0, 0, 0, 2, 0, 0, 0, 0.2, 20, 10.6, 0.481698 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling49"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling49"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling49"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling49"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling49"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling49"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling45" type="StaticBody" parent="Geometry"]
+[node name="Ceiling45" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 4.8, 0, 0, 0, 0.156532, -2.11632, 0, 0.124489, 2.66105, 20, 6.68675, 3.07273 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling45"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling45"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling45"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling45"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling45"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling45"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling47" type="StaticBody" parent="Geometry"]
+[node name="Ceiling47" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( -4.8, -1.90193e-08, -3.98778e-07, 0, 0.155352, -2.1413, 7.2478e-07, -0.125959, -2.64099, 20, 6.75417, -3.49592 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling47"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling47"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling47"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling47"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling47"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling47"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling46" type="StaticBody" parent="Geometry"]
+[node name="Ceiling46" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 4.8, 0, 0, 0, 0.2, 0, 0, 0, 3.8, 20, 4.6, -9.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling46"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling46"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling46"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling46"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling46"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling46"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling37" type="StaticBody" parent="Geometry"]
+[node name="Ceiling37" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.2, 0, 0, 0, 1.4, 9.6, 3.4, -0.600001 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling37"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling37"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling37"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling37"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling37"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling37"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling41" type="StaticBody" parent="Geometry"]
+[node name="Ceiling41" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.187819, 0.618587, 0, -0.0687319, 1.69037, 9.6, 4.0054, 2.39137 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling41"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling41"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling41"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling41"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling41"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling41"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling38" type="StaticBody" parent="Geometry"]
+[node name="Ceiling38" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.37826, 0.0480456, 0, -0.588559, 0.194143, 0, 0, 0, 0.8, 6.48275, 4.00302, 0 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling38"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling38"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling38"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling38"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling38"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling38"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling39" type="StaticBody" parent="Geometry"]
+[node name="Ceiling39" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.28445, 0.0812421, 0, -1.01553, 0.182756, 0, 0, 0, 0.8, 12.5994, 2.39218, -0.0145048 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling39"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling39"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling39"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling39"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling39"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling39"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling34" type="StaticBody" parent="Geometry"]
+[node name="Ceiling34" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.2, 0, 0, 0, 0.2, 0, 0, 0, 0.8, 6.6, 4.6, -12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling34"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling34"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling34"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling34"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling34"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling34"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling36" type="StaticBody" parent="Geometry"]
+[node name="Ceiling36" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.188926, -0.787539, 0, 0.0656283, 2.26711, 6.4, 3.79676, -9.74394 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling36"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling36"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling36"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling36"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling36"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling36"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling35" type="StaticBody" parent="Geometry"]
+[node name="Ceiling35" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 3.20939, 0.0906052, 0, -1.63089, 0.178299, 0, 0, 0, 0.8, 11.6979, 3.01082, -12.796 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling35"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling35"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling35"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling35"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling35"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling35"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling27" type="StaticBody" parent="Geometry"]
+[node name="Ceiling27" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 5.4, 0, 0, 0, 0.2, 0, 0, 0, 0.8, 9.8, 4.6, 12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling27"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling27"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling27"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling27"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling27"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling27"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling42" type="StaticBody" parent="Geometry"]
+[node name="Ceiling42" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.2, 0, 0, 0, 0.2, 0, 0, 0, 3.2, 16.4, 4.6, 8.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling42"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling42"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling42"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling42"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling42"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling42"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling43" type="StaticBody" parent="Geometry"]
+[node name="Ceiling43" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.2, 0, 0, 0, 0.2, 0, 0, 0, 3, 23.6, 4.6, 8.6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling43"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling43"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling43"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling43"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling43"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling43"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling44" type="StaticBody" parent="Geometry"]
+[node name="Ceiling44" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.4, 0, 0, 0, 0.2, 0, 0, 0, 0.6, 20, 4.6, 6.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling44"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling44"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling44"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling44"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling44"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling44"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling40" type="StaticBody" parent="Geometry"]
+[node name="Ceiling40" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.4, 0, 0, 0, 0.2, 0, 0, 0, 4, 11.2, 4.6, 8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling40"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling40"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling40"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling40"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling40"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling40"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling28" type="StaticBody" parent="Geometry"]
+[node name="Ceiling28" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 7.2, 0, 0, 0, 0.2, 0, 0, 0, 2, -5.66244e-07, 4.6, 18 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling28"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling28"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling28"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling28"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling28"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling28"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling31" type="StaticBody" parent="Geometry"]
+[node name="Ceiling31" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.2, 0, 0, 0, 0.8, -5.66244e-07, 4.6, 20.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling31"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling31"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling31"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling31"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling31"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling31"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling32" type="StaticBody" parent="Geometry"]
+[node name="Ceiling32" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.179297, 1.19629, 0, -0.0886143, 2.42051, 0, 1.78, 15.89 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling32"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling32"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling32"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling32"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling32"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling32"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling29" type="StaticBody" parent="Geometry"]
+[node name="Ceiling29" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.2, 0, 0, 0, 1.2, -6.4, 4.6, 14.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling29"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling29"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling29"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling29"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling29"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling29"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling30" type="StaticBody" parent="Geometry"]
+[node name="Ceiling30" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.2, 0, 0, 0, 1.2, 6.4, 4.6, 14.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling30"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling30"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling30"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling30"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling30"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling30"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling18" type="StaticBody" parent="Geometry"]
+[node name="Ceiling18" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.2, 0, 0, 0, 0.8, -5.2, 4.6, 0 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling18"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling18"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling18"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling18"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling18"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling18"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling20" type="StaticBody" parent="Geometry"]
+[node name="Ceiling20" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.26477, 0.0348706, 0, -0.401012, 0.196937, 0, 0, 0, 0.8, -8.10133, 4.99501, 0 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling20"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling20"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling20"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling20"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling20"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling20"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling19" type="StaticBody" parent="Geometry"]
+[node name="Ceiling19" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.6, 0, 0, 0, 0.2, 0, 0, 0, 0.8, -12, 5.4, 0 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling19"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling19"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling19"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling19"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling19"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling19"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling21" type="StaticBody" parent="Geometry"]
+[node name="Ceiling21" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.2, 0, 0, 0, 0.6, -11.2, 5.4, 1.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling21"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling21"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling21"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling21"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling21"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling21"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling22" type="StaticBody" parent="Geometry"]
+[node name="Ceiling22" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.2, 0, 0, 0, 0.6, -11.2, 5.4, 8.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling22"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling22"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling22"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling22"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling22"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling22"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling25" type="StaticBody" parent="Geometry"]
+[node name="Ceiling25" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.179344, -0.796683, 0, 0.0885204, 1.61409, -11.2, 4.588, 10.47 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling25"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling25"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling25"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling25"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling25"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling25"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling23" type="StaticBody" parent="Geometry"]
+[node name="Ceiling23" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.6, 0, 0, 0, 0.2, 0, 0, 0, 0.8, -6, 4.6, 12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling23"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling23"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling23"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling23"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling23"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling23"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling26" type="StaticBody" parent="Geometry"]
+[node name="Ceiling26" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.54337, -0.0527376, 0, 0.421901, 0.192922, 0, 0, 0, 0.8, -8.922, 4.22, 12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling26"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling26"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling26"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling26"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling26"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling26"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling24" type="StaticBody" parent="Geometry"]
+[node name="Ceiling24" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.2, 0, 0, 0, 0.8, -11.2, 3.8, 12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling24"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling24"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling24"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling24"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling24"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling24"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling11" type="StaticBody" parent="Geometry"]
+[node name="Ceiling11" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 3.2, 0, 0, 0, 0.2, 0, 0, 0, 0.8, 7.2, 0.6, 12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling11"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling11"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling11"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling11"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling11"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling11"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling10" type="StaticBody" parent="Geometry"]
+[node name="Ceiling10" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.4, 0, 0, 0, 0.2, 0, 0, 0, 3.2, 6.4, 0.6, 8.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling10"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling10"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling10"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling10"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling10"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling10"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling8" type="StaticBody" parent="Geometry"]
+[node name="Ceiling8" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.68699, -0.0123463, 0, 0.209887, 0.0992349, 0, 0, 0, 0.8, 12.043, 0.71, 12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling8"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling8"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling8"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling8"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling8"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling8"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling7" type="StaticBody" parent="Geometry"]
+[node name="Ceiling7" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 5.6, 0, 0, 0, 0.1, 0, 0, 0, 0.8, 19.2, 0.9, 12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling7"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling7"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling7"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling7"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling7"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling7"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling6" type="StaticBody" parent="Geometry"]
+[node name="Ceiling6" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.2, 0, 0, 0, 13.6, -3.2, 0.6, 0 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling6"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling6"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling6"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling6"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling6"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling6"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling5" type="StaticBody" parent="Geometry"]
+[node name="Ceiling5" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.4, 0, 0, 0, 0.2, 0, 0, 0, 4.4, 0, 0.6, 9.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling5"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling5"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling5"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling5"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling5"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling5"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling4" type="StaticBody" parent="Geometry"]
+[node name="Ceiling4" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.4, 0, 0, 0, 0.2, 0, 0, 0, 7.6, 0, 0.6, -6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling4"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling4"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling4"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling4"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling4"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling4"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Ceiling3" type="StaticBody" parent="Geometry"]
+[node name="Ceiling3" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.2, 0, 0, 0, 13.6, 3.2, 0.6, 0 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Ceiling3"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Ceiling3"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Ceiling3"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling3"]
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Ceiling3"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Ceiling3"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
-[node name="Connector" type="Spatial" parent="Geometry"]
+[node name="Connector" type="Spatial" parent="ScaleNode/Geometry"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.8, -1.6, -3.6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="WallRuler14" type="StaticBody" parent="Geometry/Connector"]
+[node name="WallRuler14" type="StaticBody" parent="ScaleNode/Geometry/Connector"]
 transform = Transform( 0.8, 0, 0, 0, 0.4, 0, 0, 0, 4, 0.800001, 0.8, 0.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Connector/WallRuler14"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Connector/WallRuler14"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Connector/WallRuler14"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Connector/WallRuler14"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Connector/WallRuler14"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Connector/WallRuler14"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="WallRuler15" type="StaticBody" parent="Geometry/Connector"]
+[node name="WallRuler15" type="StaticBody" parent="ScaleNode/Geometry/Connector"]
 transform = Transform( 1.6, 0, 0, 0, 0.4, 0, 0, 0, 2.4, -1.6, 0.8, -1.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Connector/WallRuler15"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Connector/WallRuler15"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Connector/WallRuler15"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Connector/WallRuler15"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Connector/WallRuler15"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Connector/WallRuler15"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="WallRuler" type="StaticBody" parent="Geometry"]
+[node name="WallRuler" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.4, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 4.8, 6.6, 50 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/WallRuler"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/WallRuler"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/WallRuler"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/WallRuler"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="Wall" type="StaticBody" parent="Geometry"]
+[node name="Wall" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.4, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 18.4, 7.2, 24 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall2" type="StaticBody" parent="Geometry"]
+[node name="Wall2" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.2, 0, 0, 0, 1.6, 0, 0, 0, 3.2, 4.2, -1.2, 2.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall2"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall2"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall2"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall2"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall2"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall2"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall4" type="StaticBody" parent="Geometry"]
+[node name="Wall4" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.2, 0, 0, 0, 1.6, 0, 0, 0, 6.4, -4.2, -1.2, 5.6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall4"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall4"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall4"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall4"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall4"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall4"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall5" type="StaticBody" parent="Geometry"]
+[node name="Wall5" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 1.6, 0, 0, 0, 0.8, -3.2, -1.2, -1.6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall5"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall5"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall5"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall5"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall5"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall5"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall21" type="StaticBody" parent="Geometry"]
+[node name="Wall21" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 4, 0, 0, 0, 8, 0, 0, 0, 0.8, -8, 3.6, -1.6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall21"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall21"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall21"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall21"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall21"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall21"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall36" type="StaticBody" parent="Geometry"]
+[node name="Wall36" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.2, 0, 0, 0, 5.2, 0, 0, 0, 0.8, -4.2, 6.4, -3.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall36"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall36"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall36"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall36"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall36"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall36"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall52" type="StaticBody" parent="Geometry"]
+[node name="Wall52" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.2, 0, 0, 0, 5.2, 0, 0, 0, 0.8, -7, 8, -3.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall52"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall52"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall52"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall52"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall52"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall52"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall6" type="StaticBody" parent="Geometry"]
+[node name="Wall6" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.4, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 1.6, -1.2, -2.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall6"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall6"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall6"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall6"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall6"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall6"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall37" type="StaticBody" parent="Geometry"]
+[node name="Wall37" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.4, 0, 0, 0, 1.6, 0, 0, 0, 0.2, -1.6, -1.2, -4.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall37"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall37"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall37"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall37"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall37"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall37"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall25" type="StaticBody" parent="Geometry"]
+[node name="Wall25" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.6, 0, 0, 0, 3.2, 0, 0, 0, 4, -5.6, 0.800002, -8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall25"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall25"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall25"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall25"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall25"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall25"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall72" type="StaticBody" parent="Geometry"]
+[node name="Wall72" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.8, -7, 2.6, -3.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall72"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall72"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall72"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall72"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall72"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall72"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall51" type="StaticBody" parent="Geometry"]
+[node name="Wall51" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.6, 0, 0, 0, 4, 0, 0, 0, 1.8, -5.6, 8, -5.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall51"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall51"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall51"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall51"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall51"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall51"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall49" type="StaticBody" parent="Geometry"]
+[node name="Wall49" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.6, 0, 0, 0, 4, 0, 0, 0, 1.6, -5.6, 8, -10.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall49"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall49"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall49"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall49"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall49"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall49"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall57" type="StaticBody" parent="Geometry"]
+[node name="Wall57" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.6, 0, 0, 0, 4, 0, 0, 0, 3, -5.6, 8.4, -15 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall57"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall57"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall57"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall57"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall57"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall57"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall54" type="StaticBody" parent="Geometry"]
+[node name="Wall54" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.6, 0, 0, 0, 1.6, 0, 0, 0, 0.6, -5.6, 5.6, -8.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall54"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall54"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall54"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall54"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall54"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall54"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall55" type="StaticBody" parent="Geometry"]
+[node name="Wall55" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.6, 0, 0, 0, 1.2, 0, 0, 0, 0.6, -5.6, 11.2, -8.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall55"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall55"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall55"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall55"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall55"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall55"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall26" type="StaticBody" parent="Geometry"]
+[node name="Wall26" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.4, 0, 0, 0, 6, 0, 0, 0, 1.6, -11.2, 5.2, -12 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall26"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall26"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall26"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall26"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall26"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall26"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall50" type="StaticBody" parent="Geometry"]
+[node name="Wall50" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 4.4, 0, 0, 0, 0.2, -8, 6.8, -10.6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall50"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall50"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall50"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall50"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall50"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall50"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall27" type="StaticBody" parent="Geometry"]
+[node name="Wall27" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 18.8, 0, 0, 0, 8, 0, 0, 0, 0.4, 6, 3.8, -14 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall27"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall27"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall27"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall27"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall27"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall27"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall30" type="StaticBody" parent="Geometry"]
+[node name="Wall30" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.4, 0, 0, 0, 7.6, 0, 0, 0, 10, 25.2, 5, -9.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall30"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall30"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall30"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall30"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall30"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall30"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall80" type="StaticBody" parent="Geometry"]
+[node name="Wall80" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.4, 0, 0, 0, 4.8, 0, 0, 0, 5.4, 25.2, 2.8, 6.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall80"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall80"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall80"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall80"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall80"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall80"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall81" type="StaticBody" parent="Geometry"]
+[node name="Wall81" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.4, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 25.2, 8.4, 1.6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall81"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall81"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall81"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall81"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall81"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall81"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall77" type="StaticBody" parent="Geometry"]
+[node name="Wall77" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 3, 0, 0, 0, 1.6, 0, 0, 0, 0.2, 25.4, 6, 11.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall77"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall77"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall77"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall77"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall77"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall77"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall78" type="StaticBody" parent="Geometry"]
+[node name="Wall78" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.4, 0, 0, 0, 3.2, 0, 0, 0, 0.4, 25.2, 1.2, 11.6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall78"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall78"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall78"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall78"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall78"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall78"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall79" type="StaticBody" parent="Geometry"]
+[node name="Wall79" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.2, 0, 0, 0, 1.4, 0, 0, 0, 0.8, 25, -0.6, 12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall79"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall79"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall79"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall79"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall79"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall79"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall33" type="StaticBody" parent="Geometry"]
+[node name="Wall33" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.2, 0, 0, 0, 1.4, 0, 0, 0, 0.2, 23.6, -0.599998, 11.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall33"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall33"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall33"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall33"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall33"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall33"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall31" type="StaticBody" parent="Geometry"]
+[node name="Wall31" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 9.2, 0, 0, 0, 5, 0, 0, 0, 0.4, 16.4, -0.599998, 14 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall31"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall31"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall31"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall31"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall31"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall31"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall32" type="StaticBody" parent="Geometry"]
+[node name="Wall32" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.4, 0, 0, 0, 4.8, 0, 0, 0, 2.6, 20, 2.8, 9.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall32"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall32"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall32"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall32"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall32"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall32"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall75" type="StaticBody" parent="Geometry"]
+[node name="Wall75" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.2, 0, 0, 0, 1.2, 0, 0, 0, 4, 16.4, 8.8, 13.6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall75"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall75"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall75"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall75"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall75"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall75"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall76" type="StaticBody" parent="Geometry"]
+[node name="Wall76" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.2, 0, 0, 0, 1.6, 0, 0, 0, 2, 16.4, 6, 15.6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall76"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall76"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall76"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall76"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall76"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall76"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall74" type="StaticBody" parent="Geometry"]
+[node name="Wall74" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.4, 0, 0, 0, 8, 0, 0, 0, 2.4, 20, 4.6, -9.6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall74"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall74"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall74"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall74"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall74"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall74"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall34" type="StaticBody" parent="Geometry"]
+[node name="Wall34" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 4, 0, 0, 0, 1.6, 11.2, 0.400002, 10.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall34"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall34"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall34"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall34"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall34"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall34"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall45" type="StaticBody" parent="Geometry"]
+[node name="Wall45" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 2, 0, 0, 0, 1.6, 12.8, -1.2, 10.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall45"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall45"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall45"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall45"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall45"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall45"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall42" type="StaticBody" parent="Geometry"]
+[node name="Wall42" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.4, 0, 0, 0, 2, 0, 0, 0, 3.2, 5.8, -1.6, 10.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall42"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall42"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall42"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall42"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall42"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall42"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall46" type="StaticBody" parent="Geometry"]
+[node name="Wall46" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.2, 0, 0, 0, 2, 0, 0, 0, 3.4, 6.6, 2.8, 8.6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall46"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall46"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall46"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall46"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall46"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall46"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall47" type="StaticBody" parent="Geometry"]
+[node name="Wall47" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.2, 0, 0, 0, 4, 0, 0, 0, 2.2, 6.6, 0.400002, 3 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall47"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall47"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall47"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall47"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall47"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall47"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall44" type="StaticBody" parent="Geometry"]
+[node name="Wall44" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.2, 0, 0, 0, 2, 0, 0, 0, 0.2, 6.6, -1.6, 5.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall44"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall44"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall44"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall44"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall44"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall44"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall43" type="StaticBody" parent="Geometry"]
+[node name="Wall43" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.4, 0, 0, 0, 2, 0, 0, 0, 3.2, 10.2, -1.6, 8.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall43"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall43"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall43"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall43"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall43"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall43"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall40" type="StaticBody" parent="Geometry"]
+[node name="Wall40" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 8, 0, 0, 0, 5.6, 14.4, 4.6, 6.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall40"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall40"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall40"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall40"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall40"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall40"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall41" type="StaticBody" parent="Geometry"]
+[node name="Wall41" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.6, 0, 0, 0, 4, 0, 0, 0, 1.6, 12, 0.800002, 2.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall41"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall41"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall41"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall41"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall41"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall41"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall35" type="StaticBody" parent="Geometry"]
+[node name="Wall35" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 1.8, 0, 0, 0, 0.8, 11.2, 2.6, 12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall35"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall35"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall35"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall35"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall35"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall35"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall3" type="StaticBody" parent="Geometry"]
+[node name="Wall3" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.2, 0, 0, 0, 1.6, 0, 0, 0, 2.4, 4.2, -1.2, 9.6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall3"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall3"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall3"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall3"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall3"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall3"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall13" type="StaticBody" parent="Geometry"]
+[node name="Wall13" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.2, 0, 0, 0, 5.4, 0, 0, 0, 5.6, 4.2, 6.2, 6.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall13"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall13"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall13"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall13"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall13"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall13"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall71" type="StaticBody" parent="Geometry"]
+[node name="Wall71" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.2, 0, 0, 0, 3.6, 0, 0, 0, 0.8, 4.2, 8, 2.83122e-07 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall71"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall71"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall71"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall71"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall71"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall71"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall62" type="StaticBody" parent="Geometry"]
+[node name="Wall62" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.2, 0, 0, 0, 3.6, 0, 0, 0, 0.8, 4.2, 8, 12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall62"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall62"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall62"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall62"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall62"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall62"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall15" type="StaticBody" parent="Geometry"]
+[node name="Wall15" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 3, 0, 0, 0, 5.6, 4.8, 1.4, -6.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall15"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall15"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall15"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall15"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall15"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall15"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall64" type="StaticBody" parent="Geometry"]
+[node name="Wall64" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 4, 0, 0, 0, 3.2, 4.8, 8.4, -8.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall64"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall64"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall64"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall64"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall64"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall64"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall67" type="StaticBody" parent="Geometry"]
+[node name="Wall67" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.2, 0, 0, 0, 4, 0, 0, 0, 0.8, 4.2, 8.4, -12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall67"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall67"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall67"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall67"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall67"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall67"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall66" type="StaticBody" parent="Geometry"]
+[node name="Wall66" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 2.4, 0, 0, 0, 0.8, 4.8, 10, -4.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall66"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall66"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall66"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall66"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall66"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall66"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall65" type="StaticBody" parent="Geometry"]
+[node name="Wall65" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 4, 0, 0, 0, 1.6, 4.8, 8.4, -2.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall65"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall65"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall65"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall65"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall65"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall65"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall28" type="StaticBody" parent="Geometry"]
+[node name="Wall28" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.4, 0, 0, 0, 8, 0, 0, 0, 5.6, 12.8, 4, -6.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall28"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall28"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall28"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall28"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall28"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall28"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall73" type="StaticBody" parent="Geometry"]
+[node name="Wall73" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.2, 0, 0, 0, 5.7, 0, 0, 0, 0.8, 15, 6.9, 0 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall73"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall73"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall73"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall73"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall73"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall73"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall68" type="StaticBody" parent="Geometry"]
+[node name="Wall68" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.2, 0, 0, 0, 1.6, 0, 0, 0, 0.8, 15, 2.8, -12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall68"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall68"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall68"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall68"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall68"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall68"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall29" type="StaticBody" parent="Geometry"]
+[node name="Wall29" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.6, 0, 0, 0, 8, 0, 0, 0, 2.4, 8.8, 4, -9.6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall29"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall29"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall29"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall29"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall29"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall29"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall69" type="StaticBody" parent="Geometry"]
+[node name="Wall69" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 4.4, 0, 0, 0, 0.2, 6.4, 7.2, -7.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall69"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall69"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall69"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall69"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall69"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall69"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall16" type="StaticBody" parent="Geometry"]
+[node name="Wall16" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.6, 0, 0, 0, 6.2, 0, 0, 0, 0.8, 7.2, 5.8, -1.6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall16"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall16"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall16"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall16"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall16"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall16"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall70" type="StaticBody" parent="Geometry"]
+[node name="Wall70" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 4.4, 0, 0, 0, 0.2, 9.6, 7.6, -2.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall70"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall70"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall70"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall70"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall70"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall70"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall14" type="StaticBody" parent="Geometry"]
+[node name="Wall14" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.2, 0, 0, 0, 1.6, 0, 0, 0, 5.6, -4.2, 2.8, 6.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall14"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall14"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall14"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall14"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall14"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall14"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall56" type="StaticBody" parent="Geometry"]
+[node name="Wall56" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.2, 0, 0, 0, 4, 0, 0, 0, 7.2, -4.2, 8.4, 6.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall56"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall56"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall56"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall56"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall56"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall56"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall7" type="StaticBody" parent="Geometry"]
+[node name="Wall7" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.6, 0, 0, 0, 1.6, 0, 0, 0, 0.2, 2.4, -1.2, 12.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall7"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall7"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall7"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall7"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall7"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall7"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall9" type="StaticBody" parent="Geometry"]
+[node name="Wall9" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.4, 0, 0, 0, 7.4, 0, 0, 0, 2.4, 3.2, 4.2, 16 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall9"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall9"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall9"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall9"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall9"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall9"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall48" type="StaticBody" parent="Geometry"]
+[node name="Wall48" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 5.4, 0, 0, 0, 0.2, -4.76837e-07, 6.6, 13.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall48"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall48"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall48"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall48"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall48"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall48"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall10" type="StaticBody" parent="Geometry"]
+[node name="Wall10" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.4, 0, 0, 0, 8, 0, 0, 0, 2.4, -3.2, 3.6, 16 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall10"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall10"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall10"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall10"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall10"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall10"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall17" type="StaticBody" parent="Geometry"]
+[node name="Wall17" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.4, 0, 0, 0, 4, 0, 0, 0, 3.2, -9.6, 1.2, 16.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall17"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall17"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall17"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall17"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall17"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall17"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall38" type="StaticBody" parent="Geometry"]
+[node name="Wall38" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 3.2, 0, 0, 0, 3.4, 0, 0, 0, 0.8, 4, 1.8, 20.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall38"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall38"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall38"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall38"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall38"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall38"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall61" type="StaticBody" parent="Geometry"]
+[node name="Wall61" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 1.2, 0, 0, 0, 2.2, 0, 4, 16.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall61"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall61"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall61"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall61"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall61"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall61"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall60" type="StaticBody" parent="Geometry"]
+[node name="Wall60" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 3.2, 0, 0, 0, 3.4, 0, 0, 0, 0.8, -4, 1.8, 20.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall60"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall60"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall60"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall60"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall60"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall60"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall39" type="StaticBody" parent="Geometry"]
+[node name="Wall39" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.2, 0, 0, 0, 3, 0, 0, 0, 3, 7.4, 1.6, 17.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall39"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall39"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall39"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall39"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall39"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall39"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall18" type="StaticBody" parent="Geometry"]
+[node name="Wall18" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 3, 0, 0, 0, 7, 0, 0, 0, 2.4, -7.4, 1, 9.6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall18"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall18"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall18"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall18"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall18"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall18"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall19" type="StaticBody" parent="Geometry"]
+[node name="Wall19" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.2, 0, 0, 0, 5, 0, 0, 0, 2.4, -6.6, 3, 4.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall19"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall19"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall19"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall19"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall19"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall19"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall20" type="StaticBody" parent="Geometry"]
+[node name="Wall20" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 3, 0, 0, 0, 7, 0, 0, 0, 0.8, -7.4, 1, 1.6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall20"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall20"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall20"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall20"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall20"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall20"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall22" type="StaticBody" parent="Geometry"]
+[node name="Wall22" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 7, 0, 0, 0, 0.8, -12.8, 1, 1.6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall22"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall22"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall22"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall22"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall22"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall22"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall58" type="StaticBody" parent="Geometry"]
+[node name="Wall58" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 1.4, 0, 0, 0, 0.2, -11.2, 6.6, 2.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall58"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall58"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall58"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall58"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall58"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall58"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall59" type="StaticBody" parent="Geometry"]
+[node name="Wall59" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 1.4, 0, 0, 0, 0.2, -11.2, 6.6, 7.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall59"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall59"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall59"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall59"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall59"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall59"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall23" type="StaticBody" parent="Geometry"]
+[node name="Wall23" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 6, 0, 0, 0, 8.8, -14.4, 5.2, -1.6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall23"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall23"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall23"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall23"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall23"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall23"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall53" type="StaticBody" parent="Geometry"]
+[node name="Wall53" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 5, 0, 0, 0, 0.2, -12.8, 7.4, -1 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall53"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall53"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall53"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall53"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall53"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall53"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall63" type="StaticBody" parent="Geometry"]
+[node name="Wall63" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 5, 0, 0, 0, 0.2, -12.8, 7.4, -2.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall63"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall63"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall63"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall63"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall63"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall63"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall24" type="StaticBody" parent="Geometry"]
+[node name="Wall24" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 6, 0, 0, 0, 6, -12.8, 2, 13.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall24"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall24"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall24"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall24"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall24"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall24"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall8" type="StaticBody" parent="Geometry"]
+[node name="Wall8" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.6, 0, 0, 0, 1.6, 0, 0, 0, 0.2, -2.4, -1.2, 12.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall8"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall8"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall8"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall8"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall8"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall8"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall11" type="StaticBody" parent="Geometry"]
+[node name="Wall11" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.6, 0, 0, 0, 1.6, 0, 0, 0, 0.6, -2.4, -1.2, 13 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall11"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall11"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall11"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall11"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall11"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall11"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="Wall12" type="StaticBody" parent="Geometry"]
+[node name="Wall12" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.6, 0, 0, 0, 1.6, 0, 0, 0, 0.6, 2.4, -1.2, 13 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Wall12"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Wall12"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Wall12"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Wall12"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Wall12"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Wall12"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 7 )
 
-[node name="WallRuler18" type="StaticBody" parent="Geometry"]
+[node name="WallRuler18" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 7.2, 0, 0, 0, 0.4, 0, 0, 0, 0.8, 0, -0.8, 19.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/WallRuler18"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/WallRuler18"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/WallRuler18"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler18"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/WallRuler18"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler18"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="WallRuler20" type="StaticBody" parent="Geometry"]
+[node name="WallRuler20" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.190016, -0.873609, 0, 0.0624007, 2.66023, 6.4, 0.136, 16.122 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/WallRuler20"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/WallRuler20"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/WallRuler20"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler20"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/WallRuler20"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler20"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="WallRuler21" type="StaticBody" parent="Geometry"]
+[node name="WallRuler21" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.379506, -0.884745, 0, 0.126392, 2.65654, -6.4, -0.064, 16.122 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/WallRuler21"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/WallRuler21"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/WallRuler21"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler21"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/WallRuler21"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler21"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="WallRuler19" type="StaticBody" parent="Geometry"]
+[node name="WallRuler19" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.358285, 1.24498, 0, -0.177854, 2.50799, 0, -2.00524, 16.0696 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/WallRuler19"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/WallRuler19"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/WallRuler19"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler19"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/WallRuler19"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler19"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="WallRuler17" type="StaticBody" parent="Geometry"]
+[node name="WallRuler17" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.357771, 0.894426, 0, -0.178885, 1.78886, 9.6, -0.0512422, 2.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/WallRuler17"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/WallRuler17"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/WallRuler17"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler17"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/WallRuler17"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler17"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="WallRuler16" type="StaticBody" parent="Geometry"]
+[node name="WallRuler16" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.379864, -0.814528, 0, 0.125312, 2.46912, 6.4, 0.00265205, -9.6659 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/WallRuler16"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/WallRuler16"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/WallRuler16"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler16"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/WallRuler16"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler16"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="WallRuler14" type="StaticBody" parent="Geometry"]
+[node name="WallRuler14" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.46957, 0.0625499, 0, -0.813148, 0.189967, 0, 0, 0, 0.8, 6.39817, 0.186317, 0 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/WallRuler14"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/WallRuler14"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/WallRuler14"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler14"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/WallRuler14"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler14"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="WallRuler15" type="StaticBody" parent="Geometry"]
+[node name="WallRuler15" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.46779, 0.125928, 0, -0.818534, 0.37966, 0, 0, 0, 0.8, 12.741, -1.605, 0 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/WallRuler15"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/WallRuler15"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/WallRuler15"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler15"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/WallRuler15"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler15"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="WallRuler4" type="StaticBody" parent="Geometry"]
+[node name="WallRuler4" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.6, 0, 0, 0, 0.4, 0, 0, 0, 0.8, -5.6, 0.8, 12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/WallRuler4"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/WallRuler4"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/WallRuler4"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler4"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/WallRuler4"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler4"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="WallRuler8" type="StaticBody" parent="Geometry"]
+[node name="WallRuler8" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 3.2, 0, 0, 0, 0.2, 0, 0, 0, 0.8, 7.2, 1, 12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/WallRuler8"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/WallRuler8"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/WallRuler8"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler8"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/WallRuler8"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler8"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="WallRuler9" type="StaticBody" parent="Geometry"]
+[node name="WallRuler9" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.4, 0, 0, 0, 1.6, 9.6, 0.8, 10.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/WallRuler9"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/WallRuler9"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/WallRuler9"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler9"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/WallRuler9"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler9"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="WallRuler10" type="StaticBody" parent="Geometry"]
+[node name="WallRuler10" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.4, 0, 0, 0, 0.4, 0, 0, 0, 2.4, 11.2, 0.8, 6.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/WallRuler10"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/WallRuler10"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/WallRuler10"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler10"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/WallRuler10"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler10"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="WallRuler11" type="StaticBody" parent="Geometry"]
+[node name="WallRuler11" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.1, 0, 0, 0, 2.4, 12.8, 1.1, 11.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/WallRuler11"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/WallRuler11"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/WallRuler11"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler11"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/WallRuler11"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler11"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="WallRuler12" type="StaticBody" parent="Geometry"]
+[node name="WallRuler12" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 5.6, 0, 0, 0, 0.1, 0, 0, 0, 0.8, 19.2, 1.1, 12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/WallRuler12"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/WallRuler12"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/WallRuler12"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler12"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/WallRuler12"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler12"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="WallRuler13" type="StaticBody" parent="Geometry"]
+[node name="WallRuler13" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.2, 0, 0, 0, 0.0854187, 1.76789, 0, -0.0519966, 2.90424, 23.6, -0.651, 9.198 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/WallRuler13"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/WallRuler13"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/WallRuler13"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler13"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/WallRuler13"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler13"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="WallRuler5" type="StaticBody" parent="Geometry"]
+[node name="WallRuler5" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.4, 0, 0, 0, 0.8, -11.2014, -2.38419e-07, 12.7909 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/WallRuler5"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/WallRuler5"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/WallRuler5"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler5"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/WallRuler5"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler5"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="WallRuler7" type="StaticBody" parent="Geometry"]
+[node name="WallRuler7" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 1.74705, -0.0963081, 0, 0.433386, 0.388233, 0, 0, 0, 0.8, -8.84687, 0.380428, 12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/WallRuler7"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/WallRuler7"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/WallRuler7"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler7"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/WallRuler7"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler7"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="WallRuler6" type="StaticBody" parent="Geometry"]
+[node name="WallRuler6" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 0.8, 0, 0, 0, 0.374345, 0.634256, 0, -0.140946, 1.68455, -11.2, -0.607902, 10.4604 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/WallRuler6"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/WallRuler6"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/WallRuler6"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler6"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/WallRuler6"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler6"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="WallRuler2" type="StaticBody" parent="Geometry"]
+[node name="WallRuler2" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 3.22735, 0.177228, 0, -1.59506, 0.358595, 0, 0, 0, 0.8, 11.856, -0.76, -12.796 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/WallRuler2"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/WallRuler2"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/WallRuler2"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler2"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/WallRuler2"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler2"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="WallRuler3" type="StaticBody" parent="Geometry"]
+[node name="WallRuler3" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 2.40035, -0.0768591, 0, 0.999168, 0.184642, 0, 0, 0, 0.8, -7.908, 0.009, 0 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/WallRuler3"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/WallRuler3"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/WallRuler3"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler3"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/WallRuler3"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/WallRuler3"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="F-Top" type="Spatial" parent="Geometry"]
+[node name="F-Top" type="Spatial" parent="ScaleNode/Geometry"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00821304, 0.196271, -0.0015558 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Left" type="StaticBody" parent="Geometry/F-Top"]
+[node name="Left" type="StaticBody" parent="ScaleNode/Geometry/F-Top"]
 transform = Transform( 0.8, 0, 0, 0, 0.2, 0, 0, 0, 13.6, 3.2, 0.8, 0 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/F-Top/Left"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/F-Top/Left"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/F-Top/Left"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/F-Top/Left"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/F-Top/Left"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/F-Top/Left"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="Bottom" type="StaticBody" parent="Geometry/F-Top"]
+[node name="Bottom" type="StaticBody" parent="ScaleNode/Geometry/F-Top"]
 transform = Transform( 2.4, 0, 0, 0, 0.2, 0, 0, 0, 7.6, 0, 0.8, -6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/F-Top/Bottom"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/F-Top/Bottom"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/F-Top/Bottom"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/F-Top/Bottom"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/F-Top/Bottom"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/F-Top/Bottom"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="Top" type="StaticBody" parent="Geometry/F-Top"]
+[node name="Top" type="StaticBody" parent="ScaleNode/Geometry/F-Top"]
 transform = Transform( 2.4, 0, 0, 0, 0.2, 0, 0, 0, 4.4, 0, 0.8, 9.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/F-Top/Top"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/F-Top/Top"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/F-Top/Top"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/F-Top/Top"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/F-Top/Top"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/F-Top/Top"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="Right" type="StaticBody" parent="Geometry/F-Top"]
+[node name="Right" type="StaticBody" parent="ScaleNode/Geometry/F-Top"]
 transform = Transform( 0.8, 0, 0, 0, 0.2, 0, 0, 0, 13.6, -3.2, 0.8, 0 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/F-Top/Right"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/F-Top/Right"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/F-Top/Right"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/F-Top/Right"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/F-Top/Right"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/F-Top/Right"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="Right3" type="StaticBody" parent="Geometry/F-Top"]
+[node name="Right3" type="StaticBody" parent="ScaleNode/Geometry/F-Top"]
 transform = Transform( 0.8, 0, 0, 0, 0.2, 0, 0, 0, 0.8, -4.8, 0.8, 0 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/F-Top/Right3"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/F-Top/Right3"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/F-Top/Right3"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/F-Top/Right3"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/F-Top/Right3"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/F-Top/Right3"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="Right2" type="StaticBody" parent="Geometry/F-Top"]
+[node name="Right2" type="StaticBody" parent="ScaleNode/Geometry/F-Top"]
 transform = Transform( 2.4, 0, 0, 0, 0.4, 0, 0, 0, 0.8, 6.4, 0.6, -12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/F-Top/Right2"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/F-Top/Right2"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/F-Top/Right2"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/F-Top/Right2"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/F-Top/Right2"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/F-Top/Right2"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="BottomRightRamp" type="StaticBody" parent="Geometry/F-Top"]
+[node name="BottomRightRamp" type="StaticBody" parent="ScaleNode/Geometry/F-Top"]
 transform = Transform( 1.6961, -0.211968, 0, 1.05984, 0.339219, 0, 0, 0, 0.8, -5.483, -0.4, -12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/F-Top/BottomRightRamp"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/F-Top/BottomRightRamp"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/F-Top/BottomRightRamp"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/F-Top/BottomRightRamp"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 8 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/F-Top/BottomRightRamp"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/F-Top/BottomRightRamp"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 8 )
 
-[node name="Ramp" type="StaticBody" parent="Geometry/F-Top"]
+[node name="Ramp" type="StaticBody" parent="ScaleNode/Geometry/F-Top"]
 transform = Transform( -2.50149, 0.150541, 1.20797e-07, 1.01615, 0.37059, -6.95265e-10, -3.78597e-07, 2.2409e-08, -0.8, -4.86934, -2.39139, -3.2 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/F-Top/Ramp"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/F-Top/Ramp"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/F-Top/Ramp"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/F-Top/Ramp"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 9 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/F-Top/Ramp"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/F-Top/Ramp"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 9 )
 
-[node name="F-Lower" type="Spatial" parent="Geometry"]
+[node name="F-Lower" type="Spatial" parent="ScaleNode/Geometry"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0 )
 
-[node name="Floor" type="StaticBody" parent="Geometry/F-Lower"]
+[node name="Floor" type="StaticBody" parent="ScaleNode/Geometry/F-Lower"]
 transform = Transform( 4, 0, 0, 0, 0.4, 0, 0, 0, 6.4, 4.47035e-08, -3.8, 5.6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/F-Lower/Floor"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/F-Lower/Floor"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/F-Lower/Floor"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/F-Lower/Floor"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/F-Lower/Floor"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/F-Lower/Floor"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="Floor2" type="StaticBody" parent="Geometry/F-Lower"]
+[node name="Floor2" type="StaticBody" parent="ScaleNode/Geometry/F-Lower"]
 transform = Transform( 0.8, 0, 0, 0, 0.4, 0, 0, 0, 1.6, -1.6, -3.8, -2.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/F-Lower/Floor2"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/F-Lower/Floor2"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/F-Lower/Floor2"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/F-Lower/Floor2"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/F-Lower/Floor2"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/F-Lower/Floor2"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="Floor3" type="StaticBody" parent="Geometry/F-Lower"]
+[node name="Floor3" type="StaticBody" parent="ScaleNode/Geometry/F-Lower"]
 transform = Transform( 2.4, 0, 0, 0, 0.4, 0, 0, 0, 0.8, 6.4, -3.8, 6.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/F-Lower/Floor3"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/F-Lower/Floor3"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/F-Lower/Floor3"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/F-Lower/Floor3"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/F-Lower/Floor3"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/F-Lower/Floor3"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="Floor5" type="StaticBody" parent="Geometry/F-Lower"]
+[node name="Floor5" type="StaticBody" parent="ScaleNode/Geometry/F-Lower"]
 transform = Transform( 0.8, 0, 0, 0, 0.4, 0, 0, 0, 3.2, 8, -3.8, 10.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/F-Lower/Floor5"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/F-Lower/Floor5"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/F-Lower/Floor5"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/F-Lower/Floor5"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/F-Lower/Floor5"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/F-Lower/Floor5"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="Floor6" type="StaticBody" parent="Geometry/F-Lower"]
+[node name="Floor6" type="StaticBody" parent="ScaleNode/Geometry/F-Lower"]
 transform = Transform( 0.8, 0, 0, 0, 0.4, 0, 0, 0, 0.8, 9.6, -3.8, 12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/F-Lower/Floor6"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/F-Lower/Floor6"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/F-Lower/Floor6"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/F-Lower/Floor6"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/F-Lower/Floor6"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/F-Lower/Floor6"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="Floor7" type="StaticBody" parent="Geometry/F-Lower"]
+[node name="Floor7" type="StaticBody" parent="ScaleNode/Geometry/F-Lower"]
 transform = Transform( 2.46647, -0.0652959, 0, 0.4081, 0.394635, 0, 0, 0, 0.8, 12.8047, -3.40344, 12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/F-Lower/Floor7"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/F-Lower/Floor7"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/F-Lower/Floor7"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/F-Lower/Floor7"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/F-Lower/Floor7"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/F-Lower/Floor7"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="Floor4" type="StaticBody" parent="Geometry/F-Lower"]
+[node name="Floor4" type="StaticBody" parent="ScaleNode/Geometry/F-Lower"]
 transform = Transform( 0.8, 0, 0, 0, 0.4, 0, 0, 0, 0.8, -5.06639e-07, -3.8, 12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/F-Lower/Floor4"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/F-Lower/Floor4"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/F-Lower/Floor4"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/F-Lower/Floor4"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/F-Lower/Floor4"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/F-Lower/Floor4"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="Side1" type="Spatial" parent="Geometry"]
+[node name="Side1" type="Spatial" parent="ScaleNode/Geometry"]
 
-[node name="RampHall" type="StaticBody" parent="Geometry/Side1"]
+[node name="RampHall" type="StaticBody" parent="ScaleNode/Geometry/Side1"]
 transform = Transform( 0.8, 0, 0, 0, 0.4, 0, 0, 0, 1.6, -8, -1.2, -12 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Side1/RampHall"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Side1/RampHall"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Side1/RampHall"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Side1/RampHall"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Side1/RampHall"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Side1/RampHall"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="RampHall3" type="StaticBody" parent="Geometry/Side1"]
+[node name="RampHall3" type="StaticBody" parent="ScaleNode/Geometry/Side1"]
 transform = Transform( 0.8, 0, 0, 0, 0.4, 0, 0, 0, 1.6, -12.8, -1.2, -0.800001 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Side1/RampHall3"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Side1/RampHall3"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Side1/RampHall3"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Side1/RampHall3"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Side1/RampHall3"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Side1/RampHall3"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="RampHall4" type="StaticBody" parent="Geometry/Side1"]
+[node name="RampHall4" type="StaticBody" parent="ScaleNode/Geometry/Side1"]
 transform = Transform( 0.8, 0, 0, 0, 0.4, 0, 0, 0, 1.6, -11.2, -1.2, 0.799999 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Side1/RampHall4"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Side1/RampHall4"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Side1/RampHall4"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Side1/RampHall4"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Side1/RampHall4"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Side1/RampHall4"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="RampHall5" type="StaticBody" parent="Geometry/Side1"]
+[node name="RampHall5" type="StaticBody" parent="ScaleNode/Geometry/Side1"]
 transform = Transform( 0.8, 0, 0, 0, 0.4, 0, 0, 0, 2.4, -12.8, -1.2, 4.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Side1/RampHall5"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Side1/RampHall5"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Side1/RampHall5"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Side1/RampHall5"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Side1/RampHall5"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Side1/RampHall5"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="RampHall6" type="StaticBody" parent="Geometry/Side1"]
+[node name="RampHall6" type="StaticBody" parent="ScaleNode/Geometry/Side1"]
 transform = Transform( 0.8, 0, 0, 0, 0.4, 0, 0, 0, 2.4, -9.6, -1.2, 4.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Side1/RampHall6"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Side1/RampHall6"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Side1/RampHall6"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Side1/RampHall6"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Side1/RampHall6"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Side1/RampHall6"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="RampHall7" type="StaticBody" parent="Geometry/Side1"]
+[node name="RampHall7" type="StaticBody" parent="ScaleNode/Geometry/Side1"]
 transform = Transform( 0.8, 0, 0, 0, 0.4, 0, 0, 0, 3.2, -11.2, -1.2, 5.6 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Side1/RampHall7"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Side1/RampHall7"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Side1/RampHall7"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Side1/RampHall7"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Side1/RampHall7"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Side1/RampHall7"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="RampHall2" type="StaticBody" parent="Geometry/Side1"]
+[node name="RampHall2" type="StaticBody" parent="ScaleNode/Geometry/Side1"]
 transform = Transform( 3.2, 0, 0, 0, 0.4, 0, 0, 0, 4, -10.4, -1.2, -6.4 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/Side1/RampHall2"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Side1/RampHall2"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/Side1/RampHall2"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Side1/RampHall2"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/Side1/RampHall2"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Side1/RampHall2"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="SideLarge" type="Spatial" parent="Geometry"]
+[node name="SideLarge" type="Spatial" parent="ScaleNode/Geometry"]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 15, -1.6, -3.2 )
 
-[node name="Floor" type="StaticBody" parent="Geometry/SideLarge"]
+[node name="Floor" type="StaticBody" parent="ScaleNode/Geometry/SideLarge"]
 transform = Transform( 4.8, 0, 0, 0, 0.4, 0, 0, 0, 10.4, -5, -0.8, 2.01072e-06 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/SideLarge/Floor"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/SideLarge/Floor"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/SideLarge/Floor"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/SideLarge/Floor"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/SideLarge/Floor"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/SideLarge/Floor"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="Floor2" type="StaticBody" parent="Geometry/SideLarge"]
+[node name="Floor2" type="StaticBody" parent="ScaleNode/Geometry/SideLarge"]
 transform = Transform( 1.2, 0, 0, 0, 0.4, 0, 0, 0, 2.4, -1.4, -0.8, -12.8 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/SideLarge/Floor2"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/SideLarge/Floor2"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/SideLarge/Floor2"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/SideLarge/Floor2"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/SideLarge/Floor2"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/SideLarge/Floor2"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="Floor3" type="StaticBody" parent="Geometry/SideLarge"]
+[node name="Floor3" type="StaticBody" parent="ScaleNode/Geometry/SideLarge"]
 transform = Transform( 4.8, 0, 0, 0, 0.4, 0, 0, 0, 0.8, -4.99999, -0.8, -16 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape" type="CollisionShape" parent="Geometry/SideLarge/Floor3"]
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/SideLarge/Floor3"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Geometry/SideLarge/Floor3"]
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/SideLarge/Floor3"]
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Geometry/SideLarge/Floor3"]
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/SideLarge/Floor3"]
 layers = 2
 cast_shadow = 3
 mesh = SubResource( 2 )
 material/0 = SubResource( 6 )
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 11 )
+[node name="Lights" type="Spatial" parent="ScaleNode"]
 
-[node name="OmniLight" type="OmniLight" parent="."]
+[node name="OmniLight" type="OmniLight" parent="ScaleNode/Lights"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.6622, 4.00739 )
 layers = 3
 shadow_enabled = true
-omni_range = 16.0
+omni_range = 26.0
 
-[node name="OmniLight2" type="OmniLight" parent="."]
+[node name="OmniLight2" type="OmniLight" parent="ScaleNode/Lights"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.5751, 11.598, -0.285464 )
 layers = 3
 shadow_enabled = true
-omni_range = 26.4
+omni_range = 30.0
 
-[node name="OmniLight3" type="OmniLight" parent="."]
+[node name="OmniLight3" type="OmniLight" parent="ScaleNode/Lights"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24.8629, 7.73975, 13.3942 )
 layers = 3
 shadow_enabled = true
 omni_range = 26.4
 omni_attenuation = 2.0
 
-[node name="OmniLight4" type="OmniLight" parent="."]
+[node name="OmniLight4" type="OmniLight" parent="ScaleNode/Lights"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0400623, 3.73522, 19.9694 )
 layers = 3
 light_energy = 0.5
@@ -3602,7 +3611,7 @@ light_indirect_energy = 0.5
 shadow_enabled = true
 omni_range = 26.4
 
-[node name="OmniLight5" type="OmniLight" parent="."]
+[node name="OmniLight5" type="OmniLight" parent="ScaleNode/Lights"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.4698, 5.52931, -4.8055 )
 layers = 3
 light_color = Color( 0.466667, 0.458824, 1, 1 )
@@ -3611,7 +3620,7 @@ light_indirect_energy = 1.5
 shadow_enabled = true
 omni_range = 26.4
 
-[node name="OmniLight7" type="OmniLight" parent="."]
+[node name="OmniLight7" type="OmniLight" parent="ScaleNode/Lights"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2486, 6.98174, 4.80035 )
 layers = 3
 light_color = Color( 0.458824, 1, 0.478431, 1 )
@@ -3621,7 +3630,7 @@ shadow_enabled = true
 omni_range = 10.5
 omni_attenuation = 0.5
 
-[node name="OmniLight6" type="OmniLight" parent="."]
+[node name="OmniLight6" type="OmniLight" parent="ScaleNode/Lights"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.643, 8.26282, -8.23302 )
 layers = 3
 light_color = Color( 1, 0.627451, 0.627451, 1 )
