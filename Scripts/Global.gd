@@ -14,6 +14,8 @@ const dialogMessageScene = preload("res://Scenes/DialogMessage.tscn")
 
 #Various constants
 const settingsFileName = "settings.json"
+const bindableActions = ["jump", "forward", "back", "left", "right", "item1", "item2", "item3",
+	"item4", "item5", "item6", "item7", "item8", "item9", "item0"] #Actions that can be rebound
 
 #Instances of menus
 var mainMenuInstance = null
@@ -21,9 +23,14 @@ var settingsMenuInstance = null
 
 #Data
 var settings = {}
+var defaultBinds = {}
 
 #Entry point of the game
 func _ready():
+	for action in bindableActions:
+		var keyName = "key_" + action
+		defaultBinds[keyName] = InputMap.get_action_list(action)[0].scancode
+
 	OS.window_resizable = false
 	loadDefaultSettings()
 	loadSettings()
@@ -31,16 +38,24 @@ func _ready():
 	showMainMenu()
 
 func _process(delta):	
-	if Input.is_key_pressed(KEY_ESCAPE):
+	if Input.is_key_pressed(KEY_KP_MULTIPLY):
 		get_tree().quit()
 	if Input.is_action_just_pressed("screenshot"):
 		var data = get_viewport().get_texture().get_data()
 		data.flip_y()
 		data.save_png("gameScreenshot.png")
 
+#Apply the current settings
 func applySettings():
 	OS.window_fullscreen = settings.fullscreen
 	OS.window_size = Vector2(settings.resolutionX, settings.resolutionY)
+	
+	for action in bindableActions:
+		var keyName = "key_" + action
+		var event = InputEventKey.new()
+		event.scancode = settings[keyName]
+		InputMap.action_erase_events(action)
+		InputMap.action_add_event(action, event)
 
 #Initialize settings with their default values
 func loadDefaultSettings():
@@ -49,6 +64,10 @@ func loadDefaultSettings():
 	settings.resolutionX = 1024
 	settings.resolutionY = 600
 	settings.fullscreen = false
+	
+	for action in bindableActions:
+		var keyName = "key_" + action
+		settings[keyName] = defaultBinds[keyName]
 
 #Loads settings file if one exists
 func loadSettings():
@@ -57,11 +76,7 @@ func loadSettings():
 		print("Opened settings file")
 		var data = JSON.parse(file.get_as_text())
 		print(data.result)
-		settings.playerName = data.result.playerName
-		settings.sensitivity = data.result.sensitivity
-		settings.resolutionX = data.result.resolutionX
-		settings.resolutionY = data.result.resolutionY
-		settings.fullscreen = data.result.fullscreen
+		settings = data.result
 		file.close()
 	else:
 		print("Failed to open settings file")
