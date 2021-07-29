@@ -423,6 +423,8 @@ size = Vector2( 1024, 700 )
 transparent_bg = true
 handle_input_locally = false
 render_target_update_mode = 3
+shadow_atlas_size = 4096
+shadow_atlas_quad_0 = 1
 script = ExtResource( 3 )
 
 [node name="GunCamera" type="Camera" parent="Camera/ViewportContainer/Viewport"]
