@@ -57,9 +57,10 @@ uv1_offset = Vector3( 1.036, 4.009, 0 )
 uv1_triplanar = true
 
 [sub_resource type="ProceduralSky" id=10]
-sky_energy = 0.0
-ground_energy = 0.0
-sun_energy = 0.0
+sky_top_color = Color( 1, 1, 1, 1 )
+sky_energy = 0.05
+ground_energy = 0.05
+sun_energy = 0.05
 
 [sub_resource type="Environment" id=11]
 background_mode = 3
