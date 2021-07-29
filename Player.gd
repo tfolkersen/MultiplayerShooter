@@ -202,8 +202,9 @@ func _physics_process(delta):
 	
 	velocity.y = clamp(velocity.y - gravity, -0.5 * 10, 4 * 10)
 		
-	#if Input.is_action_pressed("jump") and $RayCast.is_colliding() and is_network_master():
-	if Input.is_action_pressed("jump") and is_on_floor() and is_network_master() and jumpCooldown == 0:
+
+	#if Input.is_action_pressed("jump") and is_on_floor() and is_network_master() and jumpCooldown == 0:
+	if Input.is_action_pressed("jump") and is_network_master() and jumpCooldown == 0:
 		jumpCooldown = jumpLimit
 		velocity.y = 0.4 * 10
 	
