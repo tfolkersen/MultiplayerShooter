@@ -184,12 +184,13 @@ func clearEditButtonPrompt(action):
 func _editButtonPressed(action):
 	if editingKey: #Only one action can be rebound at a time
 		clearEditButtonPrompt(editingKey)
-		editingKey = action
+	editingKey = action
 	setEditButtonPrompt(action)
 
 #Tab of settings menu was changed -- stop capturing input
 func _tabChanged(tab):
 	if editingKey:
-		editingKey = null
 		clearEditButtonPrompt(editingKey)
+		editingKey = null
+		
 		
