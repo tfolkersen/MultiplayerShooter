@@ -42,7 +42,7 @@ func updateLayout():
 	var current
 	
 	$TabContainer.rect_size = dims
-	popup_centered(Vector2(500, 500))
+	popup_centered(dims)
 	
 	###Control
 	prev = null
