@@ -2,17 +2,15 @@
 
 [ext_resource path="res://Scripts/MainMenu.gd" type="Script" id=2]
 
-[node name="MainMenu" type="CanvasLayer"]
-script = ExtResource( 2 )
-
-[node name="Menu" type="Control" parent="."]
+[node name="MainMenu" type="Control"]
 margin_right = 40.0
 margin_bottom = 40.0
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel" type="Panel" parent="Menu"]
+[node name="Panel" type="Panel" parent="."]
 modulate = Color( 1, 1, 1, 0.501961 )
 margin_right = 40.0
 margin_bottom = 40.0
@@ -20,7 +18,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="Label" parent="Menu"]
+[node name="Title" type="Label" parent="."]
 margin_left = 361.705
 margin_top = 40.9813
 margin_right = 528.705
@@ -30,7 +28,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HostButton" type="Button" parent="Menu"]
+[node name="HostButton" type="Button" parent="."]
 margin_left = 48.9128
 margin_top = 56.8198
 margin_right = 129.913
@@ -40,7 +38,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="JoinButton" type="Button" parent="Menu"]
+[node name="JoinButton" type="Button" parent="."]
 margin_left = 53.5793
 margin_top = 109.822
 margin_right = 127.579
@@ -50,7 +48,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SettingsButton" type="Button" parent="Menu"]
+[node name="SettingsButton" type="Button" parent="."]
 margin_left = 55.2648
 margin_top = 162.602
 margin_right = 118.265
@@ -60,7 +58,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="IPLabel" type="Label" parent="Menu"]
+[node name="IPLabel" type="Label" parent="."]
 margin_left = 361.705
 margin_top = 40.9813
 margin_right = 528.705
@@ -70,7 +68,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="IPEdit" type="LineEdit" parent="Menu"]
+[node name="IPEdit" type="LineEdit" parent="."]
 margin_right = 100.0
 margin_bottom = 24.0
 text = "127.0.0.1"
@@ -78,7 +76,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PortLabel" type="Label" parent="Menu"]
+[node name="PortLabel" type="Label" parent="."]
 margin_left = 361.705
 margin_top = 40.9813
 margin_right = 541.705
@@ -88,7 +86,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PortEdit" type="LineEdit" parent="Menu"]
+[node name="PortEdit" type="LineEdit" parent="."]
 margin_left = 167.489
 margin_top = 11.5817
 margin_right = 267.489
@@ -98,7 +96,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="QuitButton" type="Button" parent="Menu"]
+[node name="QuitButton" type="Button" parent="."]
 margin_left = 59.6904
 margin_top = 205.798
 margin_right = 99.6904
@@ -108,7 +106,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="pressed" from="Menu/HostButton" to="." method="_hostButtonPressed"]
-[connection signal="pressed" from="Menu/JoinButton" to="." method="_joinButtonPressed"]
-[connection signal="pressed" from="Menu/SettingsButton" to="." method="_settingsButtonPressed"]
-[connection signal="pressed" from="Menu/QuitButton" to="." method="_quitButtonPressed"]
+[connection signal="pressed" from="HostButton" to="." method="_hostButtonPressed"]
+[connection signal="pressed" from="JoinButton" to="." method="_joinButtonPressed"]
+[connection signal="pressed" from="SettingsButton" to="." method="_settingsButtonPressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_quitButtonPressed"]

@@ -124,7 +124,7 @@ func saveSettings():
 func showMainMenu():
 	if not is_instance_valid(mainMenuInstance):
 		mainMenuInstance = mainMenuScene.instance()
-		get_node("/root/Game").add_child(mainMenuInstance)
+		get_node("/root/Game/MenuLayer").add_child(mainMenuInstance)
 	else:
 		mainMenuInstance.show()
 	setMenuFocus()
@@ -156,7 +156,7 @@ func closeMainMenu():
 func showSettingsMenu():
 	if not is_instance_valid(settingsMenuInstance):
 		settingsMenuInstance = settingsMenuScene.instance()
-		get_node("/root/Game").add_child(settingsMenuInstance)
+		get_node("/root/Game/MenuLayer").add_child(settingsMenuInstance)
 
 #Close settings menu if it's open
 func closeSettingsMenu():
@@ -169,7 +169,7 @@ func showDialogMessage(message, title = null):
 	dialog.setMessage(message)
 	if title != null:
 		dialog.setTitle(title)
-	get_node("/root/Game").add_child(dialog)
+	get_node("/root/Game/MenuLayer").add_child(dialog)
 
 #Capture the cursor
 func captureMouse():
