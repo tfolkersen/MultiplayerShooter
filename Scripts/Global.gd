@@ -22,6 +22,8 @@ const buttonListStrings = {BUTTON_LEFT: "Left Mouse", BUTTON_RIGHT: "Right Mouse
 	BUTTON_WHEEL_UP: "Mouse Wheel Up", BUTTON_WHEEL_DOWN: "Mouse Wheel Down", 
 	BUTTON_WHEEL_LEFT: "Mouse Wheel Left", BUTTON_WHEEL_RIGHT: "Mouse Wheel Right"}
 
+const zwsp = "​"
+
 #Instances of menus
 var mainMenuInstance = null
 var settingsMenuInstance = null
@@ -35,6 +37,7 @@ var allowControl = true #true if the player shouldn't be able to move
 
 #Entry point of the game
 func _ready():
+	print(zwsp == "")
 	for action in bindableActions:
 		var keyName = "key_" + action
 		defaultBinds[keyName] = eventToInfo(InputMap.get_action_list(action)[0])
