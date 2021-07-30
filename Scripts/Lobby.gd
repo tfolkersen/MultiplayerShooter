@@ -8,12 +8,16 @@ const messageScene = preload("res://Scenes/LobbyMessage.tscn")
 
 func _ready():
 	print("Lobby Joined tree")
-	$MessageEdit.grab_focus()
+	grabFocus()
 	$MessageEdit.text = "/start"
 	updateLayout()
 
 func releaseFocus():
 	$MessageEdit.release_focus()
+	
+func grabFocus():
+	$MessageEdit.grab_focus()
+	
 
 #Player disconnected
 func peerConnected(id):
@@ -143,4 +147,6 @@ func _messageEntered(text):
 
 func _exitingTree():
 	print("Lobby exiting tree")
+	Network.lobbyInstance = null
+	Global.updateMainMenu()
 

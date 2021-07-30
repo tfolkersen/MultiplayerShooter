@@ -11,6 +11,7 @@ extends Node
 const mainMenuScene = preload("res://Scenes/MainMenu.tscn")
 const settingsMenuScene = preload("res://Scenes/SettingsMenu.tscn")
 const dialogMessageScene = preload("res://Scenes/DialogMessage.tscn")
+const confirmationDialogScene = preload("res://Scenes/ConfirmationDialog.tscn")
 
 #Various constants
 const settingsFileName = "settings.json"
@@ -52,13 +53,18 @@ func _process(delta):
 		data.flip_y()
 		data.save_png("gameScreenshot.png")
 	if Input.is_action_just_pressed("escape"):
-		if is_instance_valid(settingsMenuInstance):
-			closeSettingsMenu()
+		var menus = get_node("/root/Game/MenuLayer").get_children()
+		if menus[-1] != mainMenuInstance and menus[-1].has_method("closeSelf"):
+			menus[-1].closeSelf()
 		elif not is_instance_valid(mainMenuInstance) or not mainMenuInstance.isVisible():
 			showMainMenu()
 		else:
 			if isGameVisible() or isLobbyVisible():
 				hideMainMenu()
+
+func updateMainMenu():
+	if is_instance_valid(mainMenuInstance):
+		mainMenuInstance.updateButtonVisibility()
 
 func isGameVisible():
 	return is_instance_valid(Network.gameInstance)
@@ -170,6 +176,14 @@ func showDialogMessage(message, title = null):
 	if title != null:
 		dialog.setTitle(title)
 	get_node("/root/Game/MenuLayer").add_child(dialog)
+
+func showConfirmationDialog(message, title):
+	var dialog = confirmationDialogScene.instance()
+	dialog.setMessage(message)
+	if title != null:
+		dialog.setTitle(title)
+	get_node("/root/Game/MenuLayer").add_child(dialog)
+	return dialog
 
 #Capture the cursor
 func captureMouse():

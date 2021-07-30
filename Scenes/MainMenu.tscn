@@ -48,6 +48,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ResumeButton" type="Button" parent="."]
+margin_left = 64.5793
+margin_top = 115.822
+margin_right = 138.579
+margin_bottom = 135.822
+text = "Resume"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="SettingsButton" type="Button" parent="."]
 margin_left = 55.2648
 margin_top = 162.602
@@ -106,7 +116,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="DisconnectButton" type="Button" parent="."]
+margin_left = 86.6904
+margin_top = 222.798
+margin_right = 170.69
+margin_bottom = 242.798
+text = "Disconnect"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="pressed" from="HostButton" to="." method="_hostButtonPressed"]
 [connection signal="pressed" from="JoinButton" to="." method="_joinButtonPressed"]
+[connection signal="pressed" from="ResumeButton" to="." method="_resumeButtonPressed"]
 [connection signal="pressed" from="SettingsButton" to="." method="_settingsButtonPressed"]
 [connection signal="pressed" from="QuitButton" to="." method="_quitButtonPressed"]
+[connection signal="pressed" from="DisconnectButton" to="." method="_disconnectButtonPressed"]

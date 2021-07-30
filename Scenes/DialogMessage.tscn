@@ -13,6 +13,7 @@ margin_right = 40.0
 margin_bottom = 14.0
 text = "<Sample Text>"
 align = 1
+autowrap = true
 
 [node name="OkButton" type="Button" parent="."]
 margin_right = 12.0

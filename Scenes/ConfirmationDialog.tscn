@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/ConfirmationDialog.gd" type="Script" id=1]
+
+[node name="ConfirmationDialog" type="WindowDialog"]
+margin_right = 48.0
+margin_bottom = 40.0
+popup_exclusive = true
+script = ExtResource( 1 )
+
+[node name="Message" type="Label" parent="."]
+margin_right = 40.0
+margin_bottom = 14.0
+align = 1
+autowrap = true
+
+[node name="AcceptButton" type="Button" parent="."]
+margin_right = 12.0
+margin_bottom = 20.0
+text = "Accept"
+
+[node name="CancelButton" type="Button" parent="."]
+margin_right = 12.0
+margin_bottom = 20.0
+text = "Cancel"
+
+[connection signal="pressed" from="AcceptButton" to="." method="_acceptButtonPressed"]
+[connection signal="pressed" from="CancelButton" to="." method="_cancelButtonPressed"]

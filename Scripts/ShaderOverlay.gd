@@ -23,11 +23,12 @@ func _process(delta):
 		visible = true
 	else:
 		visible = false
-		
-	if Input.is_key_pressed(KEY_KP_0):
-		startAnimation()
-	if Input.is_key_pressed(KEY_KP_1):
-		playing = false
+	
+	if Global.allowControl:
+		if Input.is_key_pressed(KEY_KP_0):
+			startAnimation()
+		if Input.is_key_pressed(KEY_KP_1):
+			playing = false
 		
 	frame += 1
 	

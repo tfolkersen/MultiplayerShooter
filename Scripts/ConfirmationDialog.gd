@@ -1,11 +1,14 @@
 extends WindowDialog
 
+signal accept
+signal cancel
+
 func _ready():
 	updateLayout()
 
 func _process(delta):
 	if Input.is_action_just_pressed("ui_accept"):
-		_okButtonPressed()
+		_acceptButtonPressed()
 
 #Set layout based on screen size
 func updateLayout():
@@ -17,10 +20,15 @@ func updateLayout():
 	curr.rect_position = Vector2(5, 18)
 	curr.rect_size = Vector2(dims.x - 5 * 2, 100)
 	
-	prev = curr
-	curr = $OkButton
 	
-	curr.rect_position = Vector2(dims.x / 2.0 - curr.rect_size.x / 2.0, dims.y - curr.rect_size.y - 20)
+	#Buttons
+	prev = curr
+	curr = $AcceptButton
+	curr.rect_position = Vector2(dims.x / 2.0 - curr.rect_size.x - 20, dims.y - curr.rect_size.y - 20)
+	
+	prev = curr
+	curr = $CancelButton
+	curr.rect_position = Vector2(dims.x / 2.0 + 20, dims.y - curr.rect_size.y - 20)
 	
 	popup_centered(dims)
 
@@ -36,10 +44,14 @@ func setTitle(title: String):
 func closeSelf():
 	queue_free()
 
-#The OK button was pressed
-func _okButtonPressed():
-	closeSelf()
-
 #X button pressed
 func _onHide():
+	closeSelf()
+
+func _acceptButtonPressed():
+	emit_signal("accept")
+	closeSelf()
+
+func _cancelButtonPressed():
+	emit_signal("cancel")
 	closeSelf()
