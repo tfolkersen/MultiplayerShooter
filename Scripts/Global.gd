@@ -133,6 +133,7 @@ func showMainMenu():
 		get_node("/root/Game/MenuLayer").add_child(mainMenuInstance)
 	else:
 		mainMenuInstance.show()
+	mainMenuInstance.updateButtonVisibility()
 	setMenuFocus()
 
 func setMenuFocus():

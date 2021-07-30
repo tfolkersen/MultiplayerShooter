@@ -124,6 +124,7 @@ func hostLobby(port: int):
 		lobbyInstance = null
 	lobbyInstance = lobbyScene.instance()
 	get_node("/root/Game").add_child(lobbyInstance)
+	lobbyInstance.systemMessage("Type /help for a list of commands")
 	
 	createServer(port)
 	rpc("addPeer", Global.settings.playerName)
@@ -139,6 +140,7 @@ func joinLobby(ip: String, port:int):
 	lobbyInstance = lobbyScene.instance()
 	lobbyInstance.visible = false
 	get_node("/root/Game").add_child(lobbyInstance)
+	lobbyInstance.systemMessage("Type /help for a list of commands")
 
 	createClient(ip, port)
 
