@@ -52,7 +52,9 @@ func _process(delta):
 		data.flip_y()
 		data.save_png("gameScreenshot.png")
 	if Input.is_action_just_pressed("escape"):
-		if not is_instance_valid(mainMenuInstance) or not mainMenuInstance.isVisible():
+		if is_instance_valid(settingsMenuInstance):
+			closeSettingsMenu()
+		elif not is_instance_valid(mainMenuInstance) or not mainMenuInstance.isVisible():
 			showMainMenu()
 		else:
 			if isGameVisible() or isLobbyVisible():
