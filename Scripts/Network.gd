@@ -25,17 +25,16 @@ func _ready():
 
 #Called by a peer sending their peer information to us. Responds with our own data
 #Called by self
-remotesync func addPeer(name: String):
+remotesync func addPeer(name: String, ready: bool):
 	var id = get_tree().get_rpc_sender_id()
 	print("Adding peer [" + str(id) + "] " + name)
-	if peers.has(id):
-		return
-	peers[id] = {"id": id, "name": name}
-	if id != networkID:
-		rpc_id(id, "addPeer", Global.settings.playerName)
+	if not peers.has(id):
+		peers[id] = {"id": id, "name": name, "ready": ready}
+		if id != networkID:
+			rpc_id(id, "addPeer", peers[networkID].name, peers[networkID].ready)
 	if is_instance_valid(lobbyInstance):
 		lobbyInstance.peerConnected(id)
-
+	
 #Remove a peer's data when they disconnect
 func removePeer(id):
 	print("Removing peer" + str(id))
@@ -55,7 +54,8 @@ func removePlayerFromGame(id):
 #Peer connected
 func _player_connected(id):
 	print("Player connected " + str(id))
-	rpc_id(id, "addPeer", Global.settings.playerName)
+	var selfPeer = peers[Network.networkID]
+	rpc_id(id, "addPeer", selfPeer.name, selfPeer.ready)
 
 #Peer disconnected
 func _player_disconnected(id):
@@ -65,7 +65,8 @@ func _player_disconnected(id):
 #Connected to server
 func _connected_ok():
 	print("Connected to server")
-	rpc("addPeer", Global.settings.playerName)
+	var selfPeer = peers[Network.networkID]
+	rpc("addPeer", selfPeer.name, selfPeer.ready)
 	lobbyInstance.visible = true
 	Global.hideMainMenu()
 
@@ -92,6 +93,7 @@ func createServer(port: int):
 	peer.create_server(int(port))
 	get_tree().network_peer = peer
 	networkID = peer.get_unique_id()
+	peers[networkID] = {"name": Global.settings.playerName, "ready": false}
 	print("Created server. I am ID " + str(networkID))
 
 #Try to join a server
@@ -102,6 +104,7 @@ func createClient(ip: String, port: int):
 	peer.create_client(ip, port)
 	get_tree().network_peer = peer
 	networkID = peer.get_unique_id()
+	peers[networkID] = {"name": Global.settings.playerName, "ready": false}
 	print("Created client. I am ID " + str(networkID))
 	
 #Close connections and reset variables
@@ -127,7 +130,9 @@ func hostLobby(port: int):
 	lobbyInstance.systemMessage("Type /help for a list of commands")
 	
 	createServer(port)
-	rpc("addPeer", Global.settings.playerName)
+	lobbyInstance.updateLayout()
+	var selfPeer = peers[Network.networkID]
+	rpc("addPeer", selfPeer.name, selfPeer.ready)
 	Global.hideMainMenu()
 
 #Join lobby as client
@@ -143,13 +148,13 @@ func joinLobby(ip: String, port:int):
 	lobbyInstance.systemMessage("Type /help for a list of commands")
 
 	createClient(ip, port)
+	lobbyInstance.updateLayout()
 
 #Leave the lobby if it exists
 func leaveLobby():
 	if is_instance_valid(lobbyInstance):
 		lobbyInstance.quitLobby()
 		
-
 #Start a game with the current peers
 remotesync func startGame():
 	if is_instance_valid(gameInstance):

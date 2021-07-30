@@ -21,10 +21,10 @@ func grabFocus():
 
 #Player disconnected
 func peerConnected(id):
-	addUserToList(id)
-	if is_network_master():
-		var peer = Network.peers[id]
-		rpc("systemMessage", peer.name + " has joined")
+	if addUserToList(id):
+		if is_network_master():
+			var peer = Network.peers[id]
+			rpc("systemMessage", peer.name + " has joined")
 
 #Player disconnected
 func peerDisconnected(id):
@@ -35,6 +35,9 @@ func peerDisconnected(id):
 
 #Adjust sizes and positions of everything to match current dimensions
 func updateLayout():
+	if Network.networkID in Network.peers:
+		updateReadyToggleButton()
+	
 	var dims = get_viewport().size
 	rect_size = dims
 	
@@ -54,29 +57,70 @@ func updateLayout():
 	curr = $PlayerList
 	curr.rect_position = Vector2(0, 0)
 	curr.rect_size = Vector2(dims.x - $ChatWindow.rect_size.x, dims.y / 2.0)
+	
+	var basePos = $MessageEdit.rect_position + Vector2(0, $MessageEdit.rect_size.y / 2.0)
+	$ReadyToggle.rect_position = Vector2(basePos.x / 2.0 - $ReadyToggle.rect_size.x - 5, basePos.y)
+	$StartButton.rect_position = Vector2(basePos.x / 2.0 + 5, basePos.y)
+	if not is_network_master():
+		$StartButton.disabled = true
+	else:
+		$StartButton.disabled = false
 
-#Mark player as ready
-remotesync func setReady():
-	var id = get_tree().get_rpc_sender_id()
+func updateReadyToggleButton():
+	if Network.peers[Network.networkID].ready:
+		$ReadyToggle.text = "Set Not Ready"
+	else:
+		$ReadyToggle.text = "Set Ready"
+
+remotesync func setReady(id):
+	Network.peers[id].ready = true
 	var node = get_node("PlayerList/VBoxContainer/" + str(id))
 	node.setText("ready")
 	node.setSenderColor(Color(0.0, 1.0, 0.0))
+	updateReadyToggleButton()
 
-#Mark player as not ready
-remotesync func setNotReady():
-	var id = get_tree().get_rpc_sender_id()
+remotesync func setNotReady(id):
+	Network.peers[id].ready = false
 	var node = get_node("PlayerList/VBoxContainer/" + str(id))
 	node.setText("not ready")
 	node.setSenderColor(Color(1.0, 0.0, 0.0))
+	updateReadyToggleButton()
+
+func readyTogglePressed():
+	if Network.peers[Network.networkID].ready:
+		unreadyButtonPressed()
+	else:
+		readyButtonPressed()
+
+#Mark player as ready
+func readyButtonPressed():
+	rpc("setReady", Network.networkID)
+	if not is_network_master():
+		setReady(Network.networkID)
+
+#Mark player as not ready
+func unreadyButtonPressed():
+	rpc("setNotReady", Network.networkID)
+	if not is_network_master():
+		setNotReady(Network.networkID)
 
 #Add player to player list
 func addUserToList(id):
+	print("adding to list")
 	var peer = Network.peers[id]
+	if is_instance_valid(get_node("PlayerList/VBoxContainer/" + str(id))):
+		return false
+	
 	var message = messageScene.instance()
-	message.setContent(peer.name, "not ready")
+	message.setContent(peer.name, "<ready status>")
 	message.setSenderColor(Color(1.0, 0.0, 0.0))
 	message.name = str(id)
 	$PlayerList/VBoxContainer.add_child(message)
+	if peer.ready:
+		setReady(id)
+	else:
+		setNotReady(id)
+	return true
 
 #Remove player from player list
 func removeUserFromList(id):
@@ -109,6 +153,12 @@ func quitLobby():
 	Network.disconnectNetwork()
 	Global.showMainMenu()
 
+func startButtonPressed():
+	if is_network_master():
+			Network.rpc("startGame")	
+	else:
+		systemMessage("Error: Only the host can start the game")
+		
 #Local user sent a message
 func _messageEntered(text):
 	$MessageEdit.clear()
@@ -120,22 +170,15 @@ func _messageEntered(text):
 		systemMessage(helpString)
 		return
 	if text in ["/start", "/startgame"]:
-		if is_network_master():
-			Network.rpc("startGame")	
-		else:
-			systemMessage("Error: Only the host can start the game")
+		startButtonPressed()
 		return
 	if text in ["/disconnect", "/quit"]:
 		quitLobby()
 	if text == "/ready":
-		rpc("setReady")
-		if not is_network_master():
-			setReady()
+		readyButtonPressed()
 		return
 	if text in ["/unready", "/notready"]:
-		rpc("setNotReady")
-		if not is_network_master():
-			setNotReady()
+		unreadyButtonPressed()
 		return
 	if text == "/host":
 		systemMessage("Host is \"" + str(Network.peers[1].name) + "\"")

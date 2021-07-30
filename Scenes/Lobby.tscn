@@ -42,5 +42,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="StartButton" type="Button" parent="."]
+margin_right = 12.0
+margin_bottom = 20.0
+text = "Start game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ReadyToggle" type="Button" parent="."]
+margin_right = 12.0
+margin_bottom = 20.0
+text = "Set not ready"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="tree_exiting" from="." to="." method="_exitingTree"]
 [connection signal="text_entered" from="MessageEdit" to="." method="_messageEntered"]
+[connection signal="pressed" from="StartButton" to="." method="startButtonPressed"]
+[connection signal="pressed" from="ReadyToggle" to="." method="readyTogglePressed"]
