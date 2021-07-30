@@ -36,7 +36,7 @@ func _ready():
 	
 #Set layout based on current screen size
 func updateLayout():
-	var dims = Vector2(500, 500)
+	var dims = Vector2(500, 550)
 	
 	var prev
 	var current
@@ -109,7 +109,7 @@ func populateValues():
 	
 	for action in keyMap:
 		var map = keyMap[action]
-		map.scancode = Global.settings[map.keyName]
+		map.event = Global.settings[map.keyName]
 		clearEditButtonPrompt(action)
 	
 	#Display
@@ -134,7 +134,7 @@ func _acceptPressed():
 	
 	for action in keyMap:
 		var map = keyMap[action]
-		Global.settings[map.keyName] = map.scancode
+		Global.settings[map.keyName] = map.event
 	
 	Global.saveSettings()
 	Global.closeSettingsMenu()
@@ -153,18 +153,19 @@ func _onHide():
 
 #Key pressed -- might need to capture this for editing binds
 func _input(event):
-	if editingKey and event is InputEventKey:
-		if event.scancode == KEY_ESCAPE:
+	if editingKey:
+		if event is InputEventKey and event.scancode == KEY_ESCAPE:
 			clearEditButtonPrompt(editingKey)
 			editingKey = null
 			return
-			
-		var action = editingKey
-		editingKey = null
-		if action in keyMap:
-			var map = keyMap[action]
-			map.scancode = event.scancode
-		clearEditButtonPrompt(action)
+		
+		if not event is InputEventMouseMotion:
+			var action = editingKey
+			editingKey = null
+			if action in keyMap:
+				var map = keyMap[action]
+				map.event = event
+			clearEditButtonPrompt(action)
 
 #Change text of button corresponding to given action to prompt editing the key bind
 func setEditButtonPrompt(action):
@@ -178,7 +179,14 @@ func setEditButtonPrompt(action):
 func clearEditButtonPrompt(action):
 	var map = keyMap[action]
 	var button = map.button
-	button.text = OS.get_scancode_string(map.scancode)
+	var event = map.event
+	if event is InputEventKey:
+		button.text = OS.get_scancode_string(event.scancode)
+	elif event is InputEventMouseButton:
+		if event.button_index in Global.buttonListStrings:
+			button.text = Global.buttonListStrings[event.button_index]
+		else:
+			button.text = "Unknown Mouse Button"
 
 #Some edit button was pressed -- action is the action being edited
 func _editButtonPressed(action):

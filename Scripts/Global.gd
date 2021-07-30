@@ -14,8 +14,12 @@ const dialogMessageScene = preload("res://Scenes/DialogMessage.tscn")
 
 #Various constants
 const settingsFileName = "settings.json"
-const bindableActions = ["jump", "forward", "back", "left", "right", "item1", "item2", "item3",
+const bindableActions = ["shoot", "jump", "forward", "back", "left", "right", "item1", "item2", "item3",
 	"item4", "item5", "item6", "item7", "item8", "item9", "item0"] #Actions that can be rebound
+const buttonListStrings = {BUTTON_LEFT: "Left Mouse", BUTTON_RIGHT: "Right Mouse",
+	BUTTON_MIDDLE: "Middle Mouse", BUTTON_XBUTTON1: "Extra Mouse 1", BUTTON_XBUTTON2: "Extra Mouse 2",
+	BUTTON_WHEEL_UP: "Mouse Wheel Up", BUTTON_WHEEL_DOWN: "Mouse Wheel Down", 
+	BUTTON_WHEEL_LEFT: "Mouse Wheel Left", BUTTON_WHEEL_RIGHT: "Mouse Wheel Right"}
 
 #Instances of menus
 var mainMenuInstance = null
@@ -29,7 +33,7 @@ var defaultBinds = {}
 func _ready():
 	for action in bindableActions:
 		var keyName = "key_" + action
-		defaultBinds[keyName] = InputMap.get_action_list(action)[0].scancode
+		defaultBinds[keyName] = InputMap.get_action_list(action)[0]
 
 	OS.window_resizable = false
 	loadDefaultSettings()
@@ -52,8 +56,7 @@ func applySettings():
 	
 	for action in bindableActions:
 		var keyName = "key_" + action
-		var event = InputEventKey.new()
-		event.scancode = settings[keyName]
+		var event = settings[keyName]
 		InputMap.action_erase_events(action)
 		InputMap.action_add_event(action, event)
 
