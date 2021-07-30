@@ -13,7 +13,7 @@ func _ready():
 	updateLayout()
 
 func releaseFocus():
-	$MessageEdit.set_focus_mode(Control.FOCUS_NONE)
+	$MessageEdit.release_focus()
 
 #Player disconnected
 func peerConnected(id):
