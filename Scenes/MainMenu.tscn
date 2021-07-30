@@ -88,6 +88,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="QuitButton" type="Button" parent="."]
+margin_left = 59.6904
+margin_top = 205.798
+margin_right = 99.6904
+margin_bottom = 225.798
+text = "Quit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="pressed" from="HostButton" to="." method="_hostButtonPressed"]
 [connection signal="pressed" from="JoinButton" to="." method="_joinButtonPressed"]
 [connection signal="pressed" from="SettingsButton" to="." method="_settingsButtonPressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_quitButtonPressed"]

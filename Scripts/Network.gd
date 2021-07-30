@@ -67,7 +67,7 @@ func _connected_ok():
 	print("Connected to server")
 	rpc("addPeer", Global.settings.playerName)
 	lobbyInstance.visible = true
-	Global.closeMainMenu()
+	Global.hideMainMenu()
 
 #Disconnected by server
 func _server_disconnected():
@@ -127,7 +127,7 @@ func hostLobby(port: int):
 	
 	createServer(port)
 	rpc("addPeer", Global.settings.playerName)
-	Global.closeMainMenu()
+	Global.hideMainMenu()
 
 #Join lobby as client
 func joinLobby(ip: String, port:int):
@@ -142,6 +142,11 @@ func joinLobby(ip: String, port:int):
 
 	createClient(ip, port)
 
+#Leave the lobby if it exists
+func leaveLobby():
+	if is_instance_valid(lobbyInstance):
+		lobbyInstance.quitLobby()
+		
 
 #Start a game with the current peers
 remotesync func startGame():

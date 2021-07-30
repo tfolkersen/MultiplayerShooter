@@ -109,7 +109,7 @@ func populateValues():
 	
 	for action in keyMap:
 		var map = keyMap[action]
-		map.event = Global.settings[map.keyName]
+		map.eventInfo = Global.settings[map.keyName]
 		clearEditButtonPrompt(action)
 	
 	#Display
@@ -134,7 +134,7 @@ func _acceptPressed():
 	
 	for action in keyMap:
 		var map = keyMap[action]
-		Global.settings[map.keyName] = map.event
+		Global.settings[map.keyName] = map.eventInfo
 	
 	Global.saveSettings()
 	Global.closeSettingsMenu()
@@ -164,7 +164,7 @@ func _input(event):
 			editingKey = null
 			if action in keyMap:
 				var map = keyMap[action]
-				map.event = event
+				map.eventInfo = Global.eventToInfo(event)
 			clearEditButtonPrompt(action)
 
 #Change text of button corresponding to given action to prompt editing the key bind
@@ -179,12 +179,12 @@ func setEditButtonPrompt(action):
 func clearEditButtonPrompt(action):
 	var map = keyMap[action]
 	var button = map.button
-	var event = map.event
-	if event is InputEventKey:
-		button.text = OS.get_scancode_string(event.scancode)
-	elif event is InputEventMouseButton:
-		if event.button_index in Global.buttonListStrings:
-			button.text = Global.buttonListStrings[event.button_index]
+	var eventInfo = map.eventInfo
+	if eventInfo.type == "InputEventKey":
+		button.text = OS.get_scancode_string(eventInfo.code)
+	elif eventInfo.type == "InputEventMouseButton":
+		if eventInfo.code in Global.buttonListStrings:
+			button.text = Global.buttonListStrings[eventInfo.code]
 		else:
 			button.text = "Unknown Mouse Button"
 

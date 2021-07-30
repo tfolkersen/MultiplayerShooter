@@ -30,6 +30,9 @@ func updateLayout():
 	pos.y += 40
 	$SettingsButton.rect_position = pos
 	
+	pos.y += 40
+	$QuitButton.rect_position = pos
+	
 	$IPLabel.rect_position = $HostButton.rect_position + Vector2($HostButton.rect_size.x + 100, 0)
 	$IPEdit.rect_position = $IPLabel.rect_position + Vector2(0, $IPLabel.rect_size.y + 10)
 	
@@ -39,15 +42,29 @@ func updateLayout():
 
 #Host game button pressed
 func _hostButtonPressed():
+	var ip = $IPEdit.text
 	var port = int($PortEdit.text)
+	Global.settings.defaultIP = ip
+	Global.settings.defaultPort = port
+	Global.saveSettings()
 	Network.hostLobby(port)
 
 #Join button pressed
 func _joinButtonPressed():
 	var ip = $IPEdit.text
 	var port = int($PortEdit.text)
+	Global.settings.defaultIP = ip
+	Global.settings.defaultPort = port
+	Global.saveSettings()
 	Network.joinLobby(ip, port)
 
 #Settings button pressed
 func _settingsButtonPressed():
 	Global.showSettingsMenu()
+
+#Quit button pressed
+func _quitButtonPressed():
+	Network.stopGame()
+	Network.leaveLobby()
+	Global.closeMainMenu()
+	get_tree().quit()

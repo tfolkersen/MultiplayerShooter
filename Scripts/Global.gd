@@ -33,7 +33,7 @@ var defaultBinds = {}
 func _ready():
 	for action in bindableActions:
 		var keyName = "key_" + action
-		defaultBinds[keyName] = InputMap.get_action_list(action)[0]
+		defaultBinds[keyName] = eventToInfo(InputMap.get_action_list(action)[0])
 
 	OS.window_resizable = false
 	loadDefaultSettings()
@@ -51,12 +51,14 @@ func _process(delta):
 
 #Apply the current settings
 func applySettings():
+	print("Applying settings")
 	OS.window_fullscreen = settings.fullscreen
 	OS.window_size = Vector2(settings.resolutionX, settings.resolutionY)
 	
 	for action in bindableActions:
 		var keyName = "key_" + action
-		var event = settings[keyName]
+		var eventInfo = settings[keyName]
+		var event = infoToEvent(eventInfo)
 		InputMap.action_erase_events(action)
 		InputMap.action_add_event(action, event)
 
@@ -67,6 +69,8 @@ func loadDefaultSettings():
 	settings.resolutionX = 1024
 	settings.resolutionY = 600
 	settings.fullscreen = false
+	settings.defaultIP = "127.0.0.1"
+	settings.defaultPort = 25565
 	
 	for action in bindableActions:
 		var keyName = "key_" + action
@@ -80,6 +84,11 @@ func loadSettings():
 		var data = JSON.parse(file.get_as_text())
 		print(data.result)
 		settings = data.result
+		
+		#fix code types
+		for action in bindableActions:
+			var keyName = "key_" + action
+			settings[keyName].code = int(settings[keyName].code)
 		file.close()
 	else:
 		print("Failed to open settings file")
@@ -99,6 +108,13 @@ func showMainMenu():
 	if not is_instance_valid(mainMenuInstance):
 		mainMenuInstance = mainMenuScene.instance()
 		get_node("/root/Game").add_child(mainMenuInstance)
+	else:
+		mainMenuInstance.visible = true
+
+#Hide main menu if it exists
+func hideMainMenu():
+	if is_instance_valid(mainMenuInstance):
+		mainMenuInstance.visible = false
 
 #Close main menu if it's open
 func closeMainMenu():
@@ -131,3 +147,20 @@ func captureMouse():
 #Allow the cursor to move again
 func releaseMouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+#Generate input event based on stored data
+func infoToEvent(info):
+	if info.type == "InputEventKey":
+		var event = InputEventKey.new()
+		event.scancode = info.code
+		return event
+	elif info.type == "InputEventMouseButton":
+		var event = InputEventMouseButton.new()
+		event.button_index = info.code
+		return event
+
+func eventToInfo(event):
+	if event is InputEventKey:
+		return {"type": "InputEventKey", "code": int(event.scancode)}
+	elif event is InputEventMouseButton:
+		return {"type": "InputEventMouseButton", "code": int(event.button_index)}
