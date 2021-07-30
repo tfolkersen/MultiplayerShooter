@@ -29,6 +29,9 @@ var settingsMenuInstance = null
 var settings = {}
 var defaultBinds = {}
 
+#Flags
+var allowControl = true #true if the player shouldn't be able to move
+
 #Entry point of the game
 func _ready():
 	for action in bindableActions:
@@ -48,6 +51,18 @@ func _process(delta):
 		var data = get_viewport().get_texture().get_data()
 		data.flip_y()
 		data.save_png("gameScreenshot.png")
+	if Input.is_action_just_pressed("escape"):
+		if not is_instance_valid(mainMenuInstance) or not mainMenuInstance.isVisible():
+			showMainMenu()
+		else:
+			if isGameVisible() or isLobbyVisible():
+				hideMainMenu()
+
+func isGameVisible():
+	return is_instance_valid(Network.gameInstance)
+	
+func isLobbyVisible():
+	return is_instance_valid(Network.lobbyInstance) and Network.lobbyInstance.visible
 
 #Apply the current settings
 func applySettings():
@@ -109,17 +124,31 @@ func showMainMenu():
 		mainMenuInstance = mainMenuScene.instance()
 		get_node("/root/Game").add_child(mainMenuInstance)
 	else:
-		mainMenuInstance.visible = true
+		mainMenuInstance.show()
+	setMenuFocus()
 
+func setMenuFocus():
+	releaseMouse()
+	allowControl = false
+	if isLobbyVisible():
+		Network.lobbyInstance.releaseFocus()
+	
+func releaseMenuFocus():
+	if isGameVisible():
+		captureMouse()
+	allowControl = true
+	
 #Hide main menu if it exists
 func hideMainMenu():
 	if is_instance_valid(mainMenuInstance):
-		mainMenuInstance.visible = false
+		mainMenuInstance.hide()
+	releaseMenuFocus()
 
 #Close main menu if it's open
 func closeMainMenu():
 	if is_instance_valid(mainMenuInstance):
 		mainMenuInstance.closeSelf()
+	releaseMenuFocus()
 
 #Show the settings menu if it's not shown
 func showSettingsMenu():

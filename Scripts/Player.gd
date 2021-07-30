@@ -25,6 +25,9 @@ var gunCooldowns = [52, 22, 10]
 var lastShot = 999999
 var activeGun
 
+func ignoreInputs():
+	return not Global.allowControl
+
 func _recursiveSetBit(obj, bit, enabled):
 	if obj.has_method("set_layer_mask_bit"):
 		obj.set_layer_mask_bit(bit, enabled)
@@ -156,6 +159,8 @@ remotesync func swapToGun(gun):
 		swapOut()
 	
 func handleItemSwap():
+	if ignoreInputs():
+		return
 	if is_network_master():
 		if Input.is_action_just_pressed("item1"):
 			print("Swapping to golden gun")
@@ -187,7 +192,7 @@ func _physics_process(delta):
 	#Move gun container based on walk time
 	
 	if is_network_master():
-		if Input.is_action_pressed("shoot"):
+		if Input.is_action_pressed("shoot") and not ignoreInputs():
 			shotBuffer = 5
 		handleShot()
 	
@@ -204,7 +209,7 @@ func _physics_process(delta):
 		
 
 	#if Input.is_action_pressed("jump") and is_on_floor() and is_network_master() and jumpCooldown == 0:
-	if Input.is_action_pressed("jump") and is_network_master() and jumpCooldown == 0:
+	if Input.is_action_pressed("jump") and is_network_master() and jumpCooldown == 0 and not ignoreInputs():
 		jumpCooldown = jumpLimit
 		velocity.y = 0.4 * 10
 	
@@ -216,14 +221,15 @@ func _physics_process(delta):
 	if is_network_master():
 		var moveDir = Vector3(0, 0, 0)
 		
-		if Input.is_action_pressed("forward"):
-			moveDir += Vector3(0, 0, -1)
-		if Input.is_action_pressed("back"):
-			moveDir += Vector3(0, 0, 1)
-		if Input.is_action_pressed("left"):
-			moveDir += Vector3(-1, 0, 0)
-		if Input.is_action_pressed("right"):
-			moveDir += Vector3(1, 0, 0)
+		if not ignoreInputs():
+			if Input.is_action_pressed("forward"):
+				moveDir += Vector3(0, 0, -1)
+			if Input.is_action_pressed("back"):
+				moveDir += Vector3(0, 0, 1)
+			if Input.is_action_pressed("left"):
+				moveDir += Vector3(-1, 0, 0)
+			if Input.is_action_pressed("right"):
+				moveDir += Vector3(1, 0, 0)
 	
 		var walkAnimator = $Camera/GCWalk/AnimationPlayer
 		walkAnimator.set_blend_time("Walk", "Idle", 0.3)
@@ -294,7 +300,7 @@ func _physics_process(delta):
 		rpc_unreliable("synchronize", global_transform, velocity, rotationVec)
 
 func _input(event):
-	if not is_network_master():
+	if not is_network_master() or ignoreInputs():
 		return
 		
 	if event is InputEventMouseMotion:

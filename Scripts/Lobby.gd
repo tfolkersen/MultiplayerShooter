@@ -12,6 +12,9 @@ func _ready():
 	$MessageEdit.text = "/start"
 	updateLayout()
 
+func releaseFocus():
+	$MessageEdit.set_focus_mode(Control.FOCUS_NONE)
+
 #Player disconnected
 func peerConnected(id):
 	addUserToList(id)
@@ -140,3 +143,4 @@ func _messageEntered(text):
 
 func _exitingTree():
 	print("Lobby exiting tree")
+
