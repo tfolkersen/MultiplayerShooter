@@ -9,14 +9,16 @@ const messageScene = preload("res://Scenes/LobbyMessage.tscn")
 func _ready():
 	print("Lobby Joined tree")
 	grabFocus()
-	$MessageEdit.text = "/start"
+	#$MessageEdit.text = "/start"
 	updateLayout()
 
 func releaseFocus():
-	$MessageEdit.release_focus()
+	#$MessageEdit.release_focus()
+	Network.chatInstance.release_focus()
 	
 func grabFocus():
-	$MessageEdit.grab_focus()
+	#$MessageEdit.grab_focus()
+	Network.chatInstance.grab_focus()
 	
 
 #Player disconnected
@@ -44,21 +46,22 @@ func updateLayout():
 	var prev = null
 	var curr = null
 	
-	curr = $ChatWindow
-	curr.rect_size = Vector2(dims.x * 0.65, dims.y * 0.9)
-	curr.rect_position = Vector2(dims.x - curr.rect_size.x, 0)
+	#curr = $ChatWindow
+	#curr.rect_size = Vector2(dims.x * 0.65, dims.y * 0.9)
+	#curr.rect_position = Vector2(dims.x - curr.rect_size.x, 0)
 	
-	prev = curr
-	curr = $MessageEdit
-	curr.rect_size = Vector2(prev.rect_size.x, dims.y - prev.rect_size.y)
-	curr.rect_position = Vector2(prev.rect_position.x, prev.rect_size.y)
+	#prev = curr
+	#curr = $MessageEdit
+	#curr.rect_size = Vector2(prev.rect_size.x, dims.y - prev.rect_size.y)
+	#curr.rect_position = Vector2(prev.rect_position.x, prev.rect_size.y)
 	
 	prev = curr
 	curr = $PlayerList
 	curr.rect_position = Vector2(0, 0)
-	curr.rect_size = Vector2(dims.x - $ChatWindow.rect_size.x, dims.y / 2.0)
+	curr.rect_size = Vector2(dims.x * 0.4, dims.y / 2.0)
 	
-	var basePos = $MessageEdit.rect_position + Vector2(0, $MessageEdit.rect_size.y / 2.0)
+	#var basePos = $MessageEdit.rect_position + Vector2(0, $MessageEdit.rect_size.y / 2.0)
+	var basePos = Vector2(dims.x / 2.0, dims.y * 0.90)
 	$ReadyToggle.rect_position = Vector2(basePos.x / 2.0 - $ReadyToggle.rect_size.x - 5, basePos.y)
 	$StartButton.rect_position = Vector2(basePos.x / 2.0 + 5, basePos.y)
 	if not is_network_master():
@@ -133,7 +136,7 @@ func addMessage(sender, text, senderColor = Color(1.0, 1.0, 0.0)):
 	var message = messageScene.instance()
 	message.setContent(sender, text)
 	message.setSenderColor(senderColor)
-	$ChatWindow/VBoxContainer.add_child(message)
+	#$ChatWindow/VBoxContainer.add_child(message)
 	
 #Receive message from someone
 remotesync func receiveMessage(message: String):

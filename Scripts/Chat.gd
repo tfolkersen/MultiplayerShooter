@@ -31,6 +31,8 @@ func _process(delta):
 	
 	$Panel.self_modulate.a = opacity
 	$Panel/ScrollContainer.get_v_scrollbar().self_modulate.a = opacity
+	$Panel/LineEdit.self_modulate.a = opacity
+	
 	for m in messages:
 		messageDict[m].lingerTime = max(messageDict[m].lingerTime - delta, 0)
 		var lingerTime = messageDict[m].lingerTime
@@ -48,6 +50,7 @@ func fadeOut():
 	tween.start()
 
 func activate():
+	print("Active " + str(active))
 	if not active:
 		active = true
 		fadeIn()
@@ -67,6 +70,14 @@ func deactivate():
 		return true
 	else:
 		return false
+
+func grab_focus():
+	$Panel/LineEdit.set_focus_mode(Control.FOCUS_ALL)
+	$Panel/LineEdit.grab_focus()
+	
+func release_focus():
+	$Panel/LineEdit.set_focus_mode(Control.FOCUS_NONE)
+	$Panel/LineEdit.release_focus()
 
 func hide():
 	deactivate()
@@ -94,7 +105,7 @@ func setSize(x, y):
 	
 func layoutGame():
 	ignoreControls = false
-	draggable = true
+	draggable = false
 	setBaseLayout()
 	setSize(420, 240)
 	var vpDims = get_viewport().size
@@ -103,6 +114,7 @@ func layoutGame():
 	$Panel/ScrollContainer.scroll_vertical += 10000
 
 func layoutLobby():
+	active = false
 	var vpDims = get_viewport().size
 	var target = Vector2(vpDims.x * 0.6, vpDims.y)
 	ignoreControls = true

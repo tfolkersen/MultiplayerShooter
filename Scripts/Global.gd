@@ -59,8 +59,9 @@ func _process(delta):
 		if is_instance_valid(Network.chatInstance) and isGameVisible() and allowControl:
 			Network.chatInstance.activate()
 	if Input.is_action_just_pressed("escape"):
-		if is_instance_valid(Network.chatInstance) and Network.chatInstance.deactivate():
-			return
+		if is_instance_valid(Network.chatInstance) and not Network.chatInstance.ignoreControls:
+			if Network.chatInstance.deactivate():
+				return
 		var menus = get_node("/root/Game/MenuLayer").get_children()
 		if menus[-1] != mainMenuInstance and menus[-1].has_method("closeSelf"):
 			menus[-1].closeSelf()

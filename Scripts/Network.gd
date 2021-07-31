@@ -80,6 +80,8 @@ func _connected_ok():
 	var selfPeer = peers[Network.networkID]
 	rpc("addPeer", selfPeer.name, selfPeer.ready)
 	lobbyInstance.visible = true
+	chatInstance.unhide()
+	chatInstance.activate()
 	Global.hideMainMenu()
 
 #Disconnected by server
@@ -137,12 +139,17 @@ func hostLobby(port: int):
 	if is_instance_valid(lobbyInstance):
 		lobbyInstance.quitLobby()
 		lobbyInstance = null
+	if not is_instance_valid(chatInstance):
+		createChat()
 	lobbyInstance = lobbyScene.instance()
 	get_node("/root/Game").add_child(lobbyInstance)
 	lobbyInstance.systemMessage("Type /help for a list of commands")
 	
 	createServer(port)
 	lobbyInstance.updateLayout()
+	chatInstance.layoutLobby()
+	chatInstance.unhide()
+	chatInstance.activate()
 	var selfPeer = peers[Network.networkID]
 	rpc("addPeer", selfPeer.name, selfPeer.ready)
 	Global.hideMainMenu()
@@ -153,7 +160,10 @@ func joinLobby(ip: String, port:int):
 	if is_instance_valid(lobbyInstance):
 		lobbyInstance.quitLobby()
 		lobbyInstance = null
-	
+	if not is_instance_valid(chatInstance):
+		createChat()
+	chatInstance.layoutLobby()
+	chatInstance.hide()
 	lobbyInstance = lobbyScene.instance()
 	lobbyInstance.visible = false
 	get_node("/root/Game").add_child(lobbyInstance)
@@ -167,8 +177,6 @@ func leaveLobby():
 	if is_instance_valid(lobbyInstance):
 		lobbyInstance.quitLobby()
 	
-
-
 	
 func createChat():
 	if is_instance_valid(chatInstance):
@@ -183,7 +191,8 @@ remotesync func startGame():
 		chatInstance.unhide()
 	else:
 		createChat()
-	
+	chatInstance.layoutGame()
+	chatInstance.deactivate()
 	if is_instance_valid(gameInstance):
 		stopGame()
 	lobbyInstance.visible = false
