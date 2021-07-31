@@ -9,8 +9,11 @@ var dragging = false
 const fadeTime = 0.1
 var pendingScrolls = 0
 
-var maxMessages = 30
+var maxMessages = 50
 var messages = []
+var messageDict = {}
+var scrollDown = false
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -24,9 +27,10 @@ func _process(delta):
 	$Panel.self_modulate.a = opacity
 	$Panel/ScrollContainer.get_v_scrollbar().self_modulate.a = opacity
 	for m in messages:
-		m[1] = max(m[1] - delta, 0)
-		var lingerOpacity = min(1.0, m[1])
-		m[0].self_modulate.a = max(lingerOpacity, opacity)
+		messageDict[m].lingerTime = max(messageDict[m].lingerTime - delta, 0)
+		var lingerTime = messageDict[m].lingerTime
+		var lingerOpacity = min(1.0, lingerTime)
+		m.self_modulate.a = max(lingerOpacity, opacity)
 
 func fadeIn():
 	tween.stop_all()
@@ -111,12 +115,18 @@ func addMessage(sender: String, content: String, senderColor: String = "#ffff00"
 #	message.bbcode_enabled = true
 	message.bbcode_text = text
 	#message.fit_content_height = true
+	if atMaxScroll():
+		scrollDown = true
+	else:
+		scrollDown = false
 	$Panel/ScrollContainer/VBoxContainer.add_child(message)
-	message.connect("draw", self, "_test")
-	messages.push_back([message, 8.0])
+	message.connect("draw", self, "_newMessageScroll", [message])
+	messages.push_back(message)
+	messageDict[message] = {"lingerTime": 8.0, drawCalls = 0}
 	if len(messages) > maxMessages:
 		var m = messages.pop_front()
-		m[0].queue_free()
+		messageDict.erase(m)
+		m.queue_free()
 		
 	pendingScrolls += 1
 
@@ -127,6 +137,14 @@ func _dragZoneExited():
 	draggable = false
 	dragging = false
 
+func atMaxScroll():
+	var container = $Panel/ScrollContainer
+	var scroll = container.scroll_vertical
+	container.scroll_vertical += 1000000
+	var maxScroll = container.scroll_vertical
+	container.scroll_vertical = scroll
+	return scroll == maxScroll
+
 func _messageEntered(new_text):
 	print("Entered message: " + new_text)
 	$Panel/LineEdit.clear()
@@ -134,7 +152,9 @@ func _messageEntered(new_text):
 	if new_text != "":
 		addMessage("Memer", new_text)
 
-func _test():
-	while pendingScrolls:
-		pendingScrolls -= 1
-		$Panel/ScrollContainer.scroll_vertical += 10000
+func _newMessageScroll(arg):
+	messageDict[arg].drawCalls += 1
+	if messageDict[arg].drawCalls == 3:
+		arg.disconnect("draw", self, "_newMessageScroll")
+		if scrollDown:
+			$Panel/ScrollContainer.scroll_vertical += 10000

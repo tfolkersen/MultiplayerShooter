@@ -56,7 +56,7 @@ func _process(delta):
 		data.flip_y()
 		data.save_png("gameScreenshot.png")
 	if Input.is_action_just_pressed("chat"):
-		if is_instance_valid(Network.chatInstance) and isGameVisible():
+		if is_instance_valid(Network.chatInstance) and isGameVisible() and allowControl:
 			Network.chatInstance.activate()
 	if Input.is_action_just_pressed("escape"):
 		if is_instance_valid(Network.chatInstance) and Network.chatInstance.deactivate():
