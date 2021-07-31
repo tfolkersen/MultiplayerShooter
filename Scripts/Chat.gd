@@ -7,23 +7,28 @@ var draggable = false
 var dragging = false
 
 const fadeTime = 0.1
-var pendingScrolls = 0
 
 var maxMessages = 50
 var messages = []
 var messageDict = {}
 var scrollDown = false
 
+var ignoreControls = true
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	updateLayout()
+	layoutGame()
 	tween = Tween.new()
 	add_child(tween)
 	active = true
 	deactivate()
 
 func _process(delta):
+	if ignoreControls:
+		draggable = false
+		dragging = false
+	
 	$Panel.self_modulate.a = opacity
 	$Panel/ScrollContainer.get_v_scrollbar().self_modulate.a = opacity
 	for m in messages:
@@ -70,6 +75,46 @@ func hide():
 func unhide():
 	self.modulate.a = 1.0
 
+func setBaseLayout():
+	var x = 420.0
+	var y = 240.0
+	$Panel.rect_size = Vector2(x, y)
+	$Panel/DragZone.rect_size = Vector2((410.0 / 420.0) * x, (14.0 / 240.0) * y)
+	$Panel/Dark1.rect_size = Vector2((395.0 / 420.0) * x, (172.0 / 240.0) * y)
+	$Panel/Dark2.rect_size = Vector2((395.0 / 420.0) * x, (24.0 / 240.0) * y)
+	
+	$Panel.rect_position = Vector2(0, 0)
+	$Panel/DragZone.rect_position = Vector2((($Panel.rect_size.x - $Panel/DragZone.rect_size.x) / 2.0), 0)
+	$Panel/Dark1.rect_position = Vector2(($Panel.rect_size.x - $Panel/Dark1.rect_size.x) / 2.0, $Panel/DragZone.rect_size.y)
+	$Panel/Dark2.rect_position = Vector2(($Panel.rect_size.x - $Panel/Dark2.rect_size.x) / 2.0, $Panel/Dark1.rect_position.y + $Panel/Dark1.rect_size.y + (20.0 / 240.0) * y)	
+
+func setSize(x, y):
+	$Panel.rect_scale.x = x / 420.0
+	$Panel.rect_scale.y = y / 240.0
+	
+func layoutGame():
+	ignoreControls = false
+	draggable = true
+	setBaseLayout()
+	setSize(420, 240)
+	var vpDims = get_viewport().size
+	rect_position = Vector2(vpDims.x / 24.0, vpDims.y / 2.0)
+	updateLayout()
+	$Panel/ScrollContainer.scroll_vertical += 10000
+
+func layoutLobby():
+	var vpDims = get_viewport().size
+	var target = Vector2(vpDims.x * 0.6, vpDims.y)
+	ignoreControls = true
+	draggable = false
+	setBaseLayout()
+	var ratio = min(target.x / 420.0, target.y / 240.0)
+	setSize(420.0 * ratio, 240.0 * ratio)
+	rect_position = Vector2(vpDims.x - $Panel.rect_size.x * $Panel.rect_scale.x, (vpDims.y - $Panel.rect_size.y * $Panel.rect_scale.y) / 2.0)
+	
+	updateLayout()
+	$Panel/ScrollContainer.scroll_vertical += 10000
+	
 func updateLayout():
 	$Panel/ScrollContainer.rect_position = $Panel/Dark1.rect_position
 	$Panel/ScrollContainer.rect_size = $Panel/Dark1.rect_size
@@ -85,6 +130,9 @@ func setShaderParams():
 	$Panel/Dark1.visible = false
 	$Panel/Dark2.visible = false
 	
+	var xScale = $Panel.rect_scale.x
+	var yScale = $Panel.rect_scale.y
+	
 	var bg = $Panel
 	var xOffset = rect_position.x + bg.rect_position.x
 	var yOffset = vpDims.y - (rect_position.y + bg.rect_position.y)
@@ -92,11 +140,11 @@ func setShaderParams():
 	
 	for c in $Panel.get_children():
 		if c.name.find("Dark") != -1:
-			var darkRect = Color(c.rect_position.x + offset.r, -c.rect_position.y + offset.g, c.rect_position.x + c.rect_size.x + offset.b, -c.rect_position.y - c.rect_size.y + offset.a)
+			var darkRect = Color(xScale * c.rect_position.x + offset.r, -c.rect_position.y * yScale + offset.g, (c.rect_position.x + c.rect_size.x) * xScale + offset.b, (-c.rect_position.y - c.rect_size.y) * yScale + offset.a)
 			$Panel.material.set_shader_param(c.name.to_lower(), darkRect)
 
 func _input(event):
-	if not active:
+	if not active or ignoreControls:
 		return
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT and event.pressed and draggable:
@@ -109,7 +157,8 @@ func _input(event):
 		
 func addMessage(sender: String, content: String, senderColor: String = "#ffff00", messageColor: String = "#ffffff"):
 	print("Adding message")
-	var message = $RichTextLabel.duplicate()
+	var message = $MessageTemplate.duplicate()
+	message.visible = true
 	content = content.replace("[", "[" + Global.zwsp)
 	var text = "[color=" + senderColor + "]" + sender + "[/color]: " + "[color=" + messageColor + "]" + content + "[/color]"
 #	message.bbcode_enabled = true
@@ -128,7 +177,11 @@ func addMessage(sender: String, content: String, senderColor: String = "#ffff00"
 		messageDict.erase(m)
 		m.queue_free()
 		
-	pendingScrolls += 1
+
+func clear():
+	messageDict = {}
+	for m in messages:
+		m.queue_free()
 
 func _dragZoneEntered():
 	draggable = true
@@ -148,7 +201,8 @@ func atMaxScroll():
 func _messageEntered(new_text):
 	print("Entered message: " + new_text)
 	$Panel/LineEdit.clear()
-	deactivate()
+	if not ignoreControls:
+		deactivate()
 	if new_text != "":
 		addMessage("Memer", new_text)
 
