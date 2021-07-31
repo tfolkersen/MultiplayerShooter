@@ -18,7 +18,7 @@ sun_energy = 0.2
 [sub_resource type="Environment" id=2]
 background_mode = 3
 background_sky = SubResource( 1 )
-background_color = Color( 0.376471, 0.376471, 0.376471, 1 )
+background_color = Color( 0.729412, 0.729412, 0.729412, 1 )
 ambient_light_color = Color( 1, 1, 1, 1 )
 ambient_light_energy = 0.2
 ambient_light_sky_contribution = 0.0
@@ -92,7 +92,7 @@ uv1_scale = Vector3( 2.504, 6.159, 2.5 )
 uv1_offset = Vector3( 1.036, 4.009, 0 )
 uv1_triplanar = true
 
-[sub_resource type="Shader" id=16]
+[sub_resource type="Shader" id=12]
 code = "shader_type spatial;
 
 render_mode unshaded;
@@ -159,16 +159,16 @@ void fragment() {
 	//ALBEDO.rgb = mix(vec3(1.0, 0.0, 0.0), vec3(0.0, 0.0, 1.0), UV.x);
 }"
 
-[sub_resource type="ShaderMaterial" id=17]
+[sub_resource type="ShaderMaterial" id=13]
 resource_local_to_scene = true
-shader = SubResource( 16 )
+shader = SubResource( 12 )
 shader_param/color1 = null
 shader_param/color2 = null
 
-[sub_resource type="ViewportTexture" id=12]
+[sub_resource type="ViewportTexture" id=14]
 viewport_path = NodePath("Portal1Viewport")
 
-[sub_resource type="Shader" id=13]
+[sub_resource type="Shader" id=15]
 code = "shader_type spatial;
 
 render_mode unshaded;
@@ -235,13 +235,13 @@ void fragment() {
 	//ALBEDO.rgb = mix(vec3(1.0, 0.0, 0.0), vec3(0.0, 0.0, 1.0), UV.x);
 }"
 
-[sub_resource type="ShaderMaterial" id=14]
+[sub_resource type="ShaderMaterial" id=16]
 resource_local_to_scene = true
-shader = SubResource( 13 )
+shader = SubResource( 15 )
 shader_param/color1 = null
 shader_param/color2 = null
 
-[sub_resource type="ViewportTexture" id=15]
+[sub_resource type="ViewportTexture" id=17]
 viewport_path = NodePath("Portal2Viewport")
 
 [node name="TempleMap" type="Spatial"]
@@ -3796,9 +3796,9 @@ omni_range = 26.4
 [node name="PortalView1" type="Sprite3D" parent="."]
 transform = Transform( 0.2, 0, 0, 0, 0.3, 0, 0, 0, 1, 33.8061, -1.78157, -18.1589 )
 layers = 4
-material_override = SubResource( 17 )
+material_override = SubResource( 13 )
 cast_shadow = 0
-texture = SubResource( 12 )
+texture = SubResource( 14 )
 script = ExtResource( 7 )
 __meta__ = {
 "_edit_group_": true
@@ -3818,8 +3818,8 @@ omni_attenuation = 0.5
 [node name="PortalView2" type="Sprite3D" parent="."]
 transform = Transform( 0.2, 0, 0, 0, 0.3, 0, 0, 0, 1, 33.3696, -1.59783, 17.8664 )
 layers = 4
-material_override = SubResource( 14 )
-texture = SubResource( 15 )
+material_override = SubResource( 16 )
+texture = SubResource( 17 )
 script = ExtResource( 9 )
 __meta__ = {
 "_edit_group_": true
