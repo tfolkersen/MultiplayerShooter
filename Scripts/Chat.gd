@@ -204,7 +204,10 @@ func _messageEntered(new_text):
 	if not ignoreControls:
 		deactivate()
 	if new_text != "":
-		addMessage("Memer", new_text)
+		#addMessage("Memer", new_text)
+		Network.rpc("receiveMessage", new_text)
+		if not is_network_master():
+			Network.receiveMessage(new_text)
 
 func _newMessageScroll(arg):
 	messageDict[arg].drawCalls += 1

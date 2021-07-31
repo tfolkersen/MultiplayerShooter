@@ -46,6 +46,17 @@ func removePeer(id):
 		removePlayerFromGame(id)
 		peers.erase(id)
 
+remotesync func receiveMessage(content: String):
+	var id = get_tree().get_rpc_sender_id()
+	if id in peers:
+		var peer = peers[id]
+		if is_instance_valid(chatInstance):
+			chatInstance.addMessage(peer.name, content)
+
+remotesync func receiveSystemMessage(content: String):
+	if is_instance_valid(chatInstance):
+		chatInstance.addMessage("[SYSTEM]", content, "#ff00ff")
+
 func removePlayerFromGame(id):
 	if is_instance_valid(gameInstance):
 		var playerNode = gameInstance.get_node("Players/" + str(id))
