@@ -2,4 +2,6 @@
 
 [node name="Game" type="Node"]
 
+[node name="ChatLayer" type="CanvasLayer" parent="."]
+
 [node name="MenuLayer" type="CanvasLayer" parent="."]

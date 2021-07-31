@@ -1,0 +1,110 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scripts/Chat.gd" type="Script" id=1]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform vec4 dark1;
+uniform vec4 dark2;
+
+bool inBox(float x, float y, vec4 box) {
+	if (x >= box.x && x <= box.z && y <= box.y && y >= box.a) {
+		return true;
+	}
+	return false;
+}
+
+void fragment() {
+	COLOR = vec4(1.0, 1.0, 1.0, 0.5);
+	if (inBox(FRAGCOORD.x, FRAGCOORD.y, dark1) || inBox(FRAGCOORD.x, FRAGCOORD.y, dark2)) {
+		COLOR = vec4(0.4, 0.4, 0.4, 0.5);
+	}
+	//COLOR = mix(vec4(1.0, 0.0, 0.0, 1.0), vec4(0.0, 0.0, 1.0, 1.0), FRAGCOORD.y / 600.0);
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/dark1 = null
+shader_param/dark2 = null
+
+[sub_resource type="StyleBoxFlat" id=3]
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=6]
+
+[node name="Chat" type="Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+material = SubResource( 2 )
+margin_right = 423.0
+margin_bottom = 234.0
+custom_styles/panel = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DragZone" type="Panel" parent="Panel"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 6.5
+margin_right = 416.5
+margin_bottom = 14.157
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
+margin_right = 12.0
+margin_bottom = 12.0
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dark1" type="Panel" parent="Panel"]
+margin_left = 13.8311
+margin_top = 14.1571
+margin_right = 408.831
+margin_bottom = 187.143
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dark2" type="Panel" parent="Panel"]
+margin_left = 13.8311
+margin_top = 197.015
+margin_right = 408.831
+margin_bottom = 221.015
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit" type="LineEdit" parent="Panel"]
+margin_left = 13.8311
+margin_top = 197.015
+margin_right = 71.8311
+margin_bottom = 221.015
+custom_styles/read_only = SubResource( 4 )
+custom_styles/focus = SubResource( 5 )
+custom_styles/normal = SubResource( 6 )
+text = "a"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="item_rect_changed" from="." to="." method="updateLayout"]
+[connection signal="mouse_entered" from="Panel/DragZone" to="." method="_dragZoneEntered"]
+[connection signal="mouse_exited" from="Panel/DragZone" to="." method="_dragZoneExited"]

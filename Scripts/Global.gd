@@ -15,7 +15,7 @@ const confirmationDialogScene = preload("res://Scenes/ConfirmationDialog.tscn")
 
 #Various constants
 const settingsFileName = "settings.json"
-const bindableActions = ["shoot", "jump", "forward", "back", "left", "right", "item1", "item2", "item3",
+const bindableActions = ["chat", "shoot", "jump", "forward", "back", "left", "right", "item1", "item2", "item3",
 	"item4", "item5", "item6", "item7", "item8", "item9", "item0"] #Actions that can be rebound
 const buttonListStrings = {BUTTON_LEFT: "Left Mouse", BUTTON_RIGHT: "Right Mouse",
 	BUTTON_MIDDLE: "Middle Mouse", BUTTON_XBUTTON1: "Extra Mouse 1", BUTTON_XBUTTON2: "Extra Mouse 2",
@@ -55,7 +55,12 @@ func _process(delta):
 		var data = get_viewport().get_texture().get_data()
 		data.flip_y()
 		data.save_png("gameScreenshot.png")
+	if Input.is_action_just_pressed("chat"):
+		if is_instance_valid(Network.chatInstance):
+			Network.chatInstance.activate()
 	if Input.is_action_just_pressed("escape"):
+		if is_instance_valid(Network.chatInstance) and Network.chatInstance.deactivate():
+			return
 		var menus = get_node("/root/Game/MenuLayer").get_children()
 		if menus[-1] != mainMenuInstance and menus[-1].has_method("closeSelf"):
 			menus[-1].closeSelf()
@@ -142,7 +147,7 @@ func showMainMenu():
 func setMenuFocus():
 	releaseMouse()
 	allowControl = false
-	if isLobbyVisible():
+	if isLobbyVisible() and not isGameVisible():
 		Network.lobbyInstance.releaseFocus()
 	
 func releaseMenuFocus():

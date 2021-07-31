@@ -11,6 +11,7 @@ const playerScene = preload("res://Scenes/Player.tscn")
 
 var lobbyInstance = null
 var gameInstance = null
+var chatInstance = null
 
 var networkID = 0 #My network ID
 var peers = {} #Data for connected peers
@@ -154,9 +155,21 @@ func joinLobby(ip: String, port:int):
 func leaveLobby():
 	if is_instance_valid(lobbyInstance):
 		lobbyInstance.quitLobby()
-		
+	
+
+
+	
+func createChat():
+	if is_instance_valid(chatInstance):
+		return
+	chatInstance = preload("res://Scenes/Chat.tscn").instance()
+	get_node("/root/Game/ChatLayer").add_child(chatInstance)
+
+
 #Start a game with the current peers
 remotesync func startGame():
+	createChat()
+	
 	if is_instance_valid(gameInstance):
 		stopGame()
 	lobbyInstance.visible = false
