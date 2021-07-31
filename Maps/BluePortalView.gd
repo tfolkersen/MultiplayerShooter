@@ -14,3 +14,6 @@ func _ready():
 func _process(delta):
 	var tex = get_viewport().get_texture()
 	material_override.set_shader_param("viewportData", texture)
+	material_override.set_shader_param("color1", Vector3(0.0, 0.0, 1.0))
+	material_override.set_shader_param("color2", Vector3(0.0, 1.0, 1.0))
+
