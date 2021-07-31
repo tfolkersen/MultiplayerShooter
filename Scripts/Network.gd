@@ -168,7 +168,10 @@ func createChat():
 
 #Start a game with the current peers
 remotesync func startGame():
-	createChat()
+	if is_instance_valid(chatInstance):
+		chatInstance.unhide()
+	else:
+		createChat()
 	
 	if is_instance_valid(gameInstance):
 		stopGame()
@@ -201,4 +204,6 @@ remotesync func stopGame():
 		gameInstance.queue_free()
 		gameInstance = null
 		Global.releaseMouse()
+	if is_instance_valid(chatInstance):
+		chatInstance.hide()
 
