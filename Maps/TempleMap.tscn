@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Textures/Temple/templeNoise/wall.png" type="Texture" id=1]
 [ext_resource path="res://Textures/Temple/templeNoise/floor.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Textures/Temple/templeWall.png" type="Texture" id=4]
 [ext_resource path="res://Textures/Temple/artSmall.png" type="Texture" id=5]
 [ext_resource path="res://Materials/TempleCeilingMaterial.tres" type="Material" id=6]
+[ext_resource path="res://Maps/portalShader.gd" type="Script" id=7]
 
 [sub_resource type="ProceduralSky" id=1]
 sky_top_color = Color( 1, 1, 1, 1 )
@@ -89,6 +90,75 @@ albedo_texture = ExtResource( 3 )
 uv1_scale = Vector3( 2.504, 6.159, 2.5 )
 uv1_offset = Vector3( 1.036, 4.009, 0 )
 uv1_triplanar = true
+
+[sub_resource type="Shader" id=13]
+code = "shader_type spatial;
+
+uniform sampler2D viewportData;
+
+void vertex(){
+	//MODELVIEW_MATRIX = INV_CAMERA_MATRIX * mat4(CAMERA_MATRIX[0],CAMERA_MATRIX[1],CAMERA_MATRIX[2],WORLD_MATRIX[3]);
+	
+	
+	vec4 i1 = vec4(1.0, 0.0, 0.0, 0.0);
+	vec4 i2 = vec4(0.0, 1.0, 0.0, 0.0);
+	vec4 i3 = vec4(0.0, 0.0, 1.0, 0.0);
+	vec4 i4 = vec4(0.0, 0.0, 0.0, 1.0);
+	mat4 m1 = INV_CAMERA_MATRIX;
+	mat4 m2 = mat4(CAMERA_MATRIX[0], WORLD_MATRIX[1], WORLD_MATRIX[2], WORLD_MATRIX[3]);
+	mat4 m3 = mat4(vec4(WORLD_MATRIX[0][0], 0.0, 0.0, 0.0), i2, i3, i4);
+	MODELVIEW_MATRIX = m1 * m2 * m3;
+}
+
+float toFrac(float val) {
+	return val - float(int(val));
+}
+
+float wave(float val) {
+	return (sin(val) + 1.0) / 2.0;
+}
+
+//450 by 640
+const float xSize = 450.0;
+const float ySize = 640.0;
+const float cx = 0.5;
+const float cy = 0.5;
+void fragment() {
+	vec2 uv = UV;
+	ALBEDO.rgb = texture(viewportData, uv).rgb;
+	float d1 = UV.x - cx;
+	float d2 = UV.y - cy;
+	float dist2 = d1 * d1 + d2 * d2;
+	if (dist2 > 0.45 * 0.45) {
+		ALPHA = 0.0;
+	} else {
+		ALPHA = 1.0;
+	}
+	if (dist2 > 0.45 * 0.45 && dist2 <= 0.5 * 0.5) {
+		ALPHA = 1.0;
+		float progress = 0.0;
+		float px = (UV.x * 2.0) - 1.0;
+		float py = (UV.y * 2.0) - 1.0;
+		if (px == 0.0) {
+			px = 0.001;
+		}
+		
+		progress = atan(py / px);
+		if (px < 0.0) {
+			progress = progress + 3.141592654;
+		}
+		float frac = wave(TIME * 10.0 + progress * 1.0);
+		ALBEDO.rgb = mix(vec3(0.0, 0.0, 1.0), vec3(0.0, 1.0, 1.0), frac);
+	}
+	//ALBEDO.rgb = mix(vec3(1.0, 0.0, 0.0), vec3(0.0, 0.0, 1.0), UV.x);
+}"
+
+[sub_resource type="ShaderMaterial" id=14]
+resource_local_to_scene = true
+shader = SubResource( 13 )
+
+[sub_resource type="ViewportTexture" id=12]
+viewport_path = NodePath("Viewport")
 
 [node name="TempleMap" type="Spatial"]
 
@@ -3638,3 +3708,22 @@ light_energy = 0.8
 light_indirect_energy = 0.8
 shadow_enabled = true
 omni_range = 26.4
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 1, -0.260779, 2.4042, -0.414244 )
+material_override = SubResource( 14 )
+cast_shadow = 0
+flip_v = true
+billboard = 2
+texture = SubResource( 12 )
+script = ExtResource( 7 )
+
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 450, 640 )
+transparent_bg = true
+render_target_update_mode = 3
+shadow_atlas_size = 512
+
+[node name="Camera" type="Camera" parent="Viewport"]
+transform = Transform( -3.8602e-08, -0.469163, 0.883111, -2.05078e-08, 0.883111, 0.469163, -1, 0, -4.37114e-08, 8.52987, 10.2449, -6.49314 )
+cull_mask = 1
