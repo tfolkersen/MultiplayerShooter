@@ -10,3 +10,6 @@ updateContext -- update context-sensitive components
 setLayout(size, [position]) -- adjust layout and size based on given size
 on__ButtonPressed -- when some button is pressed
 onResolutionChanged -- when root viewport changes
+
+enterKeyEvent -- returns true if consumed
+escapeKeyEvent -- returns true if consumed
