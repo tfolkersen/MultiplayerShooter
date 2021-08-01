@@ -1,5 +1,6 @@
 show -- make visible and active
 hide -- make invisible and inactive
+isVisible -- true if visible and active, false if invisible and inactive
 
 activate -- if active, do something
 deactivate -- if active, do something
@@ -8,3 +9,4 @@ requestClose -- start closing. returns false if already closing
 updateContext -- update context-sensitive components
 setLayout(size, [position]) -- adjust layout and size based on given size
 on__ButtonPressed -- when some button is pressed
+onResolutionChanged -- when root viewport changes
