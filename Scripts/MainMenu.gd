@@ -4,29 +4,106 @@
 
 extends Control
 
-func _ready():
-	updateLayout()
-	updateButtonVisibility()
+#Scales for translations of UI elements
+var xScale = 1.0
+var yScale = 1.0
 
-#Close the menu
-func closeSelf():
-	queue_free()
+#_draw() needs to pass these to setLayout()
+var _size = Vector2(1024, 600)
+var _position = Vector2(0, 0)
 
-func hide():
-	visible = false
-	if Global.isLobbyVisible():
-		Network.lobbyInstance.grabFocus()
-
+########################################################################################
 func show():
 	visible = true
-	updateButtonVisibility()
+	
+func hide():
+	visible = false
 	
 func isVisible():
 	return visible
+	
+func requestClose():
+	queue_free()
+	return true
+	
+func updateContext():
+	_updateButtonVisibility()
+	
+func setLayout(size, position = Vector2(0, 0)):
+	_size = size
+	_position = position
+	
+	xScale = size.x / 1024.0
+	yScale = size.y / 600.0
+	
+	theme.get_font("font", "Button").size = 24 * min(xScale, yScale)
+	
+	$Panel.rect_size = size
+	$Title.rect_size = Vector2(0, 0)
+	$HostButton.rect_size = Vector2(0, 0)
+	$JoinButton.rect_size = Vector2(0, 0)
+	$ResumeButton.rect_size = Vector2(0, 0)
+	$SettingsButton.rect_size = Vector2(0, 0)
+	$IPLabel.rect_size = Vector2(0, 0)
+	$IPEdit.rect_size = Vector2(150, 44) * min(xScale, yScale)
+	$PortLabel.rect_size = Vector2(0, 0)
+	$PortEdit.rect_size = Vector2(150, 44) * min(xScale, yScale)
+	$QuitButton.rect_size = Vector2(0, 0)
+	$DisconnectButton.rect_size = Vector2(0, 0)
+	
+	rect_position = position
+	
+	$Panel.rect_position = Vector2(0, 0)
+	
+	var pos = Vector2(0, 0)
+	pos.x = size.x / 2.0 - $Title.rect_size.x / 2.0
+	pos.y = size.y / 10.0
+	$Title.rect_position = pos
+	
+	pos.x = size.x / 20.0
+	pos.y = size.y / 10.0 + 90 * yScale
+	$HostButton.rect_position = pos
+	
+	pos.y += 60 * yScale
+	$JoinButton.rect_position = pos
+	$ResumeButton.rect_position = pos
+	
+	pos.y += 60 * yScale
+	$SettingsButton.rect_position = pos
+	
+	$IPLabel.rect_position = $HostButton.rect_position + Vector2($HostButton.rect_size.x + 100 * xScale, 0)
+	$IPEdit.rect_position = $IPLabel.rect_position + Vector2(0, $IPLabel.rect_size.y + 15 * yScale)
+	
+	var offset = max($IPLabel.rect_size.x, $IPEdit.rect_size.x) + 90 * xScale
+	$PortLabel.rect_position = $IPLabel.rect_position + Vector2(offset, 0) 
+	$PortEdit.rect_position = $PortLabel.rect_position + Vector2(0, $PortLabel.rect_size.y + 15 * yScale)
+	_updateButtonVisibility()
+	
+func onResolutionChanged():
+	setLayout(get_viewport().size)
+	
+func enterKeyEvent():
+	return false
+	
+func escapeKeyEvent():
+	if isVisible():
+		hide()
+	else:
+		show()
+	return true
 
-func updateButtonVisibility():
+func _draw():
+	setLayout(_size, _position)
+
+########################################################################################
+
+func _ready():
+	get_viewport().connect("size_changed", self, "onResolutionChanged")
+	setLayout(get_viewport().size)
+	
+func _updateButtonVisibility():
 	var pos = $SettingsButton.rect_position
-	pos.y += 40
+	pos.y += 60 * yScale
 	
 	if Global.isGameVisible() or Global.isLobbyVisible():
 		$HostButton.visible = false
@@ -38,7 +115,7 @@ func updateButtonVisibility():
 		$PortEdit.visible = false
 		$DisconnectButton.visible = true
 		$DisconnectButton.rect_position = pos
-		pos.y += 40
+		pos.y += 60 * yScale
 		$QuitButton.rect_position = pos
 	else:
 		$HostButton.visible = true
@@ -50,46 +127,11 @@ func updateButtonVisibility():
 		$PortEdit.visible = true
 		$DisconnectButton.visible = false
 		$QuitButton.rect_position = pos
-		pos.y += 40
+		pos.y += 60 * yScale
 		$DisconnectButton.rect_position = pos
 		
-
-#Set the layout based on the screen size
-func updateLayout():
-	var dims = get_viewport().size
-	var pos = Vector2(0, 0)
-	
-	$Panel.rect_position = Vector2(0, 0)
-	$Panel.rect_size = dims
-	
-	pos.x = dims.x / 2 - $Title.rect_size.x / 2
-	pos.y = dims.y / 10
-	$Title.rect_position = pos
-	
-	pos.x = dims.x / 20
-	pos.y = dims.y / 10 + 60
-	$HostButton.rect_position = pos
-	
-	pos.y += 40
-	$JoinButton.rect_position = pos
-	$ResumeButton.rect_position = pos
-	
-	pos.y += 40
-	$SettingsButton.rect_position = pos
-	
-	#pos.y += 40
-	#$QuitButton.rect_position = pos
-	#$DisconnectButton.rect_position = pos
-	
-	$IPLabel.rect_position = $HostButton.rect_position + Vector2($HostButton.rect_size.x + 100, 0)
-	$IPEdit.rect_position = $IPLabel.rect_position + Vector2(0, $IPLabel.rect_size.y + 10)
-	
-	var offset = max($IPLabel.rect_size.x, $IPEdit.rect_size.x)
-	$PortLabel.rect_position = $IPLabel.rect_position + Vector2(offset, 0) 
-	$PortEdit.rect_position = $PortLabel.rect_position + Vector2(0, $PortLabel.rect_size.y + 10)
-
 #Host game button pressed
-func _hostButtonPressed():
+func onHostButtonPressed():
 	var ip = $IPEdit.text
 	var port = int($PortEdit.text)
 	Global.settings.defaultIP = ip
@@ -98,7 +140,7 @@ func _hostButtonPressed():
 	Network.hostLobby(port)
 
 #Join button pressed
-func _joinButtonPressed():
+func onJoinButtonPressed():
 	var ip = $IPEdit.text
 	var port = int($PortEdit.text)
 	Global.settings.defaultIP = ip
@@ -106,22 +148,15 @@ func _joinButtonPressed():
 	Global.saveSettings()
 	Network.joinLobby(ip, port)
 
+func onResumeButtonPressed():
+	hide()
+
 #Settings button pressed
-func _settingsButtonPressed():
+func onSettingsButtonPressed():
 	Global.showSettingsMenu()
 
-func _quitConfirmed():
-	Network.stopGame()
-	Network.leaveLobby()
-	Global.closeMainMenu()
-	get_tree().quit()
-
-func _disconnectConfirmed():
-	Network.stopGame()
-	Network.leaveLobby()
-
 #Quit button pressed
-func _quitButtonPressed():
+func onQuitButtonPressed():
 	var message = "Close game?"
 	var title = "Quitting"
 	if Network.networkID == 1:
@@ -129,7 +164,13 @@ func _quitButtonPressed():
 	var dialog = Global.showConfirmationDialog(message, title)
 	dialog.connect("accept", self, "_quitConfirmed")	
 	
-func _disconnectButtonPressed():
+func _quitConfirmed():
+	Network.stopGame()
+	Network.leaveLobby()
+	queue_free()
+	get_tree().quit()
+
+func onDisconnectButtonPressed():
 	var message = "Disconnect from session?"
 	var title = "Disconnect"
 	if Network.networkID == 1:
@@ -137,5 +178,6 @@ func _disconnectButtonPressed():
 	var dialog = Global.showConfirmationDialog(message, title)
 	dialog.connect("accept", self, "_disconnectConfirmed")
 
-func _resumeButtonPressed():
-	Global.hideMainMenu()
+func _disconnectConfirmed():
+	Network.stopGame()
+	Network.leaveLobby()

@@ -21,7 +21,7 @@ const buttonListStrings = {BUTTON_LEFT: "Left Mouse", BUTTON_RIGHT: "Right Mouse
 	BUTTON_MIDDLE: "Middle Mouse", BUTTON_XBUTTON1: "Extra Mouse 1", BUTTON_XBUTTON2: "Extra Mouse 2",
 	BUTTON_WHEEL_UP: "Mouse Wheel Up", BUTTON_WHEEL_DOWN: "Mouse Wheel Down", 
 	BUTTON_WHEEL_LEFT: "Mouse Wheel Left", BUTTON_WHEEL_RIGHT: "Mouse Wheel Right"}
-
+const baseResolution = Vector2(1024, 600)
 const zwsp = "​"
 
 #Instances of menus
@@ -42,7 +42,7 @@ func _ready():
 		var keyName = "key_" + action
 		defaultBinds[keyName] = eventToInfo(InputMap.get_action_list(action)[0])
 
-	OS.window_resizable = false
+	OS.window_resizable = true
 	loadDefaultSettings()
 	loadSettings()
 	applySettings()
@@ -142,7 +142,7 @@ func showMainMenu():
 		get_node("/root/Game/MenuLayer").add_child(mainMenuInstance)
 	else:
 		mainMenuInstance.show()
-	mainMenuInstance.updateButtonVisibility()
+	mainMenuInstance._updateButtonVisibility()
 	setMenuFocus()
 
 func setMenuFocus():
