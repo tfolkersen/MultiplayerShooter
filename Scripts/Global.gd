@@ -177,7 +177,7 @@ func showSettingsMenu():
 #Close settings menu if it's open
 func closeSettingsMenu():
 	if is_instance_valid(settingsMenuInstance):
-		settingsMenuInstance.closeSelf()
+		settingsMenuInstance.close()
 
 #Show a dialog message (i.e. if disconnected from server)
 func showDialogMessage(message, title = null):

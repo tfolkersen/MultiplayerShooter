@@ -5,9 +5,136 @@
 extends WindowDialog
 
 var editingKey = null #Key currently being edited
-var keyMap = {}
+var keyMap = {} #Store keybinds without applying them
+
+var xScale = 1.0
+var yScale = 1.0
+var _size = Vector2(500, 550)
+var _position = Vector2(0, 0)
+
+########################################################################################
+func show():
+	visible = true
+	
+func hide():
+	visible = false
+	
+func isVisible():
+	return visible
+	
+func requestClose():
+	queue_free()
+	return true
+	
+func updateContext():
+	pass
+	
+func setLayout(size, position = Vector2(0, 0)):
+	_size = size
+	_position = position
+	xScale = size.x / 500.0
+	yScale = size.y / 550.0
+	
+	theme.get_font("font", "Button").size = 11 * min(xScale, yScale)
+	
+	#Make all buttons and labels minimum size
+	var stack = [self]
+	while stack:
+		var node = stack.pop_back()
+		for c in node.get_children():
+			stack.push_back(c)
+		if node is Button or node is Label:
+			node.rect_size = Vector2(0, 0)
+	var prev
+	var current
+	
+	rect_size = size
+	$TabContainer.rect_size = size
+	
+	###Control
+	prev = null
+	current = $TabContainer/Control/SensLabel
+	current.rect_position = Vector2(0, 0)
+	
+	prev = current
+	current = $TabContainer/Control/SensEdit
+	current.rect_size = Vector2(58, 0) * min(xScale, yScale)
+	current.rect_position = prev.rect_position + Vector2(0, prev.rect_size.y + 5 * yScale)
+
+	var maxY = 0
+	#Now space buttons
+	for action in keyMap:
+		var map = keyMap[action]
+		maxY = max(current.rect_size.y, prev.rect_size.y)
+		
+		prev = current
+		current = map.label
+		current.rect_position = Vector2(5, prev.rect_position.y) + Vector2(0, maxY + 5 * yScale)
+		prev = current
+		current = map.button
+		current.rect_size = Vector2(120, 20) * min(xScale, yScale)
+		current.rect_position = prev.rect_position + Vector2(prev.rect_size.x + 5 * xScale, 0)
+		
+	###Display
+	prev = null
+	current = $TabContainer/Display/ResLabel
+	current.rect_position = Vector2(0, 0)
+	
+	prev = current
+	current = $TabContainer/Display/ResXEdit
+	current.rect_size = Vector2(60, 0) * min(xScale, yScale)
+	current.rect_position = prev.rect_position + Vector2(0, prev.rect_size.y + 5 * yScale)
+	
+	prev = current
+	current = $TabContainer/Display/ResYEdit
+	current.rect_size = Vector2(60, 0) * min(xScale, yScale)
+	current.rect_position = prev.rect_position + Vector2(prev.rect_size.x + 5 * xScale, 0)
+	
+	prev = current
+	current = $TabContainer/Display/FullscreenLabel
+	current.rect_position = Vector2(0, prev.rect_position.y + prev.rect_size.y + 30 * yScale)
+	
+	prev = current
+	current = $TabContainer/Display/FullscreenCheck
+	current.rect_scale = Vector2(1, 1) * min(xScale, yScale)
+	current.rect_position = prev.rect_position + Vector2(0, prev.rect_size.y + 5 * yScale)
+	
+	###Misc
+	prev = null
+	current = $TabContainer/Misc/NameLabel
+	current.rect_position = Vector2(0, 0)
+	
+	prev = current
+	current = $TabContainer/Misc/NameEdit
+	current.rect_size = Vector2(200, 0) * min(xScale, yScale)
+	current.rect_position = Vector2(0, prev.rect_size.y + 5 * yScale)
+	
+	###Main pane
+	prev = null
+	current = $AcceptButton
+	current.rect_position = Vector2(10 * xScale, rect_size.y - current.rect_size.y - 10 * yScale)
+	
+func onResolutionChanged():
+	var size = get_viewport().size
+	setLayout(Vector2(size.x * (500.0 / 1024.0), size.y * (550.0 / 600.0)))
+	
+func enterKeyEvent():
+	onAcceptButtonPressed()
+	return true
+	
+func escapeKeyEvent():
+	queue_free()
+	return true
+	
+########################################################################################
+
+func _draw():
+	setLayout(_size, _position)
+
 
 func _ready():
+	get_viewport().connect("size_changed", self, "onResolutionChanged")
+	
 	#Make buttons/labels
 	for action in Global.bindableActions:
 		keyMap[action] = {}
@@ -29,78 +156,15 @@ func _ready():
 		button.name = map.buttonName
 		$TabContainer/Control.add_child(button)
 		map.button = button
-		button.connect("pressed", self, "_editButtonPressed", [action])
+		button.connect("pressed", self, "onEditButtonPressed", [action])
 
-	updateLayout()
+	var vpDims = get_viewport().size
+	var size = Vector2(vpDims.x * (500.0 / 1024.0), vpDims.y * (550.0 / 600.0))
+	
+	popup_centered(size)
+	setLayout(size)
 	populateValues()
 	
-#Set layout based on current screen size
-func updateLayout():
-	var dims = Vector2(500, 550)
-	
-	var prev
-	var current
-	
-	$TabContainer.rect_size = dims
-	popup_centered(dims)
-	
-	###Control
-	prev = null
-	current = $TabContainer/Control/SensLabel
-	current.rect_position = Vector2(0, 0)
-	
-	prev = current
-	current = $TabContainer/Control/SensEdit
-	current.rect_position = prev.rect_position + Vector2(0, prev.rect_size.y + 5)
-
-	var maxY = 0
-	#Now space buttons
-	for action in keyMap:
-		var map = keyMap[action]
-		maxY = max(current.rect_size.y, prev.rect_size.y)
-		
-		prev = current
-		current = map.label
-		current.rect_position = Vector2(5, prev.rect_position.y) + Vector2(0, maxY + 5)
-		prev = current
-		current = map.button
-		current.rect_size = Vector2(120, 20)
-		current.rect_position = prev.rect_position + Vector2(prev.rect_size.x + 5, 0)
-		
-	###Display
-	prev = null
-	current = $TabContainer/Display/ResLabel
-	current.rect_position = Vector2(0, 0)
-	
-	prev = current
-	current = $TabContainer/Display/ResXEdit
-	current.rect_position = prev.rect_position + Vector2(0, prev.rect_size.y + 5)
-	
-	prev = current
-	current = $TabContainer/Display/ResYEdit
-	current.rect_position = prev.rect_position + Vector2(prev.rect_size.x + 5, 0)
-	
-	prev = current
-	current = $TabContainer/Display/FullscreenLabel
-	current.rect_position = Vector2(0, prev.rect_position.y + prev.rect_size.y + 30)
-	
-	prev = current
-	current = $TabContainer/Display/FullscreenCheck
-	current.rect_position = prev.rect_position + Vector2(0, prev.rect_size.y + 5)
-	
-	###Misc
-	prev = null
-	current = $TabContainer/Misc/NameLabel
-	current.rect_position = Vector2(0, 0)
-	
-	prev = current
-	current = $TabContainer/Misc/NameEdit
-	current.rect_position += Vector2(0, prev.rect_size.y + 5)
-	
-	###Main pane
-	prev = null
-	current = $AcceptButton
-	current.rect_position = Vector2(10, rect_size.y - current.rect_size.y - 10)
 
 #Fill node with current settings values
 func populateValues():
@@ -121,11 +185,11 @@ func populateValues():
 	$TabContainer/Misc/NameEdit.text = Global.settings.playerName
 
 #Close menu
-func closeSelf():
+func close():
 	queue_free()
 
 #Accept button pressed
-func _acceptPressed():
+func onAcceptButtonPressed():
 	Global.settings.sensitivity = float($TabContainer/Control/SensEdit.text)
 	Global.settings.resolutionX = int($TabContainer/Display/ResXEdit.text)
 	Global.settings.resolutionY = int($TabContainer/Display/ResYEdit.text)
@@ -189,7 +253,7 @@ func clearEditButtonPrompt(action):
 			button.text = "Unknown Mouse Button"
 
 #Some edit button was pressed -- action is the action being edited
-func _editButtonPressed(action):
+func onEditButtonPressed(action):
 	if editingKey: #Only one action can be rebound at a time
 		clearEditButtonPrompt(editingKey)
 	editingKey = action

@@ -1,10 +1,18 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/SettingsMenu.gd" type="Script" id=1]
+[ext_resource path="res://Roboto-Regular.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 2 )
+
+[sub_resource type="Theme" id=1]
+default_font = SubResource( 2 )
 
 [node name="SettingsMenu" type="WindowDialog"]
 margin_right = 48.0
 margin_bottom = 40.0
+theme = SubResource( 1 )
 popup_exclusive = true
 window_title = "Settings"
 script = ExtResource( 1 )
@@ -23,7 +31,7 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
-margin_top = 32.0
+margin_top = 37.0
 margin_right = -4.0
 margin_bottom = -4.0
 
@@ -75,6 +83,7 @@ text = "Fullscreen"
 [node name="FullscreenCheck" type="CheckBox" parent="TabContainer/Display"]
 margin_right = 24.0
 margin_bottom = 24.0
+expand_icon = true
 
 [node name="Misc" type="Panel" parent="TabContainer"]
 visible = false
@@ -106,4 +115,4 @@ __meta__ = {
 [connection signal="tree_entered" from="." to="." method="_treeEntered"]
 [connection signal="tree_exiting" from="." to="." method="_leavingTree"]
 [connection signal="tab_changed" from="TabContainer" to="." method="_tabChanged"]
-[connection signal="pressed" from="AcceptButton" to="." method="_acceptPressed"]
+[connection signal="pressed" from="AcceptButton" to="." method="onAcceptButtonPressed"]

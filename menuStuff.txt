@@ -13,3 +13,16 @@ onResolutionChanged(resolution) -- when root viewport changes
 
 enterKeyEvent -- returns true if consumed
 escapeKeyEvent -- returns true if consumed
+
+
+_draw() -- this will need to call setlayout
+
+
+=====================================================================
+main menu
+settings menu
+dialog message
+confirmation dialog
+chat
+global
+network
