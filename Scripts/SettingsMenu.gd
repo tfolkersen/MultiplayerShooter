@@ -35,7 +35,8 @@ func setLayout(size, position = Vector2(0, 0)):
 	xScale = size.x / 500.0
 	yScale = size.y / 550.0
 	
-	theme.get_font("font", "Button").size = 11 * min(xScale, yScale)
+	var fontScale = min(xScale, yScale)
+	theme.get_font("font", "Button").size = 11 * fontScale
 	
 	#Make all buttons and labels minimum size
 	var stack = [self]
@@ -58,7 +59,7 @@ func setLayout(size, position = Vector2(0, 0)):
 	
 	prev = current
 	current = $TabContainer/Control/SensEdit
-	current.rect_size = Vector2(58, 0) * min(xScale, yScale)
+	current.rect_size = Vector2(58, 0) * fontScale
 	current.rect_position = prev.rect_position + Vector2(0, prev.rect_size.y + 5 * yScale)
 
 	var maxY = 0
@@ -72,7 +73,7 @@ func setLayout(size, position = Vector2(0, 0)):
 		current.rect_position = Vector2(5, prev.rect_position.y) + Vector2(0, maxY + 5 * yScale)
 		prev = current
 		current = map.button
-		current.rect_size = Vector2(120, 20) * min(xScale, yScale)
+		current.rect_size = Vector2(120, 20) * fontScale
 		current.rect_position = prev.rect_position + Vector2(prev.rect_size.x + 5 * xScale, 0)
 		
 	###Display
@@ -82,12 +83,12 @@ func setLayout(size, position = Vector2(0, 0)):
 	
 	prev = current
 	current = $TabContainer/Display/ResXEdit
-	current.rect_size = Vector2(60, 0) * min(xScale, yScale)
+	current.rect_size = Vector2(60, 0) * fontScale
 	current.rect_position = prev.rect_position + Vector2(0, prev.rect_size.y + 5 * yScale)
 	
 	prev = current
 	current = $TabContainer/Display/ResYEdit
-	current.rect_size = Vector2(60, 0) * min(xScale, yScale)
+	current.rect_size = Vector2(60, 0) * fontScale
 	current.rect_position = prev.rect_position + Vector2(prev.rect_size.x + 5 * xScale, 0)
 	
 	prev = current
@@ -96,7 +97,7 @@ func setLayout(size, position = Vector2(0, 0)):
 	
 	prev = current
 	current = $TabContainer/Display/FullscreenCheck
-	current.rect_scale = Vector2(1, 1) * min(xScale, yScale)
+	current.rect_scale = Vector2(1, 1) * fontScale
 	current.rect_position = prev.rect_position + Vector2(0, prev.rect_size.y + 5 * yScale)
 	
 	###Misc
@@ -106,7 +107,7 @@ func setLayout(size, position = Vector2(0, 0)):
 	
 	prev = current
 	current = $TabContainer/Misc/NameEdit
-	current.rect_size = Vector2(200, 0) * min(xScale, yScale)
+	current.rect_size = Vector2(200, 0) * fontScale
 	current.rect_position = Vector2(0, prev.rect_size.y + 5 * yScale)
 	
 	###Main pane
@@ -123,6 +124,11 @@ func enterKeyEvent():
 	return true
 	
 func escapeKeyEvent():
+	if editingKey:
+		clearEditButtonPrompt(editingKey)
+		editingKey = null
+		return true
+		
 	queue_free()
 	return true
 	
@@ -204,25 +210,14 @@ func onAcceptButtonPressed():
 	Global.closeSettingsMenu()
 	Global.applySettings()
 
-func _treeEntered():
-	Global.settingsMenuInstance = self
-
-func _leavingTree():
-	Global.settingsMenuInstance = null
-
 #X button clicked
 func _onHide():
-	Global.closeSettingsMenu()
-	Global.settingsMenuInstance = null
+	Menus.closeSettingsMenu()
 
 #Key pressed -- might need to capture this for editing binds
 func _input(event):
 	if editingKey:
-		if event is InputEventKey and event.scancode == KEY_ESCAPE:
-			clearEditButtonPrompt(editingKey)
-			editingKey = null
-			return
-		
+
 		if not event is InputEventMouseMotion:
 			var action = editingKey
 			editingKey = null

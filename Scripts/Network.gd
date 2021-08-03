@@ -11,7 +11,6 @@ const playerScene = preload("res://Scenes/Player.tscn")
 
 var lobbyInstance = null
 var gameInstance = null
-var chatInstance = null
 
 var networkID = 0 #My network ID
 var peers = {} #Data for connected peers
@@ -24,6 +23,10 @@ func _ready():
 	get_tree().connect("connection_failed", self, "_connected_fail")
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
 
+func setInitialSelfData(networkPeer):
+	networkID = networkPeer.get_unique_id()
+	peers[networkID] = {"id": networkID, "name": Global.settings.playerName, "ready": false}
+
 #Called by a peer sending their peer information to us. Responds with our own data
 #Called by self
 remotesync func addPeer(name: String, ready: bool):
@@ -32,17 +35,17 @@ remotesync func addPeer(name: String, ready: bool):
 	if not peers.has(id):
 		peers[id] = {"id": id, "name": name, "ready": ready}
 		if id != networkID:
-			rpc_id(id, "addPeer", peers[networkID].name, peers[networkID].ready)
-	if is_instance_valid(lobbyInstance):
-		lobbyInstance.peerConnected(id)
+			var selfPeer = peers[networkID]
+			rpc_id(id, "addPeer", selfPeer.name, selfPeer.ready)
+		if is_instance_valid(lobbyInstance):
+			lobbyInstance.onPeerConnect(peers[id])
 	
 #Remove a peer's data when they disconnect
 func removePeer(id):
 	print("Removing peer" + str(id))
 	if peers.has(id):
-		var peer = peers[id]
 		if is_instance_valid(lobbyInstance):
-			lobbyInstance.peerDisconnected(id)
+			lobbyInstance.onPeerDisconnect(peers[id])
 		removePlayerFromGame(id)
 		peers.erase(id)
 
@@ -50,23 +53,21 @@ remotesync func receiveMessage(content: String):
 	var id = get_tree().get_rpc_sender_id()
 	if id in peers:
 		var peer = peers[id]
-		if is_instance_valid(chatInstance):
-			chatInstance.addMessage(peer.name, content)
+		Menus.addChatMessage(peer.name, content)
 
 remotesync func receiveSystemMessage(content: String):
-	if is_instance_valid(chatInstance):
-		chatInstance.addMessage("[SYSTEM]", content, "#ff00ff")
+	Menus.addSystemMessage(content)
 
 func removePlayerFromGame(id):
 	if is_instance_valid(gameInstance):
 		var playerNode = gameInstance.get_node("Players/" + str(id))
 		if is_instance_valid(playerNode):
-			playerNode.queue_free()
+			playerNode.delete()
 
 #Peer connected
 func _player_connected(id):
 	print("Player connected " + str(id))
-	var selfPeer = peers[Network.networkID]
+	var selfPeer = peers[networkID]
 	rpc_id(id, "addPeer", selfPeer.name, selfPeer.ready)
 
 #Peer disconnected
@@ -77,48 +78,38 @@ func _player_disconnected(id):
 #Connected to server
 func _connected_ok():
 	print("Connected to server")
-	var selfPeer = peers[Network.networkID]
-	rpc("addPeer", selfPeer.name, selfPeer.ready)
-	lobbyInstance.visible = true
-	chatInstance.unhide()
-	chatInstance.activate()
-	Global.hideMainMenu()
+	var selfPeer = peers[networkID]
+	rpc("addPeer", selfPeer.name, selfPeer.ready) #maybe not needed (TODO)
+	showLobby()
 
 #Disconnected by server
 func _server_disconnected():
 	print("Disconnected by server")
-	stopGame()
-	if is_instance_valid(lobbyInstance):
-		lobbyInstance.quitLobby()
-	Global.showMainMenu()
-	Global.showDialogMessage("Disconnected by server.", "Network")
+	quitLobby()
+	Menus.showDialogMessage("Disconnected by server.", "Network")
 
 #Failed to connect to server
 func _connected_fail():
 	print("Failed to connect to server")
-	if is_instance_valid(lobbyInstance):
-		lobbyInstance.quitLobby()
+	quitLobby()
+	Menus.showDialogMessage("Failed to connect to server.", "Network")
 
 #Start hosting a server
 func createServer(port: int):
 	disconnectNetwork()
-	peers = {}
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_server(int(port))
+	setInitialSelfData(peer)
 	get_tree().network_peer = peer
-	networkID = peer.get_unique_id()
-	peers[networkID] = {"name": Global.settings.playerName, "ready": false}
 	print("Created server. I am ID " + str(networkID))
 
 #Try to join a server
 func createClient(ip: String, port: int):
 	disconnectNetwork()
-	peers = {}
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_client(ip, port)
+	setInitialSelfData(peer)
 	get_tree().network_peer = peer
-	networkID = peer.get_unique_id()
-	peers[networkID] = {"name": Global.settings.playerName, "ready": false}
 	print("Created client. I am ID " + str(networkID))
 	
 #Close connections and reset variables
@@ -128,74 +119,50 @@ func disconnectNetwork():
 	if is_instance_valid(peer):
 		print("Closed network connection")
 		peer.close_connection()
-		peer = null
 	peers = {}
 	networkID = 0
 	
-
 #Start a new lobby as the server
 func hostLobby(port: int):
 	print("Hosting lobby")
-	if is_instance_valid(lobbyInstance):
-		lobbyInstance.quitLobby()
-		lobbyInstance = null
-	if not is_instance_valid(chatInstance):
-		createChat()
+	quitLobby()
+	
 	lobbyInstance = lobbyScene.instance()
 	get_node("/root/Game").add_child(lobbyInstance)
-	lobbyInstance.systemMessage("Type /help for a list of commands")
+	showLobby()
+
+	Menus.addSystemMessage("Type /help for a list of commands")
 	
 	createServer(port)
-	lobbyInstance.updateLayout()
-	chatInstance.layoutLobby()
-	chatInstance.unhide()
-	chatInstance.activate()
-	var selfPeer = peers[Network.networkID]
+	
+	var selfPeer = peers[networkID]
 	rpc("addPeer", selfPeer.name, selfPeer.ready)
-	Global.hideMainMenu()
 
 #Join lobby as client
-func joinLobby(ip: String, port:int):
+func joinLobby(ip: String, port: int):
 	print("Joining lobby")
-	if is_instance_valid(lobbyInstance):
-		lobbyInstance.quitLobby()
-		lobbyInstance = null
-	if not is_instance_valid(chatInstance):
-		createChat()
-	chatInstance.layoutLobby()
-	chatInstance.hide()
+	quitLobby()
+	
+	Menus.addSystemMessage("Type /help for a list of commands")
+	
 	lobbyInstance = lobbyScene.instance()
-	lobbyInstance.visible = false
 	get_node("/root/Game").add_child(lobbyInstance)
-	lobbyInstance.systemMessage("Type /help for a list of commands")
-
+	hideLobby()
+	
 	createClient(ip, port)
-	lobbyInstance.updateLayout()
 
-#Leave the lobby if it exists
-func leaveLobby():
+func quitLobby():
+	stopGame()
 	if is_instance_valid(lobbyInstance):
-		lobbyInstance.quitLobby()
-	
-	
-func createChat():
-	if is_instance_valid(chatInstance):
-		return
-	chatInstance = preload("res://Scenes/Chat.tscn").instance()
-	get_node("/root/Game/ChatLayer").add_child(chatInstance)
-
+		lobbyInstance.requestClose()
 
 #Start a game with the current peers
 remotesync func startGame():
-	if is_instance_valid(chatInstance):
-		chatInstance.unhide()
-	else:
-		createChat()
-	chatInstance.layoutGame()
-	chatInstance.deactivate()
-	if is_instance_valid(gameInstance):
-		stopGame()
-	lobbyInstance.visible = false
+	Menus.chatModeNormal()
+	Menus.deactivateChat()
+	
+	stopGame()
+	hideLobby()
 	
 	#Make level
 	var levelScene = preload("res://Maps/Temple/TempleMap.tscn")
@@ -217,6 +184,9 @@ remotesync func startGame():
 		players.add_child(player)
 		
 	Global.captureMouse()
+	Global.allowControl = true
+	Menus.releaseMenuFocus()
+	
 
 #End the current game
 remotesync func stopGame():
@@ -224,6 +194,16 @@ remotesync func stopGame():
 		gameInstance.queue_free()
 		gameInstance = null
 		Global.releaseMouse()
-	if is_instance_valid(chatInstance):
-		chatInstance.hide()
 
+func showLobby():
+	if is_instance_valid(lobbyInstance):
+		Menus.hideMainMenu()
+		Menus.chatModeLobby()
+		Menus.showChat()
+		Menus.activateChat()
+		lobbyInstance.show()
+		
+func hideLobby():
+	if is_instance_valid(lobbyInstance):
+		Menus.hideChat()
+		lobbyInstance.hide()

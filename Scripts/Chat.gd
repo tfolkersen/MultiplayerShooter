@@ -64,7 +64,7 @@ func deactivate():
 		active = false
 		fadeOut()
 		$Panel/LineEdit.set_focus_mode(Control.FOCUS_NONE)
-		Global.releaseMenuFocus()
+		Menus.releaseMenuFocus()
 		$Panel/LineEdit.release_focus()
 		_dragZoneExited()
 		return true

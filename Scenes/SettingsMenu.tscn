@@ -3,16 +3,16 @@
 [ext_resource path="res://Scripts/SettingsMenu.gd" type="Script" id=1]
 [ext_resource path="res://Roboto-Regular.ttf" type="DynamicFontData" id=2]
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 2 )
 
-[sub_resource type="Theme" id=1]
-default_font = SubResource( 2 )
+[sub_resource type="Theme" id=2]
+default_font = SubResource( 1 )
 
 [node name="SettingsMenu" type="WindowDialog"]
 margin_right = 48.0
 margin_bottom = 40.0
-theme = SubResource( 1 )
+theme = SubResource( 2 )
 popup_exclusive = true
 window_title = "Settings"
 script = ExtResource( 1 )
@@ -56,7 +56,7 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
-margin_top = 32.0
+margin_top = 37.0
 margin_right = -4.0
 margin_bottom = -4.0
 
@@ -90,7 +90,7 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
-margin_top = 32.0
+margin_top = 37.0
 margin_right = -4.0
 margin_bottom = -4.0
 
@@ -112,7 +112,5 @@ __meta__ = {
 }
 
 [connection signal="popup_hide" from="." to="." method="_onHide"]
-[connection signal="tree_entered" from="." to="." method="_treeEntered"]
-[connection signal="tree_exiting" from="." to="." method="_leavingTree"]
 [connection signal="tab_changed" from="TabContainer" to="." method="_tabChanged"]
 [connection signal="pressed" from="AcceptButton" to="." method="onAcceptButtonPressed"]

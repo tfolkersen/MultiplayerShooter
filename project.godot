@@ -18,6 +18,7 @@ config/icon="res://icon.png"
 
 Global="*res://Scripts/Global.gd"
 Network="*res://Scripts/Network.gd"
+Menus="*res://Scripts/Menus.gd"
 
 [debug]
 

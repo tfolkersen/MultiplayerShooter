@@ -7,12 +7,6 @@
 
 extends Node
 
-#Various scene files
-const mainMenuScene = preload("res://Scenes/MainMenu.tscn")
-const settingsMenuScene = preload("res://Scenes/SettingsMenu.tscn")
-const dialogMessageScene = preload("res://Scenes/DialogMessage.tscn")
-const confirmationDialogScene = preload("res://Scenes/ConfirmationDialog.tscn")
-
 #Various constants
 const settingsFileName = "settings.json"
 const bindableActions = ["chat", "shoot", "jump", "forward", "back", "left", "right", "item1", "item2", "item3",
@@ -24,29 +18,27 @@ const buttonListStrings = {BUTTON_LEFT: "Left Mouse", BUTTON_RIGHT: "Right Mouse
 const baseResolution = Vector2(1024, 600)
 const zwsp = "​"
 
-#Instances of menus
-var mainMenuInstance = null
-var settingsMenuInstance = null
-
 #Data
 var settings = {}
 var defaultBinds = {}
 
 #Flags
-var allowControl = true #true if the player shouldn't be able to move
+var allowControl = false #true if the player shouldn be able to move
 
 #Entry point of the game
 func _ready():
-	print(zwsp == "")
-	for action in bindableActions:
-		var keyName = "key_" + action
-		defaultBinds[keyName] = eventToInfo(InputMap.get_action_list(action)[0])
-
+	assert(zwsp != "" and len(zwsp) == 1)
 	OS.window_resizable = true
+	
 	loadDefaultSettings()
 	loadSettings()
 	applySettings()
-	showMainMenu()
+	
+	Menus.init()
+	Menus.showMainMenu()
+	
+	Menus.showDialogMessage("The meme was dank", "Test")
+	Menus.showConfirmationDialog("The meme was dank?", "Test2")
 
 func _process(delta):	
 	if Input.is_key_pressed(KEY_KP_MULTIPLY):
@@ -55,31 +47,12 @@ func _process(delta):
 		var data = get_viewport().get_texture().get_data()
 		data.flip_y()
 		data.save_png("gameScreenshot.png")
-	if Input.is_action_just_pressed("chat"):
-		if is_instance_valid(Network.chatInstance) and isGameVisible() and allowControl:
-			Network.chatInstance.activate()
-	if Input.is_action_just_pressed("escape"):
-		if is_instance_valid(Network.chatInstance) and not Network.chatInstance.ignoreControls:
-			if Network.chatInstance.deactivate():
-				return
-		var menus = get_node("/root/Game/MenuLayer").get_children()
-		if menus[-1] != mainMenuInstance and menus[-1].has_method("closeSelf"):
-			menus[-1].closeSelf()
-		elif not is_instance_valid(mainMenuInstance) or not mainMenuInstance.isVisible():
-			showMainMenu()
-		else:
-			if isGameVisible() or isLobbyVisible():
-				hideMainMenu()
-
-func updateMainMenu():
-	if is_instance_valid(mainMenuInstance):
-		mainMenuInstance.updateButtonVisibility()
-
+		
 func isGameVisible():
 	return is_instance_valid(Network.gameInstance)
 	
 func isLobbyVisible():
-	return is_instance_valid(Network.lobbyInstance) and Network.lobbyInstance.visible
+	return is_instance_valid(Network.lobbyInstance) and Network.lobbyInstance.isVisible()
 
 #Apply the current settings
 func applySettings():
@@ -90,16 +63,21 @@ func applySettings():
 	for action in bindableActions:
 		var keyName = "key_" + action
 		var eventInfo = settings[keyName]
-		var event = infoToEvent(eventInfo)
+		var event = deserializeEvent(eventInfo)
 		InputMap.action_erase_events(action)
 		InputMap.action_add_event(action, event)
 
 #Initialize settings with their default values
 func loadDefaultSettings():
+	if defaultBinds.size() == 0:
+		for action in bindableActions:
+			var keyName = "key_" + action
+			defaultBinds[keyName] = serializeEvent(InputMap.get_action_list(action)[0])
+	
 	settings.playerName = "Unnamed"
 	settings.sensitivity = 0.5
-	settings.resolutionX = 1024
-	settings.resolutionY = 600
+	settings.resolutionX = baseResolution.x
+	settings.resolutionY = baseResolution.y
 	settings.fullscreen = false
 	settings.defaultIP = "127.0.0.1"
 	settings.defaultPort = 25565
@@ -114,6 +92,7 @@ func loadSettings():
 	if file.open(settingsFileName, file.READ) == OK:
 		print("Opened settings file")
 		var data = JSON.parse(file.get_as_text())
+		file.close()
 		print(data.result)
 		settings = data.result
 		
@@ -121,7 +100,6 @@ func loadSettings():
 		for action in bindableActions:
 			var keyName = "key_" + action
 			settings[keyName].code = int(settings[keyName].code)
-		file.close()
 	else:
 		print("Failed to open settings file")
 
@@ -135,66 +113,6 @@ func saveSettings():
 	else:
 		print("Failed to open settings file for writing")
 
-#Show main menu if it's not already shown
-func showMainMenu():
-	if not is_instance_valid(mainMenuInstance):
-		mainMenuInstance = mainMenuScene.instance()
-		get_node("/root/Game/MenuLayer").add_child(mainMenuInstance)
-	else:
-		mainMenuInstance.show()
-	mainMenuInstance._updateButtonVisibility()
-	setMenuFocus()
-
-func setMenuFocus():
-	releaseMouse()
-	allowControl = false
-	if isLobbyVisible() and not isGameVisible():
-		Network.lobbyInstance.releaseFocus()
-	
-func releaseMenuFocus():
-	if isGameVisible():
-		captureMouse()
-	allowControl = true
-	
-#Hide main menu if it exists
-func hideMainMenu():
-	if is_instance_valid(mainMenuInstance):
-		mainMenuInstance.hide()
-	releaseMenuFocus()
-
-#Close main menu if it's open
-func closeMainMenu():
-	if is_instance_valid(mainMenuInstance):
-		mainMenuInstance.closeSelf()
-	releaseMenuFocus()
-
-#Show the settings menu if it's not shown
-func showSettingsMenu():
-	if not is_instance_valid(settingsMenuInstance):
-		settingsMenuInstance = settingsMenuScene.instance()
-		get_node("/root/Game/MenuLayer").add_child(settingsMenuInstance)
-
-#Close settings menu if it's open
-func closeSettingsMenu():
-	if is_instance_valid(settingsMenuInstance):
-		settingsMenuInstance.close()
-
-#Show a dialog message (i.e. if disconnected from server)
-func showDialogMessage(message, title = null):
-	var dialog = dialogMessageScene.instance()
-	dialog.setMessage(message)
-	if title != null:
-		dialog.setTitle(title)
-	get_node("/root/Game/MenuLayer").add_child(dialog)
-
-func showConfirmationDialog(message, title):
-	var dialog = confirmationDialogScene.instance()
-	dialog.setMessage(message)
-	if title != null:
-		dialog.setTitle(title)
-	get_node("/root/Game/MenuLayer").add_child(dialog)
-	return dialog
-
 #Capture the cursor
 func captureMouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -204,7 +122,7 @@ func releaseMouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 #Generate input event based on stored data
-func infoToEvent(info):
+func deserializeEvent(info):
 	if info.type == "InputEventKey":
 		var event = InputEventKey.new()
 		event.scancode = info.code
@@ -213,9 +131,13 @@ func infoToEvent(info):
 		var event = InputEventMouseButton.new()
 		event.button_index = info.code
 		return event
+	else:
+		print("deserializeEvent(): Unrecognized event: " + str(info))
 
-func eventToInfo(event):
+func serializeEvent(event):
 	if event is InputEventKey:
 		return {"type": "InputEventKey", "code": int(event.scancode)}
 	elif event is InputEventMouseButton:
 		return {"type": "InputEventMouseButton", "code": int(event.button_index)}
+	else:
+		print("serializeEvent(): Unrecognized event: " + str(event))

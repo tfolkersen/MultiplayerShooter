@@ -14,7 +14,9 @@ var _position = Vector2(0, 0)
 
 ########################################################################################
 func show():
+	updateContext()
 	visible = true
+	
 	
 func hide():
 	visible = false
@@ -36,7 +38,8 @@ func setLayout(size, position = Vector2(0, 0)):
 	xScale = size.x / 1024.0
 	yScale = size.y / 600.0
 	
-	theme.get_font("font", "Button").size = 24 * min(xScale, yScale)
+	var fontScale = min(xScale, yScale)
+	theme.get_font("font", "Button").size = 24 * fontScale
 	
 	$Panel.rect_size = size
 	$Title.rect_size = Vector2(0, 0)
@@ -45,9 +48,9 @@ func setLayout(size, position = Vector2(0, 0)):
 	$ResumeButton.rect_size = Vector2(0, 0)
 	$SettingsButton.rect_size = Vector2(0, 0)
 	$IPLabel.rect_size = Vector2(0, 0)
-	$IPEdit.rect_size = Vector2(150, 44) * min(xScale, yScale)
+	$IPEdit.rect_size = Vector2(150, 44) * fontScale
 	$PortLabel.rect_size = Vector2(0, 0)
-	$PortEdit.rect_size = Vector2(150, 44) * min(xScale, yScale)
+	$PortEdit.rect_size = Vector2(150, 44) * fontScale
 	$QuitButton.rect_size = Vector2(0, 0)
 	$DisconnectButton.rect_size = Vector2(0, 0)
 	
@@ -153,7 +156,7 @@ func onResumeButtonPressed():
 
 #Settings button pressed
 func onSettingsButtonPressed():
-	Global.showSettingsMenu()
+	Menus.showSettingsMenu()
 
 #Quit button pressed
 func onQuitButtonPressed():

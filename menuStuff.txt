@@ -19,10 +19,13 @@ _draw() -- this will need to call setlayout
 
 
 =====================================================================
-main menu
-settings menu
-dialog message
-confirmation dialog
-chat
 global
 network
+menus
+
+main menu
+confirmation dialog
+dialog message
+settings menu
+lobby
+chat
