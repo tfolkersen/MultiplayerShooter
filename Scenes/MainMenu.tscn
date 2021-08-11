@@ -1,29 +1,27 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://MenuFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Scenes/MenuTheme.tres" type="Theme" id=1]
 [ext_resource path="res://Scripts/MainMenu.gd" type="Script" id=2]
-
-[sub_resource type="Theme" id=1]
-default_font = ExtResource( 1 )
+[ext_resource path="res://title.png" type="Texture" id=3]
 
 [node name="MainMenu" type="Control"]
 margin_right = 40.0
 margin_bottom = 40.0
-theme = SubResource( 1 )
+theme = ExtResource( 1 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Panel" type="Panel" parent="."]
-modulate = Color( 1, 1, 1, 0.501961 )
 margin_right = 40.0
 margin_bottom = 40.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="Label" parent="."]
+[node name="TitleText" type="Label" parent="."]
+visible = false
 margin_left = 361.705
 margin_top = 40.9813
 margin_right = 528.705
@@ -32,6 +30,12 @@ text = "Multiplayer Shooter Game"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Title" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 3 )
+expand = true
 
 [node name="HostButton" type="Button" parent="."]
 margin_left = 48.9128

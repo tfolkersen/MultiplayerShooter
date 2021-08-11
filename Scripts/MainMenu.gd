@@ -42,7 +42,7 @@ func setLayout(size, position = Vector2(0, 0)):
 	theme.get_font("font", "Button").size = 24 * fontScale
 	
 	$Panel.rect_size = size
-	$Title.rect_size = Vector2(0, 0)
+	$Title.rect_size = Vector2(300 * fontScale, 66 * fontScale)
 	$HostButton.rect_size = Vector2(0, 0)
 	$JoinButton.rect_size = Vector2(0, 0)
 	$ResumeButton.rect_size = Vector2(0, 0)
