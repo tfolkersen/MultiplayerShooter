@@ -1,0 +1,31 @@
+UI:
+	main menu -- hover over item
+	main menu -- click on item
+	chat sound
+	weapon menu scroll
+	weapon menu accept
+
+
+guns:
+	golden gun
+	AK 47
+	PP7
+
+footsteps:
+	stone/cement
+	wood
+	grass/dirt
+	metal walkway
+	metal vent
+
+gameplay:
+	spawn sound
+	use -- fail
+	use -- success
+	sprint start
+
+Temple map:
+	ambient wind
+	wind gust
+	ambient rain
+	rain on roof
