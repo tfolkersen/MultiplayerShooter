@@ -1,7 +1,7 @@
 UI:
-	main menu -- hover over item
-	main menu -- click on item
-	chat sound
+	[main menu -- hover over item]
+	[main menu -- click on item]
+	[chat sound]
 	weapon menu scroll
 	weapon menu accept
 
@@ -23,6 +23,8 @@ gameplay:
 	use -- fail
 	use -- success
 	sprint start
+	portal ambience
+	teleport
 
 Temple map:
 	ambient wind
