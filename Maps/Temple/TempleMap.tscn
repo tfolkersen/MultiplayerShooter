@@ -3863,3 +3863,13 @@ cull_mask = 1
 [node name="Camera" type="Camera" parent="MenuViews"]
 transform = Transform( 0.806063, 0, 0.59183, 0, 1, 0, -0.59183, 0, 0.806063, 33.8665, 4.60516, 8.90569 )
 cull_mask = 7
+
+[node name="Camera2" type="Camera" parent="MenuViews"]
+transform = Transform( 0.989884, 0.0427919, -0.135271, 0, 0.953431, 0.30161, 0.141878, -0.298559, 0.943787, -1.8282, 10.7535, 14.5743 )
+cull_mask = 7
+
+[node name="Camera3" type="Camera" parent="MenuViews"]
+transform = Transform( 0.101818, -0.214393, -0.971426, 0, 0.976501, -0.215513, 0.994803, 0.0219432, 0.0994258, 24.2788, 1.89089, 18.2116 )
+cull_mask = 7
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]

@@ -27,6 +27,7 @@ var allowControl = false #true if the player shouldn be able to move
 
 #Entry point of the game
 func _ready():
+	randomize()
 	assert(zwsp != "" and len(zwsp) == 1)
 	OS.window_resizable = true
 	
@@ -37,8 +38,8 @@ func _ready():
 	Menus.init()
 	Menus.showMainMenu()
 	
-	Menus.showDialogMessage("The meme was dank", "Test")
-	Menus.showConfirmationDialog("The meme was dank?", "Test2")
+	#Menus.showDialogMessage("The meme was dank", "Test")
+	#Menus.showConfirmationDialog("The meme was dank?", "Test2")
 
 func _process(delta):	
 	if Input.is_key_pressed(KEY_KP_MULTIPLY):

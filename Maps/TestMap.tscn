@@ -29,6 +29,14 @@ uv2_triplanar = true
 
 [node name="TestMap" type="Spatial"]
 
+[node name="MenuViews" type="Node" parent="."]
+
+[node name="Camera" type="Camera" parent="MenuViews"]
+transform = Transform( -0.744913, 0.364868, -0.558548, 0, 0.8372, 0.546896, 0.667162, 0.40739, -0.623641, -7.73823, 9.63889, -10.6047 )
+
+[node name="Camera2" type="Camera" parent="MenuViews"]
+transform = Transform( 0.880907, -0.244854, 0.40503, 0, 0.855777, 0.517346, -0.47329, -0.455733, 0.753859, 4.04613, 5.85348, 9.80347 )
+
 [node name="Block" type="StaticBody" parent="."]
 transform = Transform( 3, 0, 0, 0, 0.1, 0, 0, 0, 3, 0, 0, 0 )
 __meta__ = {
