@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scripts/SettingsMenu.gd" type="Script" id=1]
 [ext_resource path="res://MenuFont.tres" type="DynamicFont" id=2]
@@ -35,9 +35,6 @@ border_color = Color( 0, 0, 0, 1 )
 border_blend = true
 shadow_color = Color( 0, 0, 0, 1 )
 shadow_offset = Vector2( 1, 1 )
-
-[sub_resource type="StyleBoxFlat" id=14]
-bg_color = Color( 0.470588, 0.470588, 0.470588, 1 )
 
 [sub_resource type="StyleBoxEmpty" id=15]
 
@@ -137,12 +134,12 @@ CheckBox/icons/checked = null
 CheckBox/icons/radio_checked = null
 CheckBox/icons/radio_unchecked = null
 CheckBox/icons/unchecked = null
-CheckBox/styles/disabled = SubResource( 14 )
+CheckBox/styles/disabled = SubResource( 15 )
 CheckBox/styles/focus = SubResource( 15 )
-CheckBox/styles/hover = SubResource( 14 )
-CheckBox/styles/hover_pressed = SubResource( 14 )
-CheckBox/styles/normal = SubResource( 14 )
-CheckBox/styles/pressed = SubResource( 14 )
+CheckBox/styles/hover = SubResource( 15 )
+CheckBox/styles/hover_pressed = SubResource( 15 )
+CheckBox/styles/normal = SubResource( 15 )
+CheckBox/styles/pressed = SubResource( 15 )
 LineEdit/colors/clear_button_color = Color( 0.88, 0.88, 0.88, 1 )
 LineEdit/colors/clear_button_color_pressed = Color( 1, 1, 1, 1 )
 LineEdit/colors/cursor_color = Color( 0.94, 0.94, 0.94, 1 )
