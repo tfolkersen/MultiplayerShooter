@@ -46,6 +46,8 @@ func setLayout(size, position = Vector2(0, 0)):
 			stack.push_back(c)
 		if node is Button or node is Label:
 			node.rect_size = Vector2(0, 0)
+		if node is Button:
+			node.focus_mode = Control.FOCUS_NONE
 	var prev
 	var current
 	
@@ -55,12 +57,12 @@ func setLayout(size, position = Vector2(0, 0)):
 	###Control
 	prev = null
 	current = $TabContainer/Control/SensLabel
-	current.rect_position = Vector2(0, 0)
+	current.rect_position = Vector2(5, 0)
 	
 	prev = current
 	current = $TabContainer/Control/SensEdit
 	current.rect_size = Vector2(58, 0) * fontScale
-	current.rect_position = prev.rect_position + Vector2(0, prev.rect_size.y + 5 * yScale)
+	current.rect_position = prev.rect_position + Vector2(5, prev.rect_size.y + 5 * yScale)
 
 	var maxY = 0
 	#Now space buttons
@@ -79,7 +81,7 @@ func setLayout(size, position = Vector2(0, 0)):
 	###Display
 	prev = null
 	current = $TabContainer/Display/ResLabel
-	current.rect_position = Vector2(0, 0)
+	current.rect_position = Vector2(5, 0)
 	
 	prev = current
 	current = $TabContainer/Display/ResXEdit
@@ -93,7 +95,7 @@ func setLayout(size, position = Vector2(0, 0)):
 	
 	prev = current
 	current = $TabContainer/Display/FullscreenLabel
-	current.rect_position = Vector2(0, prev.rect_position.y + prev.rect_size.y + 30 * yScale)
+	current.rect_position = Vector2(5, prev.rect_position.y + prev.rect_size.y + 30 * yScale)
 	
 	prev = current
 	current = $TabContainer/Display/FullscreenCheck
@@ -103,17 +105,17 @@ func setLayout(size, position = Vector2(0, 0)):
 	###Misc
 	prev = null
 	current = $TabContainer/Misc/NameLabel
-	current.rect_position = Vector2(0, 0)
+	current.rect_position = Vector2(5, 0)
 	
 	prev = current
 	current = $TabContainer/Misc/NameEdit
 	current.rect_size = Vector2(200, 0) * fontScale
-	current.rect_position = Vector2(0, prev.rect_size.y + 5 * yScale)
+	current.rect_position = Vector2(5, prev.rect_size.y + 5 * yScale)
 	
 	###Main pane
 	prev = null
 	current = $AcceptButton
-	current.rect_position = Vector2(10 * xScale, rect_size.y - current.rect_size.y - 10 * yScale)
+	current.rect_position = Vector2(11 * xScale, rect_size.y - current.rect_size.y - 13 * yScale)
 	
 func onResolutionChanged():
 	var size = get_viewport().size
