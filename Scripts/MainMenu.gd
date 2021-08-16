@@ -132,7 +132,9 @@ func _ready():
 
 func setPreviewWorld():
 	#Initialize world preview
-	var worlds = [preload("res://Maps/Temple/TempleMap.tscn"), preload("res://Maps/TestMap.tscn")]
+	var worlds = [preload("res://Maps/Temple/TempleMap.tscn"),]
+	#preload("res://Maps/TestMap.tscn")]
+	
 	var previewWorld = worlds[randi() % worlds.size()].instance()
 	add_child(previewWorld)
 	var cameras = previewWorld.get_node("MenuViews").get_children()

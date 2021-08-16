@@ -1,0 +1,72 @@
+[gd_resource type="Theme" load_steps=8 format=2]
+
+[ext_resource path="res://MenuFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Roboto-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Textures/Misc/closeButton.png" type="Texture" id=3]
+
+[sub_resource type="StyleBoxFlat" id=5]
+content_margin_left = 5.0
+content_margin_right = 5.0
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+bg_color = Color( 0.666667, 0.666667, 0.666667, 0.745098 )
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_color = Color( 1, 1, 1, 1 )
+border_blend = true
+shadow_color = Color( 0, 0, 0, 1 )
+shadow_size = 1
+shadow_offset = Vector2( 1, 1 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+content_margin_left = 5.0
+content_margin_right = 5.0
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+bg_color = Color( 0.666667, 0.666667, 0.666667, 0.745098 )
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0, 0, 0, 1 )
+border_blend = true
+shadow_color = Color( 0, 0, 0, 1 )
+shadow_offset = Vector2( 1, 1 )
+
+[sub_resource type="DynamicFont" id=4]
+resource_local_to_scene = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.666667, 0.666667, 0.666667, 0.745098 )
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_right = 5.0
+expand_margin_top = 25.0
+
+[resource]
+default_font = ExtResource( 1 )
+Button/colors/font_color = Color( 1, 1, 1, 1 )
+Button/colors/font_color_disabled = Color( 0.901961, 0.901961, 0.901961, 0.2 )
+Button/colors/font_color_hover = Color( 1, 1, 1, 1 )
+Button/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+Button/constants/hseparation = 2
+Button/fonts/font = null
+Button/styles/disabled = null
+Button/styles/focus = null
+Button/styles/hover = SubResource( 5 )
+Button/styles/normal = SubResource( 5 )
+Button/styles/pressed = SubResource( 6 )
+WindowDialog/colors/title_color = Color( 0, 0, 0, 1 )
+WindowDialog/constants/close_h_ofs = 18
+WindowDialog/constants/close_v_ofs = 18
+WindowDialog/constants/scaleborder_size = 4
+WindowDialog/constants/title_height = 20
+WindowDialog/fonts/title_font = SubResource( 4 )
+WindowDialog/icons/close = ExtResource( 3 )
+WindowDialog/icons/close_highlight = ExtResource( 3 )
+WindowDialog/styles/panel = SubResource( 2 )

@@ -38,8 +38,8 @@ func _ready():
 	Menus.init()
 	Menus.showMainMenu()
 	
-	#Menus.showDialogMessage("The meme was dank", "Test")
-	#Menus.showConfirmationDialog("The meme was dank?", "Test2")
+	Menus.showDialogMessage("The meme was dank", "Test")
+	Menus.showConfirmationDialog("The meme was dank?", "Test2")
 
 func _process(delta):	
 	if Input.is_key_pressed(KEY_KP_MULTIPLY):
