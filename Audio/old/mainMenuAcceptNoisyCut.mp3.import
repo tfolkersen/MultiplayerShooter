@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/mainMenuAcceptNoisyCut.mp3-0a7399148b90f7c531a97f8e74d4e08c.mp3str"
+
+[deps]
+
+source_file="res://Audio/old/mainMenuAcceptNoisyCut.mp3"
+dest_files=[ "res://.import/mainMenuAcceptNoisyCut.mp3-0a7399148b90f7c531a97f8e74d4e08c.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

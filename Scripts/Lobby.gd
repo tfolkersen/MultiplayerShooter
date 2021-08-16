@@ -21,6 +21,7 @@ func grabFocus():
 	Network.chatInstance.grab_focus()
 	
 
+
 #Player disconnected
 func peerConnected(id):
 	if addUserToList(id):

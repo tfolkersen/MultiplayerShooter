@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/waterBucket.wav-83d45b9dca903e71f5a12e83eec149e8.sample"
+
+[deps]
+
+source_file="res://Audio/sourceSounds/waterBucket.wav"
+dest_files=[ "res://.import/waterBucket.wav-83d45b9dca903e71f5a12e83eec149e8.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -47,7 +47,16 @@ func _process(delta):
 		var data = get_viewport().get_texture().get_data()
 		data.flip_y()
 		data.save_png("gameScreenshot.png")
-		
+
+	
+func playSound(soundFileResource):
+	var audioEntityScene = preload("res://Scenes/AudioEntity.tscn")
+	var c = audioEntityScene.instance()
+	c.stream = soundFileResource
+	add_child(c)
+	c.play()
+
+
 func isGameVisible():
 	return is_instance_valid(Network.gameInstance)
 	

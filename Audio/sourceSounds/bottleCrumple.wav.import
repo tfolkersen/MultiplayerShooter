@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/bottleCrumple.wav-1ce83ae0078c71528b209c19f99519fe.sample"
+
+[deps]
+
+source_file="res://Audio/sourceSounds/bottleCrumple.wav"
+dest_files=[ "res://.import/bottleCrumple.wav-1ce83ae0078c71528b209c19f99519fe.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

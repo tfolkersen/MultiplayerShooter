@@ -43,6 +43,7 @@ margin_top = 56.8198
 margin_right = 129.913
 margin_bottom = 76.8198
 text = "Host game"
+align = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -53,6 +54,7 @@ margin_top = 109.822
 margin_right = 127.579
 margin_bottom = 129.822
 text = "Join game"
+align = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -63,6 +65,7 @@ margin_top = 115.822
 margin_right = 138.579
 margin_bottom = 135.822
 text = "Resume"
+align = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -73,6 +76,7 @@ margin_top = 162.602
 margin_right = 118.265
 margin_bottom = 182.602
 text = "Settings"
+align = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -121,6 +125,7 @@ margin_top = 205.798
 margin_right = 99.6904
 margin_bottom = 225.798
 text = "Quit"
+align = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -131,6 +136,7 @@ margin_top = 222.798
 margin_right = 170.69
 margin_bottom = 242.798
 text = "Disconnect"
+align = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }

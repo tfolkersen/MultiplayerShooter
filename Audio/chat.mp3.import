@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/chat.mp3-7ab269b6c790cbeb2fe353b6dd514a4c.mp3str"
+
+[deps]
+
+source_file="res://Audio/chat.mp3"
+dest_files=[ "res://.import/chat.mp3-7ab269b6c790cbeb2fe353b6dd514a4c.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

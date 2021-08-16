@@ -4,6 +4,7 @@
 
 extends Control
 
+
 #Scales for translations of UI elements
 var xScale = 1.0
 var yScale = 1.0
@@ -11,6 +12,8 @@ var yScale = 1.0
 #_draw() needs to pass these to setLayout()
 var _size = Vector2(1024, 600)
 var _position = Vector2(0, 0)
+
+var previewWorld = null
 
 ########################################################################################
 func show():
@@ -53,6 +56,14 @@ func setLayout(size, position = Vector2(0, 0)):
 	$PortEdit.rect_size = Vector2(150, 44) * fontScale
 	$QuitButton.rect_size = Vector2(0, 0)
 	$DisconnectButton.rect_size = Vector2(0, 0)
+	
+	var _buttons = [$HostButton, $JoinButton, $ResumeButton, $SettingsButton, $QuitButton, $DisconnectButton]
+	var widths = []
+	for b in _buttons:
+		widths.append(b.rect_size.x)
+	var maxWidth = widths.max()
+	for b in _buttons:
+		b.rect_size.x = maxWidth
 	
 	rect_position = position
 	
@@ -100,10 +111,35 @@ func _draw():
 
 ########################################################################################
 
+func playHoverSound():
+	Global.playSound(preload("res://Audio/mainMenuHover2-2Pitch.mp3"))
+
+func onButtonHover():
+	playHoverSound()
+	
+func playAcceptSound():
+	Global.playSound(preload("res://Audio/mainMenuAccept3-2.mp3"))
+
 func _ready():
 	get_viewport().connect("size_changed", self, "onResolutionChanged")
 	setLayout(get_viewport().size)
+	for c in get_children():
+		if c is Button:
+			c.connect("mouse_entered", self, "onButtonHover")
 	
+	setPreviewWorld()
+	
+
+func setPreviewWorld():
+	#Initialize world preview
+	var worlds = [preload("res://Maps/Temple/TempleMap.tscn")]
+	var previewWorld = worlds[randi() % worlds.size()].instance()
+	add_child(previewWorld)
+	var cameras = previewWorld.get_node("MenuViews").get_children()
+	var camera = cameras[randi() % cameras.size()]
+	camera.current = true
+	
+
 func _updateButtonVisibility():
 	var pos = $SettingsButton.rect_position
 	pos.y += 60 * yScale
@@ -135,6 +171,7 @@ func _updateButtonVisibility():
 		
 #Host game button pressed
 func onHostButtonPressed():
+	playAcceptSound()
 	var ip = $IPEdit.text
 	var port = int($PortEdit.text)
 	Global.settings.defaultIP = ip
@@ -144,6 +181,7 @@ func onHostButtonPressed():
 
 #Join button pressed
 func onJoinButtonPressed():
+	playAcceptSound()
 	var ip = $IPEdit.text
 	var port = int($PortEdit.text)
 	Global.settings.defaultIP = ip
@@ -152,14 +190,17 @@ func onJoinButtonPressed():
 	Network.joinLobby(ip, port)
 
 func onResumeButtonPressed():
+	playAcceptSound()
 	hide()
 
 #Settings button pressed
 func onSettingsButtonPressed():
+	playAcceptSound()
 	Menus.showSettingsMenu()
 
 #Quit button pressed
 func onQuitButtonPressed():
+	playAcceptSound()
 	var message = "Close game?"
 	var title = "Quitting"
 	if Network.networkID == 1:
@@ -174,6 +215,7 @@ func _quitConfirmed():
 	get_tree().quit()
 
 func onDisconnectButtonPressed():
+	playAcceptSound()
 	var message = "Disconnect from session?"
 	var title = "Disconnect"
 	if Network.networkID == 1:
