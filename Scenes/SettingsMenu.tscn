@@ -1,11 +1,11 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scripts/SettingsMenu.gd" type="Script" id=1]
 [ext_resource path="res://MenuFont.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Roboto-Regular.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://Textures/Misc/closeButton.png" type="Texture" id=4]
 
-[sub_resource type="StyleBoxFlat" id=5]
+[sub_resource type="StyleBoxFlat" id=1]
 content_margin_left = 5.0
 content_margin_right = 5.0
 content_margin_top = 2.0
@@ -20,7 +20,7 @@ shadow_color = Color( 0, 0, 0, 1 )
 shadow_size = 1
 shadow_offset = Vector2( 1, 1 )
 
-[sub_resource type="StyleBoxFlat" id=6]
+[sub_resource type="StyleBoxFlat" id=2]
 content_margin_left = 5.0
 content_margin_right = 5.0
 content_margin_top = 2.0
@@ -36,9 +36,14 @@ border_blend = true
 shadow_color = Color( 0, 0, 0, 1 )
 shadow_offset = Vector2( 1, 1 )
 
-[sub_resource type="StyleBoxEmpty" id=13]
+[sub_resource type="StyleBoxFlat" id=14]
+bg_color = Color( 0.470588, 0.470588, 0.470588, 1 )
 
-[sub_resource type="StyleBoxFlat" id=12]
+[sub_resource type="StyleBoxEmpty" id=15]
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.352941, 0.352941, 0.352941, 1 )
 border_width_right = 1
 border_width_bottom = 1
@@ -46,10 +51,10 @@ shadow_color = Color( 0, 0, 0, 1 )
 shadow_size = 1
 shadow_offset = Vector2( -1, -1 )
 
-[sub_resource type="StyleBoxFlat" id=8]
+[sub_resource type="StyleBoxFlat" id=7]
 bg_color = Color( 0.392157, 0.392157, 0.392157, 0.627451 )
 
-[sub_resource type="StyleBoxFlat" id=9]
+[sub_resource type="StyleBoxFlat" id=8]
 content_margin_left = 8.0
 content_margin_right = 8.0
 content_margin_top = 8.0
@@ -63,7 +68,7 @@ shadow_color = Color( 0, 0, 0, 1 )
 shadow_size = 1
 shadow_offset = Vector2( 1, 1 )
 
-[sub_resource type="StyleBoxFlat" id=10]
+[sub_resource type="StyleBoxFlat" id=9]
 content_margin_left = 5.0
 content_margin_right = 5.0
 content_margin_top = 2.0
@@ -78,7 +83,7 @@ shadow_color = Color( 0, 0, 0, 1 )
 shadow_size = 1
 shadow_offset = Vector2( 1, 1 )
 
-[sub_resource type="StyleBoxFlat" id=11]
+[sub_resource type="StyleBoxFlat" id=10]
 content_margin_left = 5.0
 content_margin_right = 5.0
 content_margin_top = 2.0
@@ -92,11 +97,11 @@ shadow_color = Color( 0, 0, 0, 1 )
 shadow_size = 1
 shadow_offset = Vector2( 1, 0 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=11]
 resource_local_to_scene = true
 font_data = ExtResource( 3 )
 
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id=12]
 bg_color = Color( 0.627451, 0.627451, 0.627451, 0.745098 )
 corner_radius_top_left = 8
 corner_radius_top_right = 8
@@ -107,7 +112,7 @@ expand_margin_right = 10.0
 expand_margin_top = 25.0
 expand_margin_bottom = 10.0
 
-[sub_resource type="Theme" id=7]
+[sub_resource type="Theme" id=13]
 default_font = ExtResource( 2 )
 Button/colors/font_color = Color( 1, 1, 1, 1 )
 Button/colors/font_color_disabled = Color( 0.901961, 0.901961, 0.901961, 0.2 )
@@ -117,9 +122,27 @@ Button/constants/hseparation = 2
 Button/fonts/font = null
 Button/styles/disabled = null
 Button/styles/focus = null
-Button/styles/hover = SubResource( 5 )
-Button/styles/normal = SubResource( 5 )
-Button/styles/pressed = SubResource( 6 )
+Button/styles/hover = SubResource( 1 )
+Button/styles/normal = SubResource( 1 )
+Button/styles/pressed = SubResource( 2 )
+CheckBox/colors/font_color = Color( 0.878431, 0.878431, 0.878431, 1 )
+CheckBox/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
+CheckBox/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
+CheckBox/colors/font_color_hover_pressed = Color( 1, 1, 1, 1 )
+CheckBox/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+CheckBox/constants/check_vadjust = 0
+CheckBox/constants/hseparation = 4
+CheckBox/fonts/font = null
+CheckBox/icons/checked = null
+CheckBox/icons/radio_checked = null
+CheckBox/icons/radio_unchecked = null
+CheckBox/icons/unchecked = null
+CheckBox/styles/disabled = SubResource( 14 )
+CheckBox/styles/focus = SubResource( 15 )
+CheckBox/styles/hover = SubResource( 14 )
+CheckBox/styles/hover_pressed = SubResource( 14 )
+CheckBox/styles/normal = SubResource( 14 )
+CheckBox/styles/pressed = SubResource( 14 )
 LineEdit/colors/clear_button_color = Color( 0.88, 0.88, 0.88, 1 )
 LineEdit/colors/clear_button_color_pressed = Color( 1, 1, 1, 1 )
 LineEdit/colors/cursor_color = Color( 0.94, 0.94, 0.94, 1 )
@@ -130,10 +153,10 @@ LineEdit/colors/selection_color = Color( 0.49, 0.49, 0.49, 1 )
 LineEdit/constants/minimum_spaces = 12
 LineEdit/fonts/font = null
 LineEdit/icons/clear = null
-LineEdit/styles/focus = SubResource( 13 )
-LineEdit/styles/normal = SubResource( 12 )
+LineEdit/styles/focus = SubResource( 5 )
+LineEdit/styles/normal = SubResource( 6 )
 LineEdit/styles/read_only = null
-Panel/styles/panel = SubResource( 8 )
+Panel/styles/panel = SubResource( 7 )
 TabContainer/colors/font_color_bg = Color( 0.862745, 0.862745, 0.862745, 1 )
 TabContainer/colors/font_color_disabled = Color( 1, 0, 1, 0.2 )
 TabContainer/colors/font_color_fg = Color( 1, 1, 1, 1 )
@@ -149,25 +172,25 @@ TabContainer/icons/increment = null
 TabContainer/icons/increment_highlight = null
 TabContainer/icons/menu = null
 TabContainer/icons/menu_highlight = null
-TabContainer/styles/panel = SubResource( 9 )
-TabContainer/styles/tab_bg = SubResource( 10 )
+TabContainer/styles/panel = SubResource( 8 )
+TabContainer/styles/tab_bg = SubResource( 9 )
 TabContainer/styles/tab_disabled = null
-TabContainer/styles/tab_fg = SubResource( 11 )
+TabContainer/styles/tab_fg = SubResource( 10 )
 WindowDialog/colors/title_color = Color( 0, 0, 0, 1 )
 WindowDialog/constants/close_h_ofs = 18
 WindowDialog/constants/close_v_ofs = 18
 WindowDialog/constants/scaleborder_size = 4
 WindowDialog/constants/title_height = 20
-WindowDialog/fonts/title_font = SubResource( 4 )
+WindowDialog/fonts/title_font = SubResource( 11 )
 WindowDialog/icons/close = ExtResource( 4 )
 WindowDialog/icons/close_highlight = ExtResource( 4 )
-WindowDialog/styles/panel = SubResource( 2 )
+WindowDialog/styles/panel = SubResource( 12 )
 
 [node name="SettingsMenu" type="WindowDialog"]
 visible = true
 margin_right = 48.0
 margin_bottom = 40.0
-theme = SubResource( 7 )
+theme = SubResource( 13 )
 custom_colors/title_color = Color( 1, 1, 1, 1 )
 popup_exclusive = true
 window_title = "Settings"
@@ -212,10 +235,10 @@ __meta__ = {
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 37.0
-margin_right = -4.0
-margin_bottom = -4.0
+margin_left = 8.0
+margin_top = 35.0
+margin_right = -8.0
+margin_bottom = -7.0
 
 [node name="ResLabel" type="Label" parent="TabContainer/Display"]
 margin_right = 40.0
@@ -240,16 +263,18 @@ text = "Fullscreen"
 [node name="FullscreenCheck" type="CheckBox" parent="TabContainer/Display"]
 margin_right = 24.0
 margin_bottom = 24.0
+focus_mode = 0
+enabled_focus_mode = 0
 expand_icon = true
 
 [node name="Misc" type="Panel" parent="TabContainer"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 37.0
-margin_right = -4.0
-margin_bottom = -4.0
+margin_left = 8.0
+margin_top = 35.0
+margin_right = -8.0
+margin_bottom = -7.0
 
 [node name="NameLabel" type="Label" parent="TabContainer/Misc"]
 margin_right = 40.0
