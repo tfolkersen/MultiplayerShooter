@@ -171,6 +171,7 @@ func addMessage(sender: String, content: String, senderColor: String = "#ffff00"
 	print("Adding message")
 	var message = $MessageTemplate.duplicate()
 	message.visible = true
+	sender = sender.replace("[", "[" + Global.zwsp)
 	content = content.replace("[", "[" + Global.zwsp)
 	var text = "[color=" + senderColor + "]" + sender + "[/color]: " + "[color=" + messageColor + "]" + content + "[/color]"
 #	message.bbcode_enabled = true
