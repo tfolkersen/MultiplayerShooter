@@ -48,7 +48,6 @@ func setLayout(size = Vector2(400, 125), position = Vector2(0, 0)):
 	curr.rect_size = Vector2(0, 0)
 	curr.rect_position = Vector2(size.x / 2.0 - curr.rect_size.x / 2.0, size.y - curr.rect_size.y - 20 * _yScale)
 	
-	
 func onResolutionChanged():
 	var dims = get_viewport().size
 	setLayout(Vector2(dims.x * (400.0 / 1024.0), dims.y * (125.0 / 600.0)))
