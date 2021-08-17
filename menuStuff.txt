@@ -23,9 +23,9 @@ _draw() -- this will need to call setlayout
 on__ButtonPressed -- when some button is pressed
 
 =====================================================================
-main menu
 chat
 lobby
+main menu
 
 menus
 network

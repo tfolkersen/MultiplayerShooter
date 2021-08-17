@@ -26,6 +26,7 @@ func isVisible():
 
 #Player disconnected
 func peerConnected(id):
+	print(str(id) + " connected")
 	if addUserToList(id):
 		if is_network_master():
 			var peer = Network.peers[id]
