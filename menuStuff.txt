@@ -2,25 +2,29 @@ show -- make visible and active
 hide -- make invisible and inactive
 isVisible -- true if visible and active, false if invisible and inactive
 
+	(implemented by chat)
 activate -- if active, do something
 deactivate -- if active, do something
 
 requestClose -- start closing. returns false if already closing
 updateContext -- update context-sensitive components
 setLayout([size], [position]) -- adjust layout and size based on given size
-on__ButtonPressed -- when some button is pressed
 onResolutionChanged() -- when root viewport changes
 
 enterKeyEvent -- returns true if consumed
 escapeKeyEvent -- returns true if consumed
 
-
-_draw() -- this will need to call setlayout
+	(Optional, internal)
 _close()
+_draw() -- this will need to call setlayout 
 
+
+
+on__ButtonPressed -- when some button is pressed
 
 =====================================================================
 confirmation dialog
+
 message dialog
 settings menu
 main menu

@@ -41,7 +41,14 @@ func _ready():
 	Menus.showMainMenu()
 	
 	#Menus.showDialogMessage("The meme was dank", "Test")
-	Menus.showConfirmationDialog("The meme was dank?", "Test2")
+	var d = Menus.showConfirmationDialog("The meme was dank?", "Test2")
+	d.connect("accept", self, "a1")
+	d.connect("cancel", self, "a2")
+
+func a1():
+	print("A")
+func a2():
+	print("C")
 
 func _process(delta):	
 	if Input.is_key_pressed(KEY_KP_MULTIPLY):

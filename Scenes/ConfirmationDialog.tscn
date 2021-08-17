@@ -31,5 +31,6 @@ focus_mode = 0
 enabled_focus_mode = 0
 text = "Cancel"
 
-[connection signal="pressed" from="AcceptButton" to="." method="_acceptButtonPressed"]
-[connection signal="pressed" from="CancelButton" to="." method="_cancelButtonPressed"]
+[connection signal="hide" from="." to="." method="_onHide"]
+[connection signal="pressed" from="AcceptButton" to="." method="_onAcceptButtonPressed"]
+[connection signal="pressed" from="CancelButton" to="." method="_onCancelButtonPressed"]
