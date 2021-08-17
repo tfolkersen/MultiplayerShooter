@@ -7,25 +7,27 @@ deactivate -- if active, do something
 
 requestClose -- start closing. returns false if already closing
 updateContext -- update context-sensitive components
-setLayout(size, [position]) -- adjust layout and size based on given size
+setLayout([size], [position]) -- adjust layout and size based on given size
 on__ButtonPressed -- when some button is pressed
-onResolutionChanged(resolution) -- when root viewport changes
+onResolutionChanged() -- when root viewport changes
 
 enterKeyEvent -- returns true if consumed
 escapeKeyEvent -- returns true if consumed
 
 
 _draw() -- this will need to call setlayout
+_close()
 
 
 =====================================================================
-global
-network
-menus
-
-main menu
 confirmation dialog
-dialog message
+message dialog
 settings menu
-lobby
+main menu
 chat
+lobby
+
+menus
+network
+
+player

@@ -16,14 +16,16 @@ const buttonListStrings = {BUTTON_LEFT: "Left Mouse", BUTTON_RIGHT: "Right Mouse
 	BUTTON_WHEEL_UP: "Mouse Wheel Up", BUTTON_WHEEL_DOWN: "Mouse Wheel Down", 
 	BUTTON_WHEEL_LEFT: "Mouse Wheel Left", BUTTON_WHEEL_RIGHT: "Mouse Wheel Right"}
 const baseResolution = Vector2(1024, 600)
-const zwsp = "​"
+const zwsp = "​" #Zero width space -- not an empty string
+
+const audioEntityScene = preload("res://Scenes/AudioEntity.tscn")
 
 #Data
 var settings = {}
 var defaultBinds = {}
 
 #Flags
-var allowControl = false #true if the player shouldn be able to move
+var allowControl = false #true if the player should be able to move
 
 #Entry point of the game
 func _ready():
@@ -39,7 +41,7 @@ func _ready():
 	Menus.showMainMenu()
 	
 	#Menus.showDialogMessage("The meme was dank", "Test")
-	#Menus.showConfirmationDialog("The meme was dank?", "Test2")
+	Menus.showConfirmationDialog("The meme was dank?", "Test2")
 
 func _process(delta):	
 	if Input.is_key_pressed(KEY_KP_MULTIPLY):
@@ -49,14 +51,11 @@ func _process(delta):
 		data.flip_y()
 		data.save_png("gameScreenshot.png")
 
-	
 func playSound(soundFileResource):
-	var audioEntityScene = preload("res://Scenes/AudioEntity.tscn")
 	var c = audioEntityScene.instance()
 	c.stream = soundFileResource
 	add_child(c)
 	c.play()
-
 
 func isGameVisible():
 	return is_instance_valid(Network.gameInstance)
@@ -100,7 +99,7 @@ func loadDefaultSettings():
 func loadSettings():
 	var file = File.new()
 	if file.open(settingsFileName, file.READ) == OK:
-		print("Opened settings file")
+		print("Opened settings file for reading")
 		var data = JSON.parse(file.get_as_text())
 		file.close()
 		print(data.result)

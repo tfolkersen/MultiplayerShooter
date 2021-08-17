@@ -3,20 +3,28 @@ extends WindowDialog
 signal accept
 signal cancel
 
-
-var xScale = 1.0
-var yScale = 1.0
+var _xScale = 1.0
+var _yScale = 1.0
 var _size = Vector2(400, 125)
 var _position = Vector2(0, 0)
+
+
+###########################################################################
+### Standard UI functions
 
 func show():
 	visible = true
 	
 func hide():
 	visible = false
-	
+
 func isVisible():
 	return visible
+
+###########################################################################
+
+	
+
 	
 func requestClose():
 	close()
@@ -25,6 +33,10 @@ func requestClose():
 func updateContext():
 	pass
 	
+func escapeEvent():
+	_cancelButtonPressed()
+	close()
+	return true
 	
 #Set layout based on screen size
 func setLayout(size, position = Vector2(0, 0)):

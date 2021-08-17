@@ -25,6 +25,7 @@ func _ready():
 
 func setInitialSelfData(networkPeer):
 	networkID = networkPeer.get_unique_id()
+	peers = {}
 	peers[networkID] = {"id": networkID, "name": Global.settings.playerName, "ready": false}
 
 #Called by a peer sending their peer information to us. Responds with our own data
@@ -126,22 +127,28 @@ func disconnectNetwork():
 func hostLobby(port: int):
 	print("Hosting lobby")
 	quitLobby()
+	Menus.clearChat()
+	Menus.chatModeLobby()
 	
 	lobbyInstance = lobbyScene.instance()
 	get_node("/root/Game").add_child(lobbyInstance)
 	showLobby()
 
+	Menus.showChat()
 	Menus.addSystemMessage("Type /help for a list of commands")
 	
 	createServer(port)
 	
-	var selfPeer = peers[networkID]
-	rpc("addPeer", selfPeer.name, selfPeer.ready)
+	#Probably not needed
+	#var selfPeer = peers[networkID]
+	#rpc("addPeer", selfPeer.name, selfPeer.ready)
 
 #Join lobby as client
 func joinLobby(ip: String, port: int):
 	print("Joining lobby")
 	quitLobby()
+	Menus.clearChat()
+	Menus.chatModeLobby()
 	
 	Menus.addSystemMessage("Type /help for a list of commands")
 	

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Scenes/MenuTheme.tres" type="Theme" id=1]
+[ext_resource path="res://Scenes/Themes/MenuTheme.tres" type="Theme" id=1]
 [ext_resource path="res://Scripts/MainMenu.gd" type="Script" id=2]
 [ext_resource path="res://title.png" type="Texture" id=3]
 

@@ -16,9 +16,12 @@ var scrollDown = false
 var ignoreControls = true
 
 
+func isVisible():
+	return visible
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	layoutGame()
+	modeNormal()
 	tween = Tween.new()
 	add_child(tween)
 	active = true
@@ -55,7 +58,7 @@ func activate():
 		active = true
 		fadeIn()
 		$Panel/LineEdit.set_focus_mode(Control.FOCUS_ALL)
-		Global.setMenuFocus()
+		Menus.setMenuFocus()
 		$Panel/LineEdit.grab_focus()
 		_dragZoneExited()
 	
@@ -82,6 +85,10 @@ func release_focus():
 func hide():
 	deactivate()
 	self.modulate.a = 0.0
+
+func show():
+	activate()
+	self.modulate.a = 1.0
 	
 func unhide():
 	self.modulate.a = 1.0
@@ -103,7 +110,7 @@ func setSize(x, y):
 	$Panel.rect_scale.x = x / 420.0
 	$Panel.rect_scale.y = y / 240.0
 	
-func layoutGame():
+func modeNormal():
 	ignoreControls = false
 	draggable = false
 	setBaseLayout()
@@ -113,7 +120,7 @@ func layoutGame():
 	updateLayout()
 	$Panel/ScrollContainer.scroll_vertical += 10000
 
-func layoutLobby():
+func modeLobby():
 	active = false
 	var vpDims = get_viewport().size
 	var target = Vector2(vpDims.x * 0.6, vpDims.y)

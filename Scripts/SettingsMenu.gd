@@ -209,23 +209,26 @@ func onAcceptButtonPressed():
 		Global.settings[map.keyName] = map.eventInfo
 	
 	Global.saveSettings()
-	Global.closeSettingsMenu()
+	Menus.closeSettingsMenu()
 	Global.applySettings()
 
 #X button clicked
 func _onHide():
 	Menus.closeSettingsMenu()
 
+func escapeEvent():
+	close()
+	return true
+
 #Key pressed -- might need to capture this for editing binds
 func _input(event):
 	if editingKey:
-
 		if not event is InputEventMouseMotion:
 			var action = editingKey
 			editingKey = null
 			if action in keyMap:
 				var map = keyMap[action]
-				map.eventInfo = Global.eventToInfo(event)
+				map.eventInfo = Global.serializeEvent(event)
 			clearEditButtonPrompt(action)
 
 #Change text of button corresponding to given action to prompt editing the key bind

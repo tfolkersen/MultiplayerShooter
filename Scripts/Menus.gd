@@ -21,8 +21,17 @@ func _process(delta):
 			var menus = get_node("/root/Game/MenuLayer").get_children()
 			for i in range(len(menus) - 1, -1, -1):
 				var m = menus[i]
-				if m.escapeEvent():
+				if m.escapeKeyEvent():
 					break
+	if Input.is_action_just_pressed("enter"):
+		var menus = get_node("/root/Game/MenuLayer").get_children()
+		for i in range(len(menus) - 1, -1, -1):
+			var m = menus[i]
+			if m.enterKeyEvent():
+				break
+					
+func clearChat():
+	chatInstance.clear()
 
 func init():
 	#Make main menu
@@ -102,6 +111,7 @@ func showDialogMessage(message, title = null):
 	if title != null:
 		dialog.setTitle(title)
 	get_node("/root/Game/MenuLayer").add_child(dialog)
+	return dialog
 
 func showConfirmationDialog(message, title):
 	var dialog = confirmationDialogScene.instance()

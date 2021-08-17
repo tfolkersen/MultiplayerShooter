@@ -1,10 +1,9 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scripts/DialogMessage.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/DialogWindowTheme.tres" type="Theme" id=2]
+[ext_resource path="res://Scenes/Themes/DialogWindowTheme.tres" type="Theme" id=2]
 
 [node name="DialogMessage" type="WindowDialog"]
-visible = true
 margin_right = 48.0
 margin_bottom = 40.0
 theme = ExtResource( 2 )
@@ -30,4 +29,4 @@ enabled_focus_mode = 0
 text = "Accept"
 
 [connection signal="popup_hide" from="." to="." method="_onHide"]
-[connection signal="pressed" from="OkButton" to="." method="_okButtonPressed"]
+[connection signal="pressed" from="OkButton" to="." method="_onOkButtonPressed"]

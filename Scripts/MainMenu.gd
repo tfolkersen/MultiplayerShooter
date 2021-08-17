@@ -207,12 +207,12 @@ func onQuitButtonPressed():
 	var title = "Quitting"
 	if Network.networkID == 1:
 		message = "Close game? This will disconnect all players from the server."
-	var dialog = Global.showConfirmationDialog(message, title)
+	var dialog = Menus.showConfirmationDialog(message, title)
 	dialog.connect("accept", self, "_quitConfirmed")	
 	
 func _quitConfirmed():
 	Network.stopGame()
-	Network.leaveLobby()
+	Network.quitLobby()
 	queue_free()
 	get_tree().quit()
 

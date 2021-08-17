@@ -14,12 +14,14 @@ func _ready():
 
 func releaseFocus():
 	#$MessageEdit.release_focus()
-	Network.chatInstance.release_focus()
+	Menus.chatInstance.release_focus()
 	
 func grabFocus():
 	#$MessageEdit.grab_focus()
-	Network.chatInstance.grab_focus()
+	Menus.chatInstance.grab_focus()
 	
+func isVisible():
+	return visible
 
 
 #Player disconnected
@@ -195,5 +197,5 @@ func _messageEntered(text):
 func _exitingTree():
 	print("Lobby exiting tree")
 	Network.lobbyInstance = null
-	Global.updateMainMenu()
+	#Menus.updateMainMenu()
 
