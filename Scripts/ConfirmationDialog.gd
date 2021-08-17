@@ -25,7 +25,7 @@ func requestClose():
 	return true
 
 func updateContext():
-	pass
+	return
 
 #Set layout based on screen size (IGNORES POSITION)
 func setLayout(size = Vector2(400, 125), position = Vector2(0, 0)):
@@ -48,10 +48,12 @@ func setLayout(size = Vector2(400, 125), position = Vector2(0, 0)):
 	#Buttons
 	prev = curr
 	curr = $AcceptButton
+	curr.rect_size = Vector2(0, 0)
 	curr.rect_position = Vector2(size.x / 2.0 - curr.rect_size.x - 20 * _xScale, size.y - curr.rect_size.y - 20 * _yScale)
 	
 	prev = curr
 	curr = $CancelButton
+	curr.rect_size = Vector2(0, 0)
 	curr.rect_position = Vector2(size.x / 2.0 + 20 * _xScale, size.y - curr.rect_size.y - 20 * _yScale)
 	
 func onResolutionChanged():

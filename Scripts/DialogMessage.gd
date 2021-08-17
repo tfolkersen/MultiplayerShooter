@@ -1,22 +1,21 @@
 extends WindowDialog
 
+var _xScale = 1.0
+var _yScale = 1.0
+var _size = Vector2(400, 125)
+var _position = Vector2(0, 0)
+
 ###########################################################################
 ### Standard UI functions
 
 func show():
-	return
+	visible = true
 	
 func hide():
-	_close()
+	visible = false
 
 func isVisible():
 	return true
-	
-func activate():
-	return
-	
-func deactivate():
-	return
 	
 func requestClose():
 	_close()
@@ -25,16 +24,34 @@ func requestClose():
 func updateContext():
 	return
 
-#Set layout based on screen size (ignores parameters)
-func setLayout(size = null, position = null):
-	return
+#Set layout based on screen size (IGNORES POSITION)
+func setLayout(size = Vector2(400, 125), position = Vector2(0, 0)):
+	_size = size
+	_position = position
+	_xScale = size.x / 400.0
+	_yScale = size.y / 125.0
+	var fontScale = min(_xScale, _yScale)
 	
-#The OK button was pressed
-func _onOkButtonPressed():
-	_close()
-
+	theme.get_font("font", "Button").size = 14 * fontScale
+	
+	rect_size = size
+	
+	var prev = null
+	var curr = $Message
+	
+	curr.rect_position = Vector2(5 * _xScale, 18 * _yScale)
+	curr.rect_size = Vector2(size.x - 5 * _xScale * 2, 100 * _yScale)
+	
+	#Buttons
+	prev = curr
+	curr = $OkButton
+	curr.rect_size = Vector2(0, 0)
+	curr.rect_position = Vector2(size.x / 2.0 - curr.rect_size.x / 2.0, size.y - curr.rect_size.y - 20 * _yScale)
+	
+	
 func onResolutionChanged():
-	return
+	var dims = get_viewport().size
+	setLayout(Vector2(dims.x * (400.0 / 1024.0), dims.y * (125.0 / 600.0)))
 	
 func enterKeyEvent():
 	_onOkButtonPressed()
@@ -48,26 +65,20 @@ func escapeKeyEvent():
 func _close():
 	queue_free()
 
+func _draw():
+	setLayout(_size, _position)
+	
+#The OK button was pressed
+func _onOkButtonPressed():
+	_close()
+
 ###########################################################################
 func _ready():
-	_initLayout()
-
-func _initLayout():
-	var dims = Vector2(400, 125)
-	
-	var prev = null
-	var curr = $Message
-	
-	curr.rect_position = Vector2(5, 18)
-	curr.rect_size = Vector2(dims.x - 5 * 2, 100)
-	
-	prev = curr
-	curr = $OkButton
-	
-	curr.rect_position = Vector2(dims.x / 2.0 - curr.rect_size.x / 2.0, dims.y - curr.rect_size.y - 20)
-	
+	get_viewport().connect("size_changed", self, "onResolutionChanged")
+	var vpDims = get_viewport().size
+	var dims = Vector2(vpDims.x * (400.0 / 1024.0), vpDims.y * (125.0 / 600.0)) 
+	setLayout(dims)
 	popup_centered(dims)
-	
 
 #Set content of message
 func setMessage(message: String):

@@ -24,7 +24,6 @@ on__ButtonPressed -- when some button is pressed
 
 =====================================================================
 confirmation dialog
-
 message dialog
 settings menu
 main menu
