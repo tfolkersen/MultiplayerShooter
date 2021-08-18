@@ -12,7 +12,8 @@ var _yScale = 1.0
 var _size = Vector2(500, 550)
 var _position = Vector2(0, 0)
 
-########################################################################################
+###########################################################################
+### Standard UI functions
 func show():
 	visible = true
 	
@@ -58,7 +59,7 @@ func setLayout(size = Vector2(500, 550), position = Vector2(0, 0)):
 	###Control
 	prev = null
 	current = $TabContainer/Control/SensLabel
-	current.rect_position = Vector2(5, 0)
+	current.rect_position = Vector2(5 * _xScale, 0)
 	
 	prev = current
 	current = $TabContainer/Control/SensEdit
@@ -73,7 +74,7 @@ func setLayout(size = Vector2(500, 550), position = Vector2(0, 0)):
 		
 		prev = current
 		current = map.label
-		current.rect_position = Vector2(5, prev.rect_position.y) + Vector2(0, maxY + 5 * _yScale)
+		current.rect_position = Vector2(5 * _xScale, prev.rect_position.y) + Vector2(0, maxY + 5 * _yScale)
 		prev = current
 		current = map.button
 		current.rect_size = Vector2(120, 20) * fontScale
@@ -82,7 +83,7 @@ func setLayout(size = Vector2(500, 550), position = Vector2(0, 0)):
 	###Display
 	prev = null
 	current = $TabContainer/Display/ResLabel
-	current.rect_position = Vector2(5, 0)
+	current.rect_position = Vector2(5 * _xScale, 0)
 	
 	prev = current
 	current = $TabContainer/Display/ResXEdit
@@ -96,7 +97,7 @@ func setLayout(size = Vector2(500, 550), position = Vector2(0, 0)):
 	
 	prev = current
 	current = $TabContainer/Display/FullscreenLabel
-	current.rect_position = Vector2(5, prev.rect_position.y + prev.rect_size.y + 30 * _yScale)
+	current.rect_position = Vector2(5 * _xScale, prev.rect_position.y + prev.rect_size.y + 30 * _yScale)
 	
 	prev = current
 	current = $TabContainer/Display/FullscreenCheck
@@ -106,12 +107,12 @@ func setLayout(size = Vector2(500, 550), position = Vector2(0, 0)):
 	###Misc
 	prev = null
 	current = $TabContainer/Misc/NameLabel
-	current.rect_position = Vector2(5, 0)
+	current.rect_position = Vector2(5 * _xScale, 0)
 	
 	prev = current
 	current = $TabContainer/Misc/NameEdit
 	current.rect_size = Vector2(200, 0) * fontScale
-	current.rect_position = Vector2(5, prev.rect_size.y + 5 * _yScale)
+	current.rect_position = Vector2(5 * _xScale, prev.rect_size.y + 5 * _yScale)
 	
 	###Main pane
 	prev = null
@@ -163,7 +164,7 @@ func _onEditButtonPressed(action):
 		clearEditButtonPrompt(editingKey)
 	editingKey = action
 	setEditButtonPrompt(action)
-########################################################################################
+###########################################################################
 
 func _ready():
 	get_viewport().connect("size_changed", self, "onResolutionChanged")
