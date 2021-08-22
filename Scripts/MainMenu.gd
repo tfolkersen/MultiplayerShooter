@@ -23,6 +23,7 @@ func show():
 	
 func hide():
 	visible = false
+	updateContext()
 	
 func isVisible():
 	return visible
@@ -162,7 +163,7 @@ func _onDisconnectButtonPressed():
 	var title = "Disconnect"
 	if Network.networkID == 1:
 		message = "Disconnect from session? This will disconnect all players from the server."
-	var dialog = Global.showConfirmationDialog(message, title)
+	var dialog = Menus.showConfirmationDialog(message, title)
 	dialog.connect("accept", self, "_disconnectConfirmed")
 	
 ###########################################################################

@@ -65,6 +65,7 @@ func showMainMenu():
 func hideMainMenu():
 	releaseMenuFocus()
 	mainMenuInstance.hide()
+	
 
 func showChat():
 	chatInstance.show()
