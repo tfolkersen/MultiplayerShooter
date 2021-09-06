@@ -12,6 +12,20 @@ func _ready():
 	#$MessageEdit.text = "/start"
 	updateLayout()
 
+func show():
+	visible = true
+	updateLayout()
+	
+func hide():
+	visible = false
+
+func onPeerConnect(peer):
+	print("Peer connected " + str(peer.id))
+	
+	if addUserToList(peer):
+		if is_network_master():
+			rpc("systemMessage", peer.name + " has joined")
+
 func releaseFocus():
 	#$MessageEdit.release_focus()
 	Menus.chatInstance.release_focus()
@@ -24,13 +38,6 @@ func isVisible():
 	return visible
 
 
-#Player disconnected
-func peerConnected(id):
-	print(str(id) + " connected")
-	if addUserToList(id):
-		if is_network_master():
-			var peer = Network.peers[id]
-			rpc("systemMessage", peer.name + " has joined")
 
 #Player disconnected
 func peerDisconnected(id):
@@ -112,21 +119,20 @@ func unreadyButtonPressed():
 		setNotReady(Network.networkID)
 
 #Add player to player list
-func addUserToList(id):
+func addUserToList(peer):
 	print("adding to list")
-	var peer = Network.peers[id]
-	if is_instance_valid(get_node("PlayerList/VBoxContainer/" + str(id))):
+	if is_instance_valid(get_node("PlayerList/VBoxContainer/" + str(peer.id))):
 		return false
 	
 	var message = messageScene.instance()
 	message.setContent(peer.name, "<ready status>")
 	message.setSenderColor(Color(1.0, 0.0, 0.0))
-	message.name = str(id)
+	message.name = str(peer.id)
 	$PlayerList/VBoxContainer.add_child(message)
 	if peer.ready:
-		setReady(id)
+		setReady(peer.id)
 	else:
-		setNotReady(id)
+		setNotReady(peer.id)
 	return true
 
 #Remove player from player list

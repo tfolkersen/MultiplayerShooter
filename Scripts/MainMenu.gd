@@ -19,10 +19,12 @@ var previewWorld = null
 
 func show():
 	visible = true
+	Menus.setMenuFocus()
 	updateContext()
 	
 func hide():
 	visible = false
+	Menus.releaseMenuFocus()
 	updateContext()
 	
 func isVisible():

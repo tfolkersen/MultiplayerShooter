@@ -15,6 +15,7 @@ var gameInstance = null
 var networkID = 0 #My network ID
 var peers = {} #Data for connected peers
 
+
 func _ready():
 	print("Network entered tree")
 	get_tree().connect("network_peer_connected", self, "_player_connected")
@@ -26,7 +27,8 @@ func _ready():
 func setInitialSelfData(networkPeer):
 	networkID = networkPeer.get_unique_id()
 	peers = {}
-	peers[networkID] = {"id": networkID, "name": Global.settings.playerName, "ready": false}
+	var selfPeer = {"id": networkID, "name": Global.settings.playerName, "ready": false}
+	peers[networkID] = selfPeer
 
 #Called by a peer sending their peer information to us. Responds with our own data
 #Called by self
@@ -38,8 +40,9 @@ remotesync func addPeer(name: String, ready: bool):
 		if id != networkID:
 			var selfPeer = peers[networkID]
 			rpc_id(id, "addPeer", selfPeer.name, selfPeer.ready)
-		if is_instance_valid(lobbyInstance):
+	if is_instance_valid(lobbyInstance):
 			lobbyInstance.onPeerConnect(peers[id])
+		
 	
 #Remove a peer's data when they disconnect
 func removePeer(id):
@@ -132,16 +135,16 @@ func hostLobby(port: int):
 	
 	lobbyInstance = lobbyScene.instance()
 	get_node("/root/Game").add_child(lobbyInstance)
-	showLobby()
 
 	Menus.showChat()
 	Menus.addSystemMessage("Type /help for a list of commands")
 	
 	createServer(port)
+	showLobby()
 	
 	#Probably not needed
-	#var selfPeer = peers[networkID]
-	#rpc("addPeer", selfPeer.name, selfPeer.ready)
+	var selfPeer = peers[networkID]
+	rpc("addPeer", selfPeer.name, selfPeer.ready)
 
 #Join lobby as client
 func joinLobby(ip: String, port: int):
