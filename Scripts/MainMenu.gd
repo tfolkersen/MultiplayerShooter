@@ -196,7 +196,7 @@ func _updatePreviewWorld():
 		if not is_instance_valid(previewWorld):
 			print("MainMenu making new preview world")
 			#Initialize world preview
-			var worlds = [preload("res://Maps/Temple/TempleMap.tscn"),]
+			var worlds = [preload("res://Maps/Temple/TempleMap.tscn"),preload("res://Maps/TestMap.tscn")]
 			#preload("res://Maps/TestMap.tscn")]
 			
 			previewWorld = worlds[randi() % worlds.size()].instance()

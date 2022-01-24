@@ -175,7 +175,8 @@ remotesync func startGame():
 	hideLobby()
 	
 	#Make level
-	var levelScene = preload("res://Maps/Temple/TempleMap.tscn")
+	#var levelScene = preload("res://Maps/Temple/TempleMap.tscn")
+	var levelScene = preload("res://Maps/TestMap.tscn")
 	gameInstance = levelScene.instance()
 	gameInstance.name = "Level"
 	get_node("/root/Game").add_child(gameInstance)
