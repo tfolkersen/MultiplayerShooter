@@ -18,6 +18,9 @@ var jumpLimit = 20 #Frames before you can jump again
 #TODO could also make consecutive slope jumps result in large cooldown
 var jumpCooldown = 0
 
+var airFrames = 0
+var groundFrames = 0
+
 enum guns {GOLDEN_GUN = 0, PISTOL, RIFLE}
 onready var gunModels = [$Camera/GCWalk/GCTurn/GCAnim/GoldenGun, $Camera/GCWalk/GCTurn/GCAnim/pistol, $Camera/GCWalk/GCTurn/GCAnim/rifle]
 onready var gunCModels = [preload("res://Scenes/Models/GoldenGun.tscn").instance(), preload("res://Scenes/Models/pistol.tscn").instance(), preload("res://Scenes/Models/rifle.tscn").instance()]
@@ -175,8 +178,10 @@ func handleItemSwap():
 			rpc("swapToGun", guns.RIFLE)
 			#swapToGun(guns.RIFLE)
 
-var airFrames = 0
+
 func _physics_process(delta):
+	print("GROUNDED: " + str(groundFrames))
+	
 	lastShot += delta * 60.0
 	handleItemSwap()
 	
@@ -199,13 +204,15 @@ func _physics_process(delta):
 	var gravity = 0.015 * 10
 	if not is_on_floor():
 		airFrames += 1
+		groundFrames = 0
 	else:
+		groundFrames += 1
 		airFrames = 0
 		velocity.y = 0
 	if airFrames < 1:
 		gravity = 0.05
 	
-	velocity.y = clamp(velocity.y - gravity, -0.5 * 10, 4 * 10)
+	velocity.y = clamp(velocity.y - gravity, -0.5 * 25, 4 * 25)
 		
 
 	#if Input.is_action_pressed("jump") and is_on_floor() and is_network_master() and jumpCooldown == 0:
@@ -250,10 +257,19 @@ func _physics_process(delta):
 				legAnimator.rpc("playRemote", "Walk")
 		
 		moveDir = moveDir.normalized().rotated(Vector3(0, 1, 0), deg2rad(rotationVec.y))
-	
-		velocity.z = moveDir.z * 0.4 * 10
-		velocity.x = moveDir.x * 0.4 * 10
 		
+		
+		
+		#velocity.z = moveDir.z * 0.4 * 10
+		#velocity.x = moveDir.x * 0.4 * 10
+
+		quakeMove(moveDir)
+		
+		
+		
+		
+		
+			
 	var rotVel = Vector3(velocity.x, 0, velocity.z)
 	var zRot = 0
 	var xRot = 0
@@ -311,4 +327,73 @@ func _input(event):
 		rotationVec.x = clamp(rotationVec.x, -90, 90)
 		$Camera.rotation_degrees = rotationVec
 
+
+func airAccelerate(wishdir):
+	var wishspd = 6
+	var accel = 2.0
+	
+	wishspd = 6
+	accel = 0.7
+	
+	if wishspd > 30:
+		wishspd = 30
+	var currentspeed = velocity.dot(wishdir)
+	var addspeed = wishspd - currentspeed
+	if addspeed <= 0:
+		return
+	var accelspeed = accel * wishspd * (1 / 60.0)
+	if accelspeed > addspeed:
+		accelspeed = addspeed
+		
+	velocity.x += accelspeed * wishdir.x
+	velocity.z += accelspeed * wishdir.z
+
+func groundAccelerate(wishdir):
+	var wishspd = 6
+	var accel = 10.0
+	
+	if wishspd > 30:
+		wishspd = 30
+	var currentspeed = velocity.dot(wishdir)
+	var addspeed = wishspd - currentspeed
+	if addspeed <= 0:
+		return
+	var accelspeed = accel * wishspd * (1 / 60.0)
+	if accelspeed > addspeed:
+		accelspeed = addspeed
+		
+	velocity.x += accelspeed * wishdir.x
+	velocity.z += accelspeed * wishdir.z
+
+func groundFriction():
+	var speed = velocity.length()
+	if speed < 1.0:
+		velocity.x = 0
+		velocity.z = 0
+		return
+	
+	var friction = 8
+	
+	var stopspeed = 1
+	
+	var control = stopspeed if speed < stopspeed else speed
+	var drop = control * friction * (1 / 60.0)
+	
+	var newspeed = speed - drop
+	if newspeed < 0:
+		newspeed = 0
+	newspeed /= speed
+	
+	velocity *= newspeed
+	
+	
+
+func quakeMove(wishdir):
+	if groundFrames < 3:
+		airAccelerate(wishdir)
+	else:
+		groundFriction()
+		groundAccelerate(wishdir)
+		
+	#print(Vector2(velocity.x, velocity.z).length())
 
