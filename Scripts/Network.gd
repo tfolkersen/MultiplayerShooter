@@ -193,6 +193,7 @@ remotesync func startGame():
 		player.set_network_master(id)
 		players.add_child(player)
 		
+	Menus.showChat()
 	Global.captureMouse()
 	Global.allowControl = true
 	Menus.releaseMenuFocus()

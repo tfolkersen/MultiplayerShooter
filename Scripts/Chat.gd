@@ -87,7 +87,7 @@ func hide():
 	self.modulate.a = 0.0
 
 func show():
-	activate()
+	#activate()
 	self.modulate.a = 1.0
 	
 func unhide():
