@@ -14,7 +14,7 @@ var baseWaistTransform
 
 var cameraBone = "Chest"
 
-var jumpLimit = 20 #Frames before you can jump again
+var jumpLimit = 10 #Frames before you can jump again
 #TODO could also make consecutive slope jumps result in large cooldown
 var jumpCooldown = 0
 
