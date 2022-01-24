@@ -180,6 +180,10 @@ func addMessage(sender: String, content: String, senderColor: String = "#ffff00"
 	message.visible = true
 	sender = sender.replace("[", "[" + Global.zwsp)
 	content = content.replace("[", "[" + Global.zwsp)
+	
+	content = content.replace(":ggwelost:", "[img=50]res://Textures/Emotes/ggwelost.png[/img]")
+	
+	
 	var text = "[color=" + senderColor + "]" + sender + "[/color]: " + "[color=" + messageColor + "]" + content + "[/color]"
 #	message.bbcode_enabled = true
 	message.bbcode_text = text
