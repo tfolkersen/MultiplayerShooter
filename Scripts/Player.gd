@@ -28,6 +28,15 @@ var gunCooldowns = [52, 22, 10]
 var lastShot = 999999
 var activeGun
 
+func groundCheck():
+	if is_on_floor():
+		return true
+	if $GroundRay.is_colliding():
+		return true
+	if groundFrames >= 1 and test_move(self.transform, Vector3(0, -0.01, 0)):
+		return true
+	return false
+
 func ignoreInputs():
 	return not Global.allowControl
 
@@ -202,7 +211,7 @@ func _physics_process(delta):
 		handleShot()
 	
 	var gravity = 0.015 * 10
-	if not (is_on_floor() or $GroundRay.is_colliding()):
+	if not (groundCheck()):
 		airFrames += 1
 		groundFrames = 0
 	else:
@@ -215,9 +224,10 @@ func _physics_process(delta):
 	velocity.y = clamp(velocity.y - gravity, -0.5 * 25, 4 * 25)
 
 	#if Input.is_action_pressed("jump") and is_on_floor() and is_network_master() and jumpCooldown == 0:
-	if Input.is_action_pressed("jump") and is_network_master() and jumpCooldown == 0 and not ignoreInputs() and (is_on_floor() or $GroundRay.is_colliding()):
+	if Input.is_action_pressed("jump") and is_network_master() and jumpCooldown == 0 and not ignoreInputs() and (groundCheck()):
 		jumpCooldown = jumpLimit
 		velocity.y = 0.4 * 10
+		groundFrames = 0
 	
 	var modelSpeed = 8.0
 	legAnimator.set_blend_time("Walk", "Stand", 0.2 * modelSpeed)
@@ -265,19 +275,14 @@ func _physics_process(delta):
 		quakeMove(moveDir)
 		
 		
-		
-		
-		
-			
 	var rotVel = Vector3(velocity.x, 0, velocity.z)
 	var zRot = 0
 	var xRot = 0
-	if is_on_floor() or $GroundRay.is_colliding():
+	if groundCheck():
 		var x = Vector3(1, 0, 0)
 		var y = Vector3(0, 1, 0)
 		var z = Vector3(0, 0, 1)
 		var norm = get_floor_normal()
-		
 		
 		var normXY = Vector3(norm.dot(x), norm.dot(y), 0)
 		var normYZ = Vector3(0, norm.dot(y), norm.dot(z))
@@ -295,7 +300,7 @@ func _physics_process(delta):
 		
 	rotationMomentum *= 0.94
 	
-	if is_on_floor() or $GroundRay.is_colliding():
+	if groundCheck():
 		var vec = rotVel + Vector3(0, velocity.y, 0)
 		move_and_slide(vec, Vector3(0, 1, 0), true, 4, deg2rad(70))
 	else:
