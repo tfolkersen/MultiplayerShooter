@@ -75,6 +75,7 @@ func updateLayout():
 	var basePos = Vector2(dims.x / 2.0, dims.y * 0.90)
 	$ReadyToggle.rect_position = Vector2(basePos.x / 2.0 - $ReadyToggle.rect_size.x - 5, basePos.y)
 	$StartButton.rect_position = Vector2(basePos.x / 2.0 + 5, basePos.y)
+	print("LOBBY NETWORK MASTER: " + str(is_network_master()))
 	if not is_network_master():
 		$StartButton.disabled = true
 	else:

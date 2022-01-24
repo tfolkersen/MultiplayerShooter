@@ -208,11 +208,13 @@ remotesync func stopGame():
 
 func showLobby():
 	if is_instance_valid(lobbyInstance):
+		lobbyInstance.show()
 		Menus.hideMainMenu()
 		Menus.chatModeLobby()
 		Menus.showChat()
 		Menus.activateChat()
-		lobbyInstance.show()
+		
+
 		
 func hideLobby():
 	if is_instance_valid(lobbyInstance):

@@ -187,6 +187,7 @@ func playAcceptSound():
 	Global.playSound(preload("res://Audio/mainMenuAccept3-2.mp3"))
 
 func _updatePreviewWorld():
+	
 	if Global.isGameVisible() or Global.isLobbyVisible():
 		if is_instance_valid(previewWorld):
 			previewWorld.queue_free()
