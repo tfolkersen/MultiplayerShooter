@@ -180,7 +180,7 @@ func handleItemSwap():
 
 
 func _physics_process(delta):
-	print("GROUNDED: " + str(groundFrames))
+	#print("GROUNDED: " + str(groundFrames))
 	
 	lastShot += delta * 60.0
 	handleItemSwap()
@@ -213,7 +213,6 @@ func _physics_process(delta):
 		gravity = 0.05
 	
 	velocity.y = clamp(velocity.y - gravity, -0.5 * 25, 4 * 25)
-		
 
 	#if Input.is_action_pressed("jump") and is_on_floor() and is_network_master() and jumpCooldown == 0:
 	if Input.is_action_pressed("jump") and is_network_master() and jumpCooldown == 0 and not ignoreInputs():
@@ -334,7 +333,7 @@ func airAccelerate(wishdir):
 	
 	wishspd = 6
 	accel = 0.7
-	
+	accel = 2.0
 	if wishspd > 30:
 		wishspd = 30
 	var currentspeed = velocity.dot(wishdir)
@@ -344,6 +343,8 @@ func airAccelerate(wishdir):
 	var accelspeed = accel * wishspd * (1 / 60.0)
 	if accelspeed > addspeed:
 		accelspeed = addspeed
+		
+	print(str(velocity.x) + " " + str(velocity.z) + " -- " + str(wishdir.x) + " " + str(wishdir.z)) 
 		
 	velocity.x += accelspeed * wishdir.x
 	velocity.z += accelspeed * wishdir.z
@@ -361,7 +362,7 @@ func groundAccelerate(wishdir):
 	var accelspeed = accel * wishspd * (1 / 60.0)
 	if accelspeed > addspeed:
 		accelspeed = addspeed
-		
+	
 	velocity.x += accelspeed * wishdir.x
 	velocity.z += accelspeed * wishdir.z
 
@@ -384,12 +385,13 @@ func groundFriction():
 		newspeed = 0
 	newspeed /= speed
 	
-	velocity *= newspeed
+	velocity.x *= newspeed
+	velocity.z *= newspeed
 	
 	
 
 func quakeMove(wishdir):
-	if groundFrames < 3:
+	if groundFrames < 1:
 		airAccelerate(wishdir)
 	else:
 		groundFriction()

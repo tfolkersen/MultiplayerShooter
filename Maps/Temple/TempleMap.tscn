@@ -277,6 +277,26 @@ cast_shadow = 3
 mesh = SubResource( 4 )
 material/0 = ExtResource( 6 )
 
+[node name="Block" type="StaticBody" parent="ScaleNode/Geometry"]
+transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.942191, 1.73965, 0.546808 )
+__meta__ = {
+"_edit_group_": true,
+"_editor_description_": "		"
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="ScaleNode/Geometry/Block"]
+shape = SubResource( 3 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ScaleNode/Geometry/Block"]
+mesh = SubResource( 4 )
+material/0 = ExtResource( 6 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="ScaleNode/Geometry/Block"]
+layers = 2
+cast_shadow = 3
+mesh = SubResource( 4 )
+material/0 = ExtResource( 6 )
+
 [node name="Ceiling17" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 3.2, 0, 0, 0, 0.2, 0, 0, 0, 4, -10.4, 8.2, 3.2 )
 __meta__ = {
