@@ -360,6 +360,10 @@ material/0 = SubResource( 3 )
 enabled = true
 cast_to = Vector3( 0, -4, 0 )
 
+[node name="GroundRay" type="RayCast" parent="."]
+enabled = true
+cast_to = Vector3( 0, -0.455, 0 )
+
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.499, 0 )
 cull_mask = 5

@@ -202,7 +202,7 @@ func _physics_process(delta):
 		handleShot()
 	
 	var gravity = 0.015 * 10
-	if not is_on_floor():
+	if not (is_on_floor() or $GroundRay.is_colliding()):
 		airFrames += 1
 		groundFrames = 0
 	else:
@@ -215,7 +215,7 @@ func _physics_process(delta):
 	velocity.y = clamp(velocity.y - gravity, -0.5 * 25, 4 * 25)
 
 	#if Input.is_action_pressed("jump") and is_on_floor() and is_network_master() and jumpCooldown == 0:
-	if Input.is_action_pressed("jump") and is_network_master() and jumpCooldown == 0 and not ignoreInputs():
+	if Input.is_action_pressed("jump") and is_network_master() and jumpCooldown == 0 and not ignoreInputs() and (is_on_floor() or $GroundRay.is_colliding()):
 		jumpCooldown = jumpLimit
 		velocity.y = 0.4 * 10
 	
@@ -272,7 +272,7 @@ func _physics_process(delta):
 	var rotVel = Vector3(velocity.x, 0, velocity.z)
 	var zRot = 0
 	var xRot = 0
-	if is_on_floor():
+	if is_on_floor() or $GroundRay.is_colliding():
 		var x = Vector3(1, 0, 0)
 		var y = Vector3(0, 1, 0)
 		var z = Vector3(0, 0, 1)
@@ -295,7 +295,7 @@ func _physics_process(delta):
 		
 	rotationMomentum *= 0.94
 	
-	if is_on_floor():
+	if is_on_floor() or $GroundRay.is_colliding():
 		var vec = rotVel + Vector3(0, velocity.y, 0)
 		move_and_slide(vec, Vector3(0, 1, 0), true, 4, deg2rad(70))
 	else:
@@ -333,7 +333,7 @@ func airAccelerate(wishdir):
 	
 	wishspd = 6
 	accel = 0.7
-	accel = 2.0
+	accel = 0.5
 	if wishspd > 30:
 		wishspd = 30
 	var currentspeed = velocity.dot(wishdir)
@@ -344,7 +344,6 @@ func airAccelerate(wishdir):
 	if accelspeed > addspeed:
 		accelspeed = addspeed
 		
-	print(str(velocity.x) + " " + str(velocity.z) + " -- " + str(wishdir.x) + " " + str(wishdir.z)) 
 		
 	velocity.x += accelspeed * wishdir.x
 	velocity.z += accelspeed * wishdir.z
@@ -391,7 +390,7 @@ func groundFriction():
 	
 
 func quakeMove(wishdir):
-	if groundFrames < 1:
+	if groundFrames < 2:
 		airAccelerate(wishdir)
 	else:
 		groundFriction()
