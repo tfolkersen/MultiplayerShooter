@@ -201,6 +201,8 @@ func addMessage(sender: String, content: String, senderColor: String = "#ffff00"
 		messageDict.erase(m)
 		m.queue_free()
 		
+	Global.playSound(preload("res://Audio/chat.mp3"))
+		
 
 func clear():
 	messageDict = {}
