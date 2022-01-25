@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Scenes/Models/GoldenGun.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Models/pistol.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Textures/GunFlash/gunFlash.png" type="Texture" id=8]
 [ext_resource path="res://Scripts/ShaderOverlay.gd" type="Script" id=9]
 [ext_resource path="res://Scripts/gunflash.gd" type="Script" id=10]
+[ext_resource path="res://Scripts/Crosshair.gd" type="Script" id=11]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.3
@@ -337,6 +338,82 @@ shader_param/dims = null
 shader_param/frame = null
 shader_param/lastFrame = null
 
+[sub_resource type="Shader" id=15]
+code = "shader_type canvas_item;
+
+uniform vec2 dims;
+uniform float time;
+
+void vertex() {
+}
+
+const float PI = 3.141592654;
+
+const vec3 c_red = vec3(1.0, 0.0, 0.0);
+const vec3 c_orange = vec3(1.0, 0.5, 0.0);
+const vec3 c_yellow = vec3(1.0, 1.0, 0.0);
+const vec3 c_green = vec3(0.0, 1.0, 0.0);
+const vec3 c_blue = vec3(0.0, 0.0, 1.0);
+const vec3 c_lblue = vec3(0.0, 1.0, 1.0);
+const vec3 c_purple = vec3(0.5, 0.0, 1.0);
+const vec3 c_pink = vec3(1.0, 0.5, 1.0);
+
+vec3 getRainbow(float val, float minval, float maxval) {
+	//0-7
+	float range = maxval - minval;
+	float normalized = 7.0 * ((val - minval) / range);
+	if (normalized <= 1.0) {
+		return mix(c_red, c_orange, normalized);
+	}
+	if (normalized <= 2.0) {
+		return mix(c_orange, c_yellow, normalized - 1.0);
+	}
+	if (normalized <= 3.0) {
+		return mix(c_yellow, c_green, normalized - 2.0);
+	}
+	if (normalized <= 4.0) {
+		return mix(c_green, c_blue, normalized - 3.0);
+	}
+	if (normalized <= 5.0) {
+		return mix(c_blue, c_lblue, normalized - 4.0);
+	}
+	if (normalized <= 6.0) {
+		return mix(c_lblue, c_purple, normalized - 5.0);
+	}
+	return mix(c_purple, c_pink, normalized - 6.0);
+}
+
+void fragment() {
+	COLOR = vec4(0.0, 0.0, 0.0, 0.0);
+	
+	
+	//	CIRCLE
+	float cx = dims.x / 2.0;
+	float cy = dims.y / 2.0;
+	
+	float dx = FRAGCOORD.x - cx;
+	float dy = FRAGCOORD.y - cy;
+	
+	
+	float dist = dx*dx + dy*dy;
+	
+	float mindist = 18.0;
+	float maxdist = 34.0;
+	float distrange = maxdist - mindist;
+	if (dist >= mindist && dist <= maxdist) {
+		COLOR = mix(vec4(0.0, 1.0, 1.0, 1.0), vec4(1.0, 0.0, 1.0, 1.0), abs(cos(time / 3000.0 + FRAGCOORD.x * 8.0 / dims.x + FRAGCOORD.y * 8.0 / dims.y)));
+	}
+	
+	
+	
+}	
+"
+
+[sub_resource type="ShaderMaterial" id=16]
+shader = SubResource( 15 )
+shader_param/dims = null
+shader_param/time = null
+
 [node name="Player" type="KinematicBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0 )
 script = ExtResource( 6 )
@@ -440,6 +517,15 @@ material = SubResource( 14 )
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Crosshair" type="ColorRect" parent="."]
+material = SubResource( 16 )
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
