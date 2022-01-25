@@ -383,19 +383,24 @@ vec3 getRainbow(float val, float minval, float maxval) {
 	return mix(c_purple, c_pink, normalized - 6.0);
 }
 
+bool inBox(vec2 point, vec4 bounds) {
+	return point.x >= bounds.r && point.x <= bounds.b && point.y >= bounds.g && point.y <= bounds.a;
+}
+
 void fragment() {
 	COLOR = vec4(0.0, 0.0, 0.0, 0.0);
 	
 	vec4 coord = FRAGCOORD;
-	
-	
-	//	CIRCLE
 	float cx = dims.x / 2.0;
 	float cy = dims.y / 2.0;
 	
+	
+	//	CIRCLE
+	/*
+	
+	
 	float dx = coord.x - cx;
 	float dy = coord.y - cy;
-	
 	
 	float dist = dx*dx * (1024.0 / dims.x) + dy*dy * (600.0 / dims.y);
 	
@@ -410,6 +415,32 @@ void fragment() {
 	
 	float normalized = (dist - mindist) / distrange;
 	if ((normalized >= 0.0 && normalized <= 0.3) || (normalized >= 0.7 && normalized <= 1.0)) {
+		COLOR = vec4(0.0, 0.0, 0.0, 1.0);
+	}
+	*/
+	
+	float gap = 5.0;
+	float L = 8.0;
+	float W = 1.8;
+	float hScale = dims.x / 1024.0;
+	float vScale = dims.y / 600.0;
+	
+	//hScale = 1.5;
+	//vScale = 1.5;
+	
+	vec4 boxN = vec4(cx - hScale * (W / 2.0), cy + vScale * (gap), cx + hScale * (W / 2.0), cy + vScale * (gap + L));
+	vec4 boxE = vec4(cx + hScale * (gap), cy - vScale * (W / 2.0), cx + hScale * (gap + L), cy + vScale * (W / 2.0));
+	vec4 boxS = vec4(cx - hScale * (W / 2.0), cy - vScale * (gap + L), cx + hScale * (W / 2.0), cy - vScale * (gap));
+	vec4 boxW = vec4(cx - hScale * (gap + L), cy - vScale * (W / 2.0), cx - hScale * (gap), cy + vScale * (W / 2.0));
+	
+	float outlineScale = 1.7;
+	vec4 outlineOffset = vec4(-outlineScale, -outlineScale, outlineScale, outlineScale);
+	
+	vec2 coord2 = vec2(coord.x, coord.y);
+	
+	if (inBox(coord2, boxN) || inBox(coord2, boxE) || inBox(coord2, boxS) || inBox(coord2, boxW)) {
+		COLOR = mix(vec4(0.0, 1.0, 1.0, 1.0), vec4(1.0, 0.0, 1.0, 1.0), abs(cos(time / 1500.0 + FRAGCOORD.x * 8.0 / dims.x + FRAGCOORD.y * 8.0 / dims.y)));
+	} else if (inBox(coord2, boxN + outlineOffset) || inBox(coord2, boxE + outlineOffset) || inBox(coord2, boxS + outlineOffset) || inBox(coord2, boxW + outlineOffset)) {
 		COLOR = vec4(0.0, 0.0, 0.0, 1.0);
 	}
 	
