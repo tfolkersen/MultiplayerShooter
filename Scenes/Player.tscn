@@ -397,11 +397,18 @@ void fragment() {
 	
 	float dist = dx*dx + dy*dy;
 	
-	float mindist = 18.0;
-	float maxdist = 34.0;
+	float mindist = 20.0;
+	float maxdist = 40.0;
 	float distrange = maxdist - mindist;
+	
 	if (dist >= mindist && dist <= maxdist) {
 		COLOR = mix(vec4(0.0, 1.0, 1.0, 1.0), vec4(1.0, 0.0, 1.0, 1.0), abs(cos(time / 3000.0 + FRAGCOORD.x * 8.0 / dims.x + FRAGCOORD.y * 8.0 / dims.y)));
+		
+	}
+	
+	float normalized = (dist - mindist) / distrange;
+	if ((normalized >= 0.0 && normalized <= 0.3) || (normalized >= 0.7 && normalized <= 1.0)) {
+		COLOR = vec4(0.0, 0.0, 0.0, 1.0);
 	}
 	
 	
