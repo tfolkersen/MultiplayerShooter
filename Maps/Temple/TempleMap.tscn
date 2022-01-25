@@ -249,6 +249,24 @@ viewport_path = NodePath("Portal2Viewport")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )
 
+[node name="Box" parent="." instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.558642, 3.0112, -3.02953 )
+
+[node name="Box2" parent="." instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.558642, 3.64052, -3.02953 )
+
+[node name="Box3" parent="." instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.558642, 4.25212, -3.02953 )
+
+[node name="Box4" parent="." instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.558642, 4.84937, -3.02953 )
+
+[node name="Box5" parent="." instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.558642, 5.43186, -1.43681 )
+
+[node name="Box6" parent="." instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.558642, 6.10424, -3.02953 )
+
 [node name="ScaleNode" type="Spatial" parent="."]
 transform = Transform( 1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 0, 0, 0 )
 
@@ -316,24 +334,6 @@ layers = 2
 cast_shadow = 3
 mesh = SubResource( 4 )
 material/0 = ExtResource( 6 )
-
-[node name="Box" parent="ScaleNode/Geometry/Block2" instance=ExtResource( 10 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.41953, -0.0432119, -13.5538 )
-
-[node name="Box2" parent="ScaleNode/Geometry/Block2" instance=ExtResource( 10 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.41953, 2.20434, -13.5538 )
-
-[node name="Box3" parent="ScaleNode/Geometry/Block2" instance=ExtResource( 10 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.41953, 4.38863, -13.5538 )
-
-[node name="Box4" parent="ScaleNode/Geometry/Block2" instance=ExtResource( 10 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.41953, 6.52168, -13.5538 )
-
-[node name="Box5" parent="ScaleNode/Geometry/Block2" instance=ExtResource( 10 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.41953, 8.60199, -7.86549 )
-
-[node name="Box6" parent="ScaleNode/Geometry/Block2" instance=ExtResource( 10 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.41953, 11.0034, -13.5538 )
 
 [node name="Ceiling17" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 3.2, 0, 0, 0, 0.2, 0, 0, 0, 4, -10.4, 8.2, 3.2 )
