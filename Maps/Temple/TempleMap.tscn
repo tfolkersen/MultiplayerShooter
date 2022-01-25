@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Textures/Temple/templeNoise/floor.png" type="Texture" id=1]
 [ext_resource path="res://Textures/Temple/templeWall.png" type="Texture" id=2]
@@ -8,12 +8,10 @@
 [ext_resource path="res://Materials/TempleCeilingMaterial.tres" type="Material" id=6]
 [ext_resource path="res://Maps/Temple/RedPortalView.gd" type="Script" id=7]
 [ext_resource path="res://Maps/Temple/BluePortalView.gd" type="Script" id=8]
+[ext_resource path="res://Textures/Skies/forest1.jpg" type="Texture" id=9]
 
-[sub_resource type="ProceduralSky" id=1]
-sky_top_color = Color( 1, 1, 1, 1 )
-sky_energy = 0.2
-ground_energy = 0.2
-sun_energy = 0.2
+[sub_resource type="PanoramaSky" id=1]
+panorama = ExtResource( 9 )
 
 [sub_resource type="Environment" id=2]
 background_mode = 3
