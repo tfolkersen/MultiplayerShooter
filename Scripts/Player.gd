@@ -307,6 +307,26 @@ func _physics_process(delta):
 		var vec = velocity
 		move_and_slide(velocity, Vector3(0, 1, 0), true, 4, deg2rad(70))
 		
+	var pushNormals = []
+	var slideCount = get_slide_count()
+	for i in range(slideCount):
+		var cNorm = -get_slide_collision(i).normal
+		if cNorm in pushNormals:
+				continue
+		pushNormals.append(cNorm)
+		if Vector3(0, -1, 0).dot(cNorm) < 0.1:
+			var pushFactor = 0.4
+			if Vector3(0,1,0).dot(cNorm) > 0.95:
+				pushFactor = 1.0
+			var vNorm = velocity.normalized()
+			var dot = Vector3()
+			dot.x = clamp(vNorm.x * cNorm.x, 0, 1)
+			dot.y = clamp(vNorm.y * cNorm.y, 0, 1)
+			dot.z = clamp(vNorm.z * cNorm.z, 0, 1)
+			velocity.x -= dot.x * sign(cNorm.x) * pushFactor
+			velocity.y -= dot.y * sign(cNorm.y) * pushFactor
+			velocity.z -= dot.z * sign(cNorm.z) * pushFactor
+		
 	$MeshInstance.rotation_degrees.y = rotationVec.y
 	$playerModel.rotation_degrees.y = rotationVec.y - 180
 	#Bones

@@ -189,7 +189,9 @@ remotesync func startGame():
 	for id in peers:
 		var player = playerScene.instance()
 		print("Making player with ID " + str(id))
-		player.global_transform.origin = Vector3(0, 24, 0) + Vector3(0, 3.5 * ((id - 1) % 2), 0)
+		#player.global_transform.origin = Vector3(0, 24, 0) + Vector3(0, 3.5 * ((id - 1) % 2), 0)
+		player.global_transform.origin = Vector3(30, 0, 7) + Vector3(0, 3.5 * ((id - 1) % 2), 0)
+		#player.global_transform.origin = Vector3(0, 6, 0) + Vector3(0, 3.5 * ((id - 1) % 2), 0)
 		player.set_name(str(id))
 		player.set_network_master(id)
 		players.add_child(player)
