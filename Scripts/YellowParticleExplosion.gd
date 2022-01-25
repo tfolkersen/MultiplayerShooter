@@ -22,5 +22,3 @@ func _ready():
 func _onTimeout():
 	queue_free()
 
-func _on_Particles_tree_exiting():
-	print("PARTICLES GONE")
