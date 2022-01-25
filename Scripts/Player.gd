@@ -28,6 +28,8 @@ var gunCooldowns = [52, 22, 10]
 var lastShot = 999999
 var activeGun
 
+onready var hitParticles = preload("res://Scenes/YellowParticleExplosion.tscn")
+
 func groundCheck():
 	if is_on_floor():
 		return true
@@ -138,9 +140,19 @@ func handleShot():
 		rpc("cModelShotAnim")
 		
 		if $Camera/SelectRay.is_colliding():
+			var dir = ($Camera/SelectRay.global_transform * $Camera/SelectRay.cast_to).normalized()
 			var col = $Camera/SelectRay.get_collider()
+			var particles = hitParticles.instance()
+			#get_tree().add_child(particles)
+			get_parent().add_child(particles)
+			
+			particles.global_translate($Camera/SelectRay.get_collision_point())
+			particles.look_at(dir, Vector3(0, 1, 0))
+			particles.emitting = true
+			
+			
 			if col is RigidBody:
-				var dir = ($Camera/SelectRay.global_transform * $Camera/SelectRay.cast_to).normalized()
+				
 				col.apply_impulse($Camera/SelectRay.get_collision_point(), -dir * 5.0)
 				#col.apply_impulse(Vector3(0, 0, 0), dir * 30.0)
 				
