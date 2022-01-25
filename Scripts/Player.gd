@@ -140,14 +140,25 @@ func handleShot():
 		rpc("cModelShotAnim")
 		
 		if $Camera/SelectRay.is_colliding():
-			var dir = ($Camera/SelectRay.global_transform * ($Camera/SelectRay.cast_to - $Camera/SelectRay.translation)).normalized()
+			print($Camera/SelectRay.cast_to)
+	
+			var dir = $Camera/SelectRay.cast_to.normalized()
+			
 			var col = $Camera/SelectRay.get_collider()
+			
+			var p2 = $Camera/SelectRay.get_collision_point()
+			var p1 = $Camera/SelectRay.to_global($Camera/SelectRay.translation)
+			dir = (p2 - p1).normalized()
+			
+			
 			var particles = hitParticles.instance()
 			#get_tree().add_child(particles)
 			get_parent().add_child(particles)
 			
 			particles.global_translate($Camera/SelectRay.get_collision_point())
-			particles.process_material.direction = -(dir.normalized())
+			#particles.process_material.direction = -dir #This doesn't work -- probably an engine bug
+			print(p2)
+			particles.look_at(p2, Vector3(0, 1, 0))
 			particles.emitting = true
 			
 			
