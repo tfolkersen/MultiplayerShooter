@@ -175,8 +175,8 @@ remotesync func startGame():
 	hideLobby()
 	
 	#Make level
-	#var levelScene = preload("res://Maps/Temple/TempleMap.tscn")
-	var levelScene = preload("res://Maps/TestMap.tscn")
+	var levelScene = preload("res://Maps/Temple/TempleMap.tscn")
+	#var levelScene = preload("res://Maps/TestMap.tscn")
 	gameInstance = levelScene.instance()
 	gameInstance.name = "Level"
 	get_node("/root/Game").add_child(gameInstance)
@@ -189,7 +189,7 @@ remotesync func startGame():
 	for id in peers:
 		var player = playerScene.instance()
 		print("Making player with ID " + str(id))
-		player.global_transform.origin = Vector3(0, 2, 0) + Vector3(0, 3.5 * ((id - 1) % 2), 0)
+		player.global_transform.origin = Vector3(0, 24, 0) + Vector3(0, 3.5 * ((id - 1) % 2), 0)
 		player.set_name(str(id))
 		player.set_network_master(id)
 		players.add_child(player)
