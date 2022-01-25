@@ -156,15 +156,15 @@ func handleShot():
 			get_parent().add_child(particles)
 			
 			particles.global_translate($Camera/SelectRay.get_collision_point())
-			#particles.process_material.direction = -dir #This doesn't work -- probably an engine bug
+			particles.process_material.direction = -dir #This doesn't work -- probably an engine bug
 			print(p2)
-			particles.look_at(p2, Vector3(0, 1, 0))
+			#particles.look_at(p2, Vector3(0, 1, 0))
 			particles.emitting = true
 			
 			
 			if col is RigidBody:
 				
-				col.apply_impulse($Camera/SelectRay.get_collision_point(), -dir * 5.0)
+				col.apply_impulse($Camera/SelectRay.get_collision_point(), dir * 5.0)
 				#col.apply_impulse(Vector3(0, 0, 0), dir * 30.0)
 				
 				
