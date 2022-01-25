@@ -15,6 +15,7 @@ extents = Vector3( 0.5, 0.5, 0.5 )
 
 [node name="Box" type="RigidBody"]
 mass = 10.0
+angular_damp = 0.0
 __meta__ = {
 "_edit_group_": true
 }

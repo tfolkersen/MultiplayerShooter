@@ -137,6 +137,15 @@ func handleShot():
 		
 		rpc("cModelShotAnim")
 		
+		if $Camera/SelectRay.is_colliding():
+			var col = $Camera/SelectRay.get_collider()
+			if col is RigidBody:
+				var dir = ($Camera/SelectRay.global_transform * $Camera/SelectRay.cast_to).normalized()
+				col.apply_impulse($Camera/SelectRay.get_collision_point(), -dir * 5.0)
+				#col.apply_impulse(Vector3(0, 0, 0), dir * 30.0)
+				
+				
+		
 		#Shot multiplayer anim
 
 func swapOut():
