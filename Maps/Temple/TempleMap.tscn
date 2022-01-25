@@ -318,22 +318,22 @@ mesh = SubResource( 4 )
 material/0 = ExtResource( 6 )
 
 [node name="Box" parent="ScaleNode/Geometry/Block2" instance=ExtResource( 10 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.41953, 2.55516, -13.5538 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.41953, -0.0432119, -13.5538 )
 
 [node name="Box2" parent="ScaleNode/Geometry/Block2" instance=ExtResource( 10 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.41953, 3.67933, -13.5538 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.41953, 2.20434, -13.5538 )
 
 [node name="Box3" parent="ScaleNode/Geometry/Block2" instance=ExtResource( 10 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.41953, 4.87158, -13.5538 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.41953, 4.38863, -13.5538 )
 
 [node name="Box4" parent="ScaleNode/Geometry/Block2" instance=ExtResource( 10 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.41953, 6.11195, -13.5538 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.41953, 6.52168, -13.5538 )
 
 [node name="Box5" parent="ScaleNode/Geometry/Block2" instance=ExtResource( 10 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.41953, 7.26361, -13.5538 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.41953, 8.60199, -7.86549 )
 
 [node name="Box6" parent="ScaleNode/Geometry/Block2" instance=ExtResource( 10 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.41953, 8.54963, -13.5538 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.41953, 11.0034, -13.5538 )
 
 [node name="Ceiling17" type="StaticBody" parent="ScaleNode/Geometry"]
 transform = Transform( 3.2, 0, 0, 0, 0.2, 0, 0, 0, 4, -10.4, 8.2, 3.2 )

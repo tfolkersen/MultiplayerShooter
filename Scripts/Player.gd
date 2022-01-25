@@ -306,9 +306,22 @@ func _physics_process(delta):
 	else:
 		var vec = velocity
 		move_and_slide(velocity, Vector3(0, 1, 0), true, 4, deg2rad(70), false)
+	
+	
+	var slideCount = get_slide_count()
+	
+	var collidedObjects = []
+	for i in range(slideCount):
+		var col = get_slide_collision(i)
+		var obj = col.collider
+		if obj in collidedObjects:
+			continue
+		if obj is RigidBody:
+			obj.apply_impulse(Vector3(0, 0, 0), velocity)
+		
 		
 	var pushNormals = []
-	var slideCount = get_slide_count()
+	
 	for i in range(slideCount):
 		var cNorm = -get_slide_collision(i).normal
 		if cNorm in pushNormals:
