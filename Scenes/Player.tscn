@@ -386,23 +386,25 @@ vec3 getRainbow(float val, float minval, float maxval) {
 void fragment() {
 	COLOR = vec4(0.0, 0.0, 0.0, 0.0);
 	
+	vec4 coord = FRAGCOORD;
+	
 	
 	//	CIRCLE
 	float cx = dims.x / 2.0;
 	float cy = dims.y / 2.0;
 	
-	float dx = FRAGCOORD.x - cx;
-	float dy = FRAGCOORD.y - cy;
+	float dx = coord.x - cx;
+	float dy = coord.y - cy;
 	
 	
-	float dist = dx*dx + dy*dy;
+	float dist = dx*dx * (1024.0 / dims.x) + dy*dy * (600.0 / dims.y);
 	
 	float mindist = 20.0;
-	float maxdist = 40.0;
+	float maxdist = 80.0;
 	float distrange = maxdist - mindist;
 	
 	if (dist >= mindist && dist <= maxdist) {
-		COLOR = mix(vec4(0.0, 1.0, 1.0, 1.0), vec4(1.0, 0.0, 1.0, 1.0), abs(cos(time / 3000.0 + FRAGCOORD.x * 8.0 / dims.x + FRAGCOORD.y * 8.0 / dims.y)));
+		COLOR = mix(vec4(0.0, 1.0, 1.0, 1.0), vec4(1.0, 0.0, 1.0, 1.0), abs(cos(time / 1500.0 + FRAGCOORD.x * 8.0 / dims.x + FRAGCOORD.y * 8.0 / dims.y)));
 		
 	}
 	
