@@ -302,10 +302,10 @@ func _physics_process(delta):
 	
 	if groundCheck():
 		var vec = rotVel + Vector3(0, velocity.y, 0)
-		move_and_slide(vec, Vector3(0, 1, 0), true, 4, deg2rad(70))
+		move_and_slide(vec, Vector3(0, 1, 0), true, 4, deg2rad(70), false)
 	else:
 		var vec = velocity
-		move_and_slide(velocity, Vector3(0, 1, 0), true, 4, deg2rad(70))
+		move_and_slide(velocity, Vector3(0, 1, 0), true, 4, deg2rad(70), false)
 		
 	var pushNormals = []
 	var slideCount = get_slide_count()
