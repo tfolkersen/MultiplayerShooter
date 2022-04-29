@@ -395,29 +395,6 @@ void fragment() {
 	float cy = dims.y / 2.0;
 	
 	
-	//	CIRCLE
-	/*
-	
-	
-	float dx = coord.x - cx;
-	float dy = coord.y - cy;
-	
-	float dist = dx*dx * (1024.0 / dims.x) + dy*dy * (600.0 / dims.y);
-	
-	float mindist = 20.0;
-	float maxdist = 80.0;
-	float distrange = maxdist - mindist;
-	
-	if (dist >= mindist && dist <= maxdist) {
-		COLOR = mix(vec4(0.0, 1.0, 1.0, 1.0), vec4(1.0, 0.0, 1.0, 1.0), abs(cos(time / 1500.0 + FRAGCOORD.x * 8.0 / dims.x + FRAGCOORD.y * 8.0 / dims.y)));
-		
-	}
-	
-	float normalized = (dist - mindist) / distrange;
-	if ((normalized >= 0.0 && normalized <= 0.3) || (normalized >= 0.7 && normalized <= 1.0)) {
-		COLOR = vec4(0.0, 0.0, 0.0, 1.0);
-	}
-	*/
 	
 	float gap = 5.0;
 	float L = 8.0;
@@ -425,16 +402,14 @@ void fragment() {
 	float hScale = dims.x / 1024.0;
 	float vScale = dims.y / 600.0;
 	
-	//hScale = 1.5;
-	//vScale = 1.5;
-	
+
 	vec4 boxN = vec4(cx - hScale * (W / 2.0), cy + vScale * (gap), cx + hScale * (W / 2.0), cy + vScale * (gap + L));
 	vec4 boxE = vec4(cx + hScale * (gap), cy - vScale * (W / 2.0), cx + hScale * (gap + L), cy + vScale * (W / 2.0));
 	vec4 boxS = vec4(cx - hScale * (W / 2.0), cy - vScale * (gap + L), cx + hScale * (W / 2.0), cy - vScale * (gap));
 	vec4 boxW = vec4(cx - hScale * (gap + L), cy - vScale * (W / 2.0), cx - hScale * (gap), cy + vScale * (W / 2.0));
 	
-	float outlineScale = 1.7;
-	vec4 outlineOffset = vec4(-outlineScale, -outlineScale, outlineScale, outlineScale);
+	float outlineScale = 1.6;
+	vec4 outlineOffset = vec4(-outlineScale * hScale, -outlineScale * vScale, outlineScale * hScale, outlineScale * vScale);
 	
 	vec2 coord2 = vec2(coord.x, coord.y);
 	
