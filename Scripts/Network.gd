@@ -2,6 +2,8 @@
 		Network singleton
 
 	Handles client/server setup and connecting/disconnecting
+	
+	owns the lobby node
 """
 
 extends Node

@@ -1,3 +1,7 @@
+"""Owns the chat node
+
+"""
+
 extends Node
 
 #Various scene files
@@ -33,8 +37,9 @@ func _process(delta):
 func clearChat():
 	chatInstance.clear()
 
+
 func init():
-	#Make main menu
+	#Make main menu	
 	mainMenuInstance = mainMenuScene.instance()
 	get_node("/root/Game/MenuLayer").add_child(mainMenuInstance)
 	hideMainMenu()
