@@ -35,6 +35,7 @@ const audioEntityScene = preload("res://Scenes/AudioEntity.tscn")
 #Contents of settings.json, including mouse sensitivity, name, etc.
 var settings = {}
 
+#Map from keyName to serialized event
 var defaultBinds = {}
 
 #true if the player should be able to move
