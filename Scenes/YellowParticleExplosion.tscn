@@ -32,5 +32,3 @@ explosiveness = 0.8
 process_material = SubResource( 1 )
 draw_pass_1 = SubResource( 3 )
 script = ExtResource( 1 )
-
-[connection signal="tree_exiting" from="." to="." method="_on_Particles_tree_exiting"]
