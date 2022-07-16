@@ -188,7 +188,7 @@ func playAcceptSound():
 
 func _updatePreviewWorld():
 	
-	if Global.isGameVisible() or Global.isLobbyVisible():
+	if Network.isGameVisible() or Network.isLobbyVisible():
 		if is_instance_valid(previewWorld):
 			previewWorld.queue_free()
 			print("MainMenu freeing old preview world")
@@ -209,7 +209,7 @@ func _updateButtonVisibility():
 	var pos = $SettingsButton.rect_position
 	pos.y += 60 * _yScale
 	
-	if Global.isGameVisible() or Global.isLobbyVisible():
+	if Network.isGameVisible() or Network.isLobbyVisible():
 		$HostButton.visible = false
 		$JoinButton.visible = false
 		$ResumeButton.visible = true

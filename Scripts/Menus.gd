@@ -18,10 +18,10 @@ var chatInstance = null
 
 func _process(delta):
 	if Input.is_action_just_pressed("chat"):
-		if Global.isGameVisible() and not Global.isLobbyVisible():
+		if Network.isGameVisible() and not Network.isLobbyVisible():
 			activateChat()
 	if Input.is_action_just_pressed("escape"):
-		if not deactivateChat():
+		if Network.isGameVisible() and not Network.isLobbyVisible() and not deactivateChat():
 			var menus = get_node("/root/Game/MenuLayer").get_children()
 			for i in range(len(menus) - 1, -1, -1):
 				var m = menus[i]
@@ -37,7 +37,6 @@ func _process(delta):
 func clearChat():
 	chatInstance.clear()
 
-
 func init():
 	#Make main menu	
 	mainMenuInstance = mainMenuScene.instance()
@@ -52,14 +51,14 @@ func init():
 func setMenuFocus():
 	Global.releaseMouse()
 	Global.allowControl = false
-	if Global.isLobbyVisible() and not Global.isGameVisible():
+	if Network.isLobbyVisible() and not Network.isGameVisible():
 		Network.lobbyInstance.releaseFocus()
 	
 func releaseMenuFocus():
-	if Global.isGameVisible():
+	if Network.isGameVisible():
 		Global.captureMouse()
 		Global.allowControl = true
-	if Global.isLobbyVisible():
+	if Network.isLobbyVisible():
 		Network.lobbyInstance.grabFocus()
 		
 
@@ -71,7 +70,6 @@ func hideMainMenu():
 	releaseMenuFocus()
 	mainMenuInstance.hide()
 	
-
 func showChat():
 	chatInstance.show()
 	
@@ -83,7 +81,7 @@ func activateChat():
 		chatInstance.activate()
 		
 func deactivateChat():
-	if Global.isGameVisible():
+	if Network.isGameVisible():
 		return chatInstance.deactivate()
 	return false
 

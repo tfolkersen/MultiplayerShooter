@@ -76,12 +76,6 @@ func playSound(soundFileResource):
 	add_child(c)
 	c.play()
 
-func isGameVisible():
-	return is_instance_valid(Network.gameInstance)
-	
-func isLobbyVisible():
-	return is_instance_valid(Network.lobbyInstance) and Network.lobbyInstance.isVisible()
-
 #Apply the current settings
 func applySettings():
 	print("Applying settings")

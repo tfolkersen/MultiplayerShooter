@@ -20,30 +20,37 @@ var peers = {} #Data for connected peers
 
 func _ready():
 	print("Network entered tree")
-	get_tree().connect("network_peer_connected", self, "_player_connected")
-	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
-	get_tree().connect("connected_to_server", self, "_connected_ok")
-	get_tree().connect("connection_failed", self, "_connected_fail")
+	get_tree().connect("network_peer_connected", self, "_network_peer_connected")
+	get_tree().connect("network_peer_disconnected", self, "_network_peer_disconnected")
+	get_tree().connect("connected_to_server", self, "_connected_to_server")
+	get_tree().connect("connection_failed", self, "_connection_failed")
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
 
-func setInitialSelfData(networkPeer):
+func initializePeers(networkPeer):
 	networkID = networkPeer.get_unique_id()
 	peers = {}
-	var selfPeer = {"id": networkID, "name": Global.settings.playerName, "ready": false}
+	var selfPeer = {
+		"id": networkID,
+		"name": Global.settings.playerName,
+		"ready": false,
+	}
 	peers[networkID] = selfPeer
+
+func cleanPeerData(data):
+	var cleaned = {}
+	for key in ["id", "name", "ready"]:
+		cleaned[key] = data[key]
+	return cleaned
 
 #Called by a peer sending their peer information to us. Responds with our own data
 #Called by self
-remotesync func addPeer(name: String, ready: bool):
+remote func addPeer(peerData):
+	peerData = cleanPeerData(peerData)
 	var id = get_tree().get_rpc_sender_id()
-	print("Adding peer [" + str(id) + "] " + name)
-	if not peers.has(id):
-		peers[id] = {"id": id, "name": name, "ready": ready}
-		if id != networkID:
-			var selfPeer = peers[networkID]
-			rpc_id(id, "addPeer", selfPeer.name, selfPeer.ready)
+	print("Adding peer %s \"%s\"" % [str(id), peerData["name"]])
+	peers[id] = peerData
 	if is_instance_valid(lobbyInstance):
-			lobbyInstance.onPeerConnect(peers[id])
+		lobbyInstance.onPeerConnect(id)
 		
 	
 #Remove a peer's data when they disconnect
@@ -71,21 +78,19 @@ func removePlayerFromGame(id):
 			playerNode.delete()
 
 #Peer connected
-func _player_connected(id):
-	print("Player connected " + str(id))
+func _network_peer_connected(id):
+	print("Network peer connected " + str(id))
 	var selfPeer = peers[networkID]
-	rpc_id(id, "addPeer", selfPeer.name, selfPeer.ready)
+	rpc_id(id, "addPeer", selfPeer)
 
 #Peer disconnected
-func _player_disconnected(id):
-	print("Player disconnected " + str(id))
+func _network_peer_disconnected(id):
+	print("Network peer disconnected " + str(id))
 	removePeer(id)
 	
 #Connected to server
-func _connected_ok():
+func _connected_to_server():
 	print("Connected to server")
-	var selfPeer = peers[networkID]
-	rpc("addPeer", selfPeer.name, selfPeer.ready) #maybe not needed (TODO)
 	showLobby()
 
 #Disconnected by server
@@ -95,7 +100,7 @@ func _server_disconnected():
 	Menus.showDialogMessage("Disconnected by server.", "Network")
 
 #Failed to connect to server
-func _connected_fail():
+func _connection_failed():
 	print("Failed to connect to server")
 	quitLobby()
 	Menus.showDialogMessage("Failed to connect to server.", "Network")
@@ -105,7 +110,7 @@ func createServer(port: int):
 	disconnectNetwork()
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_server(int(port))
-	setInitialSelfData(peer)
+	initializePeers(peer)
 	get_tree().network_peer = peer
 	print("Created server. I am ID " + str(networkID))
 
@@ -114,7 +119,7 @@ func createClient(ip: String, port: int):
 	disconnectNetwork()
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_client(ip, port)
-	setInitialSelfData(peer)
+	initializePeers(peer)
 	get_tree().network_peer = peer
 	print("Created client. I am ID " + str(networkID))
 	
@@ -143,10 +148,6 @@ func hostLobby(port: int):
 	
 	createServer(port)
 	showLobby()
-	
-	#Probably not needed
-	var selfPeer = peers[networkID]
-	rpc("addPeer", selfPeer.name, selfPeer.ready)
 
 #Join lobby as client
 func joinLobby(ip: String, port: int):
@@ -206,6 +207,9 @@ remotesync func startGame():
 
 #End the current game
 remotesync func stopGame():
+	if not get_tree().get_rpc_sender_id() in [0, 1]:
+		return
+		
 	if is_instance_valid(gameInstance):
 		gameInstance.queue_free()
 		gameInstance = null
@@ -225,3 +229,10 @@ func hideLobby():
 	if is_instance_valid(lobbyInstance):
 		Menus.hideChat()
 		lobbyInstance.hide()
+
+
+func isGameVisible():
+	return is_instance_valid(Network.gameInstance)
+	
+func isLobbyVisible():
+	return is_instance_valid(Network.lobbyInstance) and Network.lobbyInstance.isVisible()
